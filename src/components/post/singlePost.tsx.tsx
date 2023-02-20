@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../App.module.css";
 import { PostType } from "../../App";
 import {  useParams } from 'react-router-dom';
@@ -9,26 +9,41 @@ type ParamsID = {
 const SinglePost = ({Posts,imageList}:postProps) => {
   let { postID } = useParams<ParamsID>();
   const PostContainer: PostType[] = Posts.filter((item) => item.id === postID);
+  const [image,setimage] = useState<string>("white")
+
+ useEffect(()=>{
+  const img = imageList.find((it) => it.includes(PostContainer[0].img))
+  if(img !== undefined){
+    setimage(img)
+  }
+ },[PostContainer])
+
 
   return (
     <>
-      {PostContainer?.map((item) => (
+      {PostContainer.length ? PostContainer.map((item) => (
         <div
           key={item.id}
-          style={{
-            background:
-              item.img !== "none"
-                ? `url("${imageList.find((it) => it.includes(item.img))}")`
-                : "white",
-          }}
           className={styles.SinglePostBody}
         >
-          <div className={styles.SinglePostContainer}></div>
+          {
+            item.img !== "none"?
+            <div className={styles.SinglePostIMG}>
+            <img src={image} alt="photo"  />
+          </div>:null
+          }
+          {
+            item.desc.length > 0?
+            <div className={styles.SinglePostDesc}>
+            <p>{item.desc}</p>
+          </div>:null
+          }
         </div>
-      ))}
+      )): <div>ERROR</div> }
 
     </>
   );
 };
 
 export default SinglePost;
+

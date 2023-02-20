@@ -451,15 +451,49 @@
 .SinglePostBody {
   width: 100%;
   min-height: 100vh;
-  background-size: cover;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 3em;
+  padding-top: 10vh;
+  
 }
-.SinglePostContainer {
-  min-height: 100vh;
+.SinglePostIMG {
   width: 100%;
-  padding-top: 6vh;
-  backdrop-filter: blur(10px);
-  background-size: cover;
+  height: 100%;
+  max-width: 1000px;
+  max-height: 550px;
+  margin: 0 auto;
+  background-color: white;
+
 }
+
+.SinglePostIMG img{
+  width: 100%;
+  height: 100%;
+  max-height: 550px;
+  max-width: 1000px;
+  box-shadow: 0 0 15px black;
+}
+
+.SinglePostDesc{
+  box-shadow: 0 0 15px grey;
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px ;
+}
+.SinglePostDesc p{
+  text-align: center;
+  font-size: 25px;
+  font-weight: 400;
+  word-wrap: break-word;
+ 
+}
+.SinglePostDesc p::first-letter{
+  text-transform: uppercase;
+}
+
 @media screen and (max-width: 450px) {
   .SearchPanel {
     flex-direction: column;
