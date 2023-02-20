@@ -1,25 +1,73 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React ,{useState,useEffect}from 'react';
+import { db } from "./firebase/firebase-config";
+import { collection, getDocs } from "firebase/firestore";
+import { storage } from "./firebase/firebase-config";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
+import Header from './components/header/header';
+import Footer from './components/footer/footer';
+import Home from './components/body/homeBody';
+import {
+  BrowserRouter, Route, Routes
+} from "react-router-dom";
+import SinglePost from './components/post/singlePost.tsx';
+import LoginPage from './components/user/login';
+
+
+export type PostType = {
+  id: string;
+  postID: string;
+  title: string;
+  desc: string;
+  img: string;
+  date: string;
+  datetime: number;
+};
 
 function App() {
+  const [imageList, setimageList] = useState<Array<string>>([]);
+  const usersCollectionRef = collection(db, "Posts");
+  const imageListRef = ref(storage, "image/");
+  const [Posts, setPosts] = useState<Array<PostType>>([]);
+
+
+  const getPosts = async () => {
+    const data = await getDocs(usersCollectionRef);
+    const PostData: any = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+    setPosts(PostData);
+  };
+  const getImg = async () => {
+    await listAll(imageListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setimageList((prev) => [...prev, url]);
+        });
+      });
+    });
+  };
+
+
+
+  useEffect(() => {
+    getImg();
+    getPosts();
+  }, []);
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+    <Header/>
+    <Routes>
+      <Route path='/' element={<Home Posts={Posts} imageList={imageList} />}/>
+      <Route path='/post/:postID' element={<SinglePost Posts={Posts} imageList={imageList}/>}/>
+      <Route path='/login' element={<LoginPage/>}/>
+    </Routes>
+    <Footer/>
+    </BrowserRouter>
+    
   );
 }
 

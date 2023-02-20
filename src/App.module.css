@@ -1,0 +1,496 @@
+.Header {
+  min-height: 6vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 70%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  z-index: 100;
+}
+
+.Header div:nth-child(1) a {
+  padding-left: 30px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.Header div:nth-child(1) svg {
+  margin-left: 1px;
+  margin-right: 1px;
+}
+.Header div:nth-child(2) {
+  padding-right: 30px;
+  display: flex;
+  gap: 30px;
+}
+.Header div:nth-child(2) button {
+  border-radius: 1em;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: rgb(0, 130, 250);
+  color: white;
+  font-size: 15px;
+}
+.Header div:nth-child(2) button a {
+  text-decoration: none;
+  padding: 5px 20px;
+  border-radius: 1em;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: rgb(0, 130, 250);
+  color: white;
+  font-size: 15px;
+}
+
+.Header div:nth-child(2) button:nth-child(1) {
+  display: none;
+}
+
+.Footer {
+  min-height: 10vh;
+  width: 100%;
+  background-color: grey;
+}
+
+.Home_body {
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  background-color: #dee2e6;
+  position: relative;
+  top: 6vh;
+  padding-top: 30px;
+}
+
+.SearchPanel {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  border: 1px solid silver;
+}
+.SearchBar {
+  padding: 20px 0 20px 0;
+  width: 40%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: auto;
+}
+
+.SearchBar div {
+  width: 80%;
+  background-color: #dee2e6;
+  display: flex;
+  justify-content: center;
+  height: 35px;
+  border-radius: 2em;
+}
+
+.SearchBar div svg {
+  height: 35px;
+  font-size: 30px;
+  padding: 0 5px;
+}
+
+.SearchBar div input {
+  width: 95%;
+  border: none;
+  outline: none;
+  padding-right: 15px;
+  border-top-right-radius: 2em;
+  border-bottom-right-radius: 2em;
+  background-color: #dee2e6;
+}
+
+.SearchButton {
+  padding: 20px 0 20px 0;
+  width: 40%;
+  margin-right: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 30px;
+}
+
+.SearchButton button {
+  width: 20%;
+  min-width: 75px;
+  max-width: 100px;
+  height: 35px;
+  border-radius: 2em;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  font-weight: 500;
+  background-color: #dee2e6;
+}
+
+.SearchButton svg {
+  font-size: 20px;
+}
+
+.PostsPanel {
+  background-color: transparent;
+  min-height: 120vh;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.PostsPanel ul {
+  height: 100%;
+  margin-top: 30px;
+  width: 90%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding-bottom: 50px;
+}
+.PostsPanel li {
+  max-height: 760px;
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid silver;
+}
+
+.PostTop {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px;
+  width: 100%;
+  border-bottom: 1px solid silver;
+  position: relative;
+}
+.PostTop span:nth-child(1) {
+  display: flex;
+  gap: 30px;
+  padding-bottom: 20px;
+}
+.PostTop span:nth-child(2) {
+  position: absolute;
+  right: 10px;
+
+  border: 1px solid silver;
+  padding: 4px 6px;
+  border-radius: 2em;
+}
+.PostTop span a {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.PostContent {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.PostDesc {
+  text-align: center;
+  padding: 20px;
+}
+
+.PostDesc p {
+  overflow: hidden;
+}
+
+.PostContent img {
+  width: auto;
+  max-height: 470px;
+}
+
+.PostBottom {
+  padding: 15px 10px;
+  display: flex;
+  width: 100%;
+  gap: 30px;
+}
+.PostBottom a {
+  text-decoration: none;
+  color: black;
+}
+
+.PostBottom p:nth-child(1) {
+  padding-left: 30px;
+}
+
+.ReadMore {
+  width: 100%;
+  font-size: 14px;
+  text-align: center;
+  padding: 5px 0;
+  cursor: pointer;
+  color: blue;
+  border-bottom: 1px solid silver;
+}
+.ReadMore a {
+  text-decoration: none;
+  color: blue;
+}
+
+.AddPost {
+  min-height: 20vh;
+  background-color: white;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  border: 1px solid silver;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.PostForm {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px;
+}
+
+.PostFormTitleInput {
+  width: 60%;
+  height: 35px;
+  border-radius: 1em;
+  padding: 0 10px;
+  border: 1px solid black;
+  background-color: white;
+  outline-color: black;
+}
+
+.PostForm textarea {
+  width: 60%;
+  height: 100px;
+  border-radius: 0.5em;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.AddPost span {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 50px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.AddPost span button:nth-child(1) {
+  border: 1px solid red;
+  color: red;
+  border-radius: 2em;
+  font-weight: bold;
+  padding: 4px 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.AddPost span button:nth-child(2) {
+  border: 1px solid rgb(0, 130, 250);
+  color: rgb(0, 130, 250);
+  border-radius: 2em;
+  font-weight: bold;
+  padding: 4px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.AddPost span button:nth-child(3) {
+  border: 1px solid green;
+  color: green;
+  border-radius: 2em;
+  font-weight: bold;
+  padding: 4px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.AddPost button:nth-child(1):hover {
+  background-color: red;
+  color: white;
+}
+.AddPost button:nth-child(3):hover {
+  background-color: green;
+  color: white;
+}
+.AddPost button:nth-child(2):hover {
+  background-color: rgb(0, 130, 250);
+  color: white;
+}
+
+.PostForm input[type="file"] {
+  font-weight: bold;
+}
+
+.LoginPage {
+  min-height: 100vh;
+  background-color: white;
+  padding-top: 6vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.LoginPage h2 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  position: relative;
+  top: -50px;
+  font-size: 30px;
+}
+
+.LoginPage form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 0;
+}
+.LoginPage form label {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.LoginPage form input {
+  width: 60%;
+  height: 35px;
+  border-radius: 2em;
+  padding: 0 20px;
+  border: 1px solid black;
+}
+
+.error {
+  color: red;
+}
+
+.logBtn {
+  width: 30%;
+  height: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid rgb(0, 130, 250);
+  color: rgb(0, 130, 250);
+  border-radius: 1em;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.logBtn:hover {
+  background-color: rgb(0, 130, 250);
+  color: white;
+}
+
+.logBtn:active {
+  transform: scale(1.02);
+}
+
+.LoginPage span:nth-child(3) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  gap: 0px;
+  width: 100%;
+}
+
+.LoginPage span:nth-child(3) p {
+  font-size: 20px;
+  font-weight: 500;
+  position: relative;
+  top: 5px;
+}
+
+.NotFound {
+  padding: 20px;
+  font-weight: bold;
+  border-radius: 2em;
+  font-size: 20px;
+  color: red;
+}
+
+.SinglePostBody {
+  width: 100%;
+  min-height: 100vh;
+  background-size: cover;
+}
+.SinglePostContainer {
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 6vh;
+  backdrop-filter: blur(10px);
+  background-size: cover;
+}
+@media screen and (max-width: 450px) {
+  .SearchPanel {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .SearchBar {
+    width: 90%;
+    padding: 20px 0px 10px 0px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  .SearchButton {
+    justify-content: center;
+    margin: 0 auto;
+  }
+  .Header div:nth-child(1) {
+    font-size: 14px;
+    padding: 0px 0px 0px 10px;
+  }
+  .Header div:nth-child(2) {
+    gap: 10px;
+    padding: 0px 10px 0px 0px;
+  }
+  .Header div:nth-child(2) button {
+    font-size: 12px;
+  }
+  .LoginPage span:nth-child(3) p {
+    font-size: 5vw;
+  }
+  .AddPost span {
+    gap: 10px;
+  }
+}
