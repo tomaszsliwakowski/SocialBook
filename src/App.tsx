@@ -21,6 +21,7 @@ export type PostType = {
   img: string;
   date: string;
   datetime: number;
+  like:number
 };
 
 function App() {

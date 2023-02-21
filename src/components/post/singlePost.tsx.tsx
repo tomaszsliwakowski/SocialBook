@@ -45,10 +45,10 @@ const SinglePost = ({Posts,imageList}:postProps) => {
           }
           <div className={styles.SinglePostCom}>
             <div className={styles.SinglePostAddCom}>
-            <textarea></textarea>
+            <textarea placeholder="Write Comment..." ></textarea>
             <span>
             <button>Add Comment</button>
-            <button className={styles.SinglePostAddLike} >Like</button>
+            <button className={styles.SinglePostAddLike}>{"Like" + " " +`${item.like}`}</button>
             </span>
             </div >
               <ul className={styles.SinglePostShowCom}>
@@ -56,7 +56,7 @@ const SinglePost = ({Posts,imageList}:postProps) => {
                 <div className={styles.com_user}>
                       <span>
                         <BiUserCircle />
-                        T0K3M
+                        user
                       </span>
                       <p className={styles.com_date}>21.02.2023</p>
                         <AiOutlineDelete className={styles.com_svg} />

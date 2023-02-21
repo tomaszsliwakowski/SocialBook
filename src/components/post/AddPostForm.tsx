@@ -55,6 +55,7 @@ const AddPostForm = () => {
         img: `${img.name ? img.name + "_" + uid : "none"}`,
         date: date.toLocaleString(),
         datetime: DateTime,
+        like: 0,
       });
       if (img.name) {
         await uploadBytes(imageref, img);
