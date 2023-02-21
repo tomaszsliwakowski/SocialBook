@@ -478,7 +478,8 @@
 }
 
 .SinglePostDesc{
-  box-shadow: 0 0 15px grey;
+  border-top: 1px solid silver;
+  border-bottom: 1px solid silver;
   width: 100%;
   max-width: 1000px;
   padding: 20px ;
@@ -493,7 +494,124 @@
 .SinglePostDesc p::first-letter{
   text-transform: uppercase;
 }
+.SinglePostTitle p{
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow:  1px 1px 1px black;
+  font-size: 25px;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+.SinglePostCom{
+  width: 100%;
+   max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.SinglePostAddCom{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-bottom: 1px solid silver;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 
+
+}
+.SinglePostAddCom textarea{
+  width: 60%;
+  height: 80px;
+  border-radius: 1em;
+  
+}
+.SinglePostAddCom span{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+padding-top: 30px;
+}
+.SinglePostAddCom span button:nth-child(1){
+  width: 35%;
+  height: 30px;
+  border-radius: 1em;
+  border: 1px solid green;
+  color: green;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: white;
+}
+.SinglePostAddCom span button:nth-child(1):hover{
+background-color: green;
+color: white;
+}
+.SinglePostAddLike{
+  width: 20%;
+  height: 30px;
+  border-radius: 1em;
+  border: 1px solid rgb(0, 130, 250);
+  font-weight: bold;
+  color: rgb(0, 130, 250);
+  cursor: pointer;
+  background-color: white;
+}
+.SinglePostAddLike.active{
+  background-color: rgb(0, 130, 250);
+  color: white;
+}
+.SinglePostAddLike:hover{
+  background-color: rgb(0, 130, 250);
+  color: white;
+}
+
+.SinglePostShowCom{
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  list-style: none;
+}
+.SinglePostShowCom li{
+  width: 80%;
+  border: 1px solid silver;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1em;
+
+}
+.SinglePostShowCom li:last-child{
+  margin-bottom: 50px;
+}
+.com_user{
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+ 
+}
+.com_svg{
+position: absolute;
+right: 0;
+}
+.com_user span{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.com_date{
+  margin-left: 20px;
+}
+.com_text{
+  padding: 20px 0px 10px 0px;
+}
 @media screen and (max-width: 450px) {
   .SearchPanel {
     flex-direction: column;
