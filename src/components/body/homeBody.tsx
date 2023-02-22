@@ -6,19 +6,15 @@ import { MdOutlineNewReleases } from "react-icons/md";
 import { AiOutlineStar, AiOutlineSearch } from "react-icons/ai";
 import AddPostForm from "../post/AddPostForm";
 import Post from "../post/post";
-import { PostType } from "../../App";
+
 
 export type BtnSortType = {
   new: boolean;
   like: boolean;
 };
 
-export type postProps ={
-  Posts: Array<PostType>
-  imageList :Array<string>
-}
 
-export default function Home({Posts,imageList}:postProps) {
+export default function Home() {
   const [search, setsearch] = useState<string>("");
   const [BtnSortPost, setBtnSortPost] = useState<BtnSortType>({
     new: true,
@@ -103,7 +99,7 @@ export default function Home({Posts,imageList}:postProps) {
         </div>
         <div className={styles.PostsPanel}>
           <ul>
-            <Post searchPost={search} BtnSortPost={BtnSortPost} Posts={Posts} imageList ={imageList}  />
+            <Post searchPost={search} BtnSortPost={BtnSortPost}   />
           </ul>
         </div>
       </div>

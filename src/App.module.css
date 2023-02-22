@@ -235,8 +235,8 @@
   color: black;
 }
 
-.PostBottom p:nth-child(1) {
-  padding-left: 30px;
+.PostBottom button:nth-child(1) {
+  margin-left: 30px;
 }
 
 .ReadMore {
@@ -561,9 +561,15 @@ color: white;
   cursor: pointer;
   background-color: white;
 }
-.SinglePostAddLike.active{
+.SinglePostAddLikeactive{
+  width: 20%;
+  height: 30px;
+  border-radius: 1em;
   background-color: rgb(0, 130, 250);
   color: white;
+  border: 1px solid rgb(0, 130, 250);
+  cursor: pointer;
+  font-weight: bold;
 }
 .SinglePostAddLike:hover{
   background-color: rgb(0, 130, 250);
@@ -646,4 +652,21 @@ right: 0;
   .AddPost span {
     gap: 10px;
   }
+ 
+
+}
+
+@media screen and (max-width:600px){
+  .SinglePostAddCom span button:nth-child(1){
+    width: 50%;
+  }
+  .SinglePostAddCom span{
+    width: 80%;
+  }
+  .SinglePostAddLikeactive{
+    width: 40%;
+  }
+  .SinglePostAddLike{
+    width: 40%;
+  }  
 }

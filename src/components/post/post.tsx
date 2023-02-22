@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../App.module.css";
-import { db } from "../../firebase/firebase-config";
-import { collection, getDocs } from "firebase/firestore";
-import { storage } from "../../firebase/firebase-config";
-import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { BsDoorOpen } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { BtnSortType } from "../body/homeBody";
+import { db } from "../../firebase/firebase-config";
+import { collection, getDocs ,doc, updateDoc } from "firebase/firestore";
+import { storage } from "../../firebase/firebase-config";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
 
 export type PostType = {
   id: string;
@@ -16,18 +16,43 @@ export type PostType = {
   img: string;
   date: string;
   datetime: number;
-  like: number;
+  like: Array<string>,
+  com: string,
+  user: string
 };
 
 type props = {
   searchPost: string;
   BtnSortPost: BtnSortType;
-  Posts: Array<PostType>
-  imageList:Array<string>
+
 };
 
-const Post = ({ searchPost, BtnSortPost,Posts,imageList }: props) => {
+const Post = ({ searchPost, BtnSortPost }: props) => {
   const [showPost, setshowPost] = useState<Array<PostType>>([]);
+  const [imageList, setimageList] = useState<Array<string>>([]);
+  const usersCollectionRef = collection(db, "Posts");
+  const imageListRef = ref(storage, "image/");
+  const [Posts, setPosts] = useState<Array<PostType>>([]);
+
+
+  const getPosts = async () => {
+    const data = await getDocs(usersCollectionRef);
+    const PostData: any = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+    setPosts(PostData);
+  };
+  const getImg = async () => {
+    await listAll(imageListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setimageList((prev) => [...prev, url]);
+        });
+      });
+    });
+  };
+
   function sortPostNew(a: PostType, b: PostType) {
     return b.datetime - a.datetime;
   }
@@ -47,10 +72,29 @@ const Post = ({ searchPost, BtnSortPost,Posts,imageList }: props) => {
     }
   };
 
+  useEffect(() => {
+    getImg();
+    getPosts();
+  }, []);
+
 
   useEffect(() => {
     SortPost();
   }, [searchPost, BtnSortPost, Posts]);
+
+  const AddLike = async(post:PostType) =>{
+    if(post.like.indexOf("user") === -1){
+      const postDoc = doc(db,"Posts",post.id)
+      const newField = {like: post.like.concat("user")}
+      await updateDoc(postDoc,newField)
+      await getPosts()
+    }else{
+      const postDoc = doc(db,"Posts",post.id)
+      const newField = {like: post.like.filter((it)=> it !== "user")}
+      await updateDoc(postDoc,newField)
+      await getPosts()
+    }
+   }
 
   return (
     <>
@@ -91,9 +135,9 @@ const Post = ({ searchPost, BtnSortPost,Posts,imageList }: props) => {
             </span>
             <div className={styles.PostBottom}>
               <Link to={`/post/${post.id}`}>
-                <p>Comments</p>
+                <button>Comments</button>
               </Link>
-              <p>LIKE</p>
+             <button onClick={()=> AddLike(post)} className={post.like.indexOf("user") !== -1 ? styles.PostAddLikeactive : styles.PostAddLike } >LIKE {post.like.length}</button>
             </div>
           </li>
         ))

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styles from "../../App.module.css";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebase-config";
+import { db} from "../../firebase/firebase-config";
 import { storage } from "../../firebase/firebase-config";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref , uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
+
 
 type Inputs = {
   title: string;
@@ -55,8 +56,11 @@ const AddPostForm = () => {
         img: `${img.name ? img.name + "_" + uid : "none"}`,
         date: date.toLocaleString(),
         datetime: DateTime,
-        like: 0,
+        like: [],
+        com: "",
+        user:""
       });
+     
       if (img.name) {
         await uploadBytes(imageref, img);
       }
