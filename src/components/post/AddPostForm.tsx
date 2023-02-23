@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../App.module.css";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc,getDocs } from "firebase/firestore";
 import { db} from "../../firebase/firebase-config";
 import { storage } from "../../firebase/firebase-config";
 import { ref , uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
-
+import { UserType } from "./post";
+import {  onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase/firebase-config";
 
 type Inputs = {
   title: string;
@@ -19,10 +21,18 @@ type File = {
 };
 
 const AddPostForm = () => {
+  const UsersCollectionRef = collection(db, "Users");
   const PostCollectionRef = collection(db, "Posts");
   const [FormInput, setFormInput] = useState<Inputs>({
     title: "",
     description: "",
+  });
+  const [user, setuser] = useState<UserType>({
+    email: "",
+    id:"",
+    password:"",
+    userID:"",
+    username:""
   });
   const [img, setimg] = useState<any>({});
   const HandleInput = (
@@ -57,8 +67,8 @@ const AddPostForm = () => {
         date: date.toLocaleString(),
         datetime: DateTime,
         like: [],
-        com: "",
-        user:""
+        com: [],
+        user: `${user.username}`
       });
      
       if (img.name) {
@@ -66,6 +76,24 @@ const AddPostForm = () => {
       }
     }
   };
+
+  const getUser = async (Userid:string)=>{
+    const UsersData = await getDocs(UsersCollectionRef);
+    const Users: any = UsersData.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    })); 
+    const UserObj = Users.filter((item:UserType)=> item.userID === Userid)
+    setuser(UserObj[0]);
+  }
+
+  useEffect(()=>{
+    onAuthStateChanged(auth, (currentUser) => {
+      if(currentUser?.email){
+       getUser(currentUser.uid)
+      }
+    })
+  },[])
 
   return (
     <>

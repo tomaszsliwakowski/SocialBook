@@ -7,7 +7,7 @@ import { db } from "../../firebase/firebase-config";
 import { collection, getDocs ,doc, updateDoc } from "firebase/firestore";
 import { storage } from "../../firebase/firebase-config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
-import { User, onAuthStateChanged } from "firebase/auth";
+import {  onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 
 export type PostType = {
@@ -19,7 +19,7 @@ export type PostType = {
   date: string;
   datetime: number;
   like: Array<string>,
-  com: string,
+  com: Array<ComType>
   user: string
 };
 
@@ -36,6 +36,12 @@ type props = {
   BtnSortPost: BtnSortType;
 
 };
+
+export type ComType = {
+  user:string,
+  date:string,
+  comment:string
+}
 
 
 const Post = ({ searchPost, BtnSortPost }: props) => {
@@ -128,6 +134,7 @@ const Post = ({ searchPost, BtnSortPost }: props) => {
       await getPosts()
     }
    }
+
 
   return (
     <>

@@ -31,6 +31,7 @@ const SinglePost = () => {
     userID:"",
     username:""
   });
+  const [ComInput,setComInput] = useState<string>("")
 
   const getPosts = async () => {
     const data = await getDocs(PostCollectionRef);
@@ -93,6 +94,18 @@ const SinglePost = () => {
   }
  }
 
+ const AddComment = async (item:PostType) =>{
+  const postDoc = doc(db,"Posts",item.id)
+    const newField = {com: item.com.concat({
+      user:user.username,
+      date: new Date().toLocaleString(),
+      comment: ComInput
+    })}
+    await updateDoc(postDoc,newField)
+    await getPosts()
+    setComInput("")
+ }
+
 
   return (
     <>
@@ -118,26 +131,28 @@ const SinglePost = () => {
           }
           <div className={styles.SinglePostCom}>
             <div className={styles.SinglePostAddCom}>
-            <textarea placeholder="Write Comment..."  disabled={user.email ? false : true}></textarea>
+            <textarea placeholder="Write Comment..." value={ComInput} onChange={(e:React.ChangeEvent<HTMLTextAreaElement>)=> setComInput(e.target.value)} disabled={user.email ? false : true}></textarea>
             <span>
-            <button disabled={user.email ? false : true}>Add Comment</button>
+            <button disabled={user.email ? false : true} onClick={()=> AddComment(item)} >Add Comment</button>
             <button  disabled={user.email ? false : true} onClick={()=> AddLike(item)} className={item.like.indexOf(user.email) !== -1 ? styles.SinglePostAddLikeactive : styles.SinglePostAddLike }>{"Like" + " " +`${item.like.length}`}</button>
             </span>
             </div >
               <ul className={styles.SinglePostShowCom}>
-                <li>
-                <div className={styles.com_user}>
-                      <span>
-                        <BiUserCircle />
-                        {item.user}
-                      </span>
-                      <p className={styles.com_date}>21.02.2023</p>
-                        <AiOutlineDelete className={styles.com_svg} />
-                    </div>
-                    <div className={styles.com_text}>
-                     {item.com}
-                    </div>
-                </li>
+                {item.com.length ? item.com.map((el,id)=>(
+                  <li key={id}>
+                  <div className={styles.com_user}>
+                        <span>
+                          <BiUserCircle />
+                          {el.user}
+                        </span>
+                        <p className={styles.com_date}>{el.date}</p>
+                          <AiOutlineDelete className={styles.com_svg} />
+                      </div>
+                      <div className={styles.com_text}>
+                      {el.comment}
+                      </div>
+                  </li>
+                )):null}
               </ul> 
           </div>
         </div>
