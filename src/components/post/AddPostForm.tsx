@@ -19,7 +19,7 @@ type File = {
 };
 
 const AddPostForm = () => {
-  const usersCollectionRef = collection(db, "Posts");
+  const PostCollectionRef = collection(db, "Posts");
   const [FormInput, setFormInput] = useState<Inputs>({
     title: "",
     description: "",
@@ -49,7 +49,7 @@ const AddPostForm = () => {
       const DateTime: number = date.getTime();
       const uid:string = uuidv4();
       const imageref = ref(storage, `image/${img?.name + "_" + uid}`);
-      await addDoc(usersCollectionRef, {
+      await addDoc(PostCollectionRef, {
         postID: uid,
         title: FormInput.title,
         desc: FormInput.description,

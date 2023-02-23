@@ -4,6 +4,7 @@ import styles from "../../App.module.css";
 import { useForm } from "react-hook-form";
 import { signInWithEmailAndPassword} from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
+import { Link } from "react-router-dom";
 
 
 type Inputs = {
@@ -71,7 +72,7 @@ const LoginPage = () => {
         </form>
         <span>
           <p>You don't have an account, please register</p>
-          <button className={styles.logBtn}>Register</button>
+          <Link to="/register" className={styles.logBtn}>Register</Link>
         </span>
       </div>
     </>

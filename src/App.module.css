@@ -1,7 +1,7 @@
 .Header {
   min-height: 6vh;
   width: 100vw;
-  background-color: rgba(0, 0, 0, 70%);
+  background-color: rgba(0, 0, 0, 60%);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -377,7 +377,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: transparent;
   flex-direction: column;
   gap: 20px;
   padding: 20px 0;
@@ -413,6 +413,8 @@
   border-radius: 1em;
   cursor: pointer;
   margin-top: 20px;
+  text-decoration: none;
+  text-align: center;
 }
 .logBtn:hover {
   background-color: rgb(0, 130, 250);

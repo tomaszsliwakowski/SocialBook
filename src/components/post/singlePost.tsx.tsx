@@ -8,21 +8,32 @@ import { db} from "../../firebase/firebase-config";
 import { PostType } from "./post";
 import { storage } from "../../firebase/firebase-config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
+import { UserType } from "./post";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase/firebase-config";
 
 type ParamsID = {
   postID :string
 }
 
 const SinglePost = () => {
-  const usersCollectionRef = collection(db, "Posts");
+  const PostCollectionRef = collection(db, "Posts");
+  const UsersCollectionRef = collection(db, "Users");
   let { postID } = useParams<ParamsID>();
   const [image,setimage] = useState<string>("white")
   const [imageList, setimageList] = useState<Array<string>>([]);
   const imageListRef = ref(storage, "image/");
   const [Posts, setPosts] = useState<Array<PostType>>([]);
+  const [user, setuser] = useState<UserType>({
+    email: "",
+    id:"",
+    password:"",
+    userID:"",
+    username:""
+  });
 
   const getPosts = async () => {
-    const data = await getDocs(usersCollectionRef);
+    const data = await getDocs(PostCollectionRef);
     const PostData: any = data.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
@@ -39,9 +50,24 @@ const SinglePost = () => {
     });
   };
 
+  const getUser = async (Userid:string)=>{
+    const UsersData = await getDocs(UsersCollectionRef);
+    const Users: any = UsersData.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    })); 
+    const UserObj = Users.filter((item:UserType)=> item.userID === Userid)
+    setuser(UserObj[0]);
+  }
+
   useEffect(() => {
     getImg();
     getPosts();
+    onAuthStateChanged(auth, (currentUser) => {
+      if(currentUser?.email){
+       getUser(currentUser.uid)
+      }
+    })
   }, []);
 
   const PostContainer: PostType[] = Posts.filter((item) => item.id === postID);
@@ -54,14 +80,14 @@ const SinglePost = () => {
  },[PostContainer,Posts,imageList])
 
  const AddLike = async(item:PostType) =>{
-  if(item.like.indexOf("user") === -1){
+  if(item.like.indexOf(user.email) === -1){
     const postDoc = doc(db,"Posts",item.id)
-    const newField = {like: item.like.concat("user")}
+    const newField = {like: item.like.concat(user.email)}
     await updateDoc(postDoc,newField)
     await getPosts()
   }else{
     const postDoc = doc(db,"Posts",item.id)
-    const newField = {like: item.like.filter((it)=> it !== "user")}
+    const newField = {like: item.like.filter((it)=> it !== user.email)}
     await updateDoc(postDoc,newField)
     await getPosts()
   }
@@ -92,10 +118,10 @@ const SinglePost = () => {
           }
           <div className={styles.SinglePostCom}>
             <div className={styles.SinglePostAddCom}>
-            <textarea placeholder="Write Comment..." ></textarea>
+            <textarea placeholder="Write Comment..."  disabled={user.email ? false : true}></textarea>
             <span>
-            <button>Add Comment</button>
-            <button  onClick={()=> AddLike(item)} className={item.like.indexOf("user") !== -1 ? styles.SinglePostAddLikeactive : styles.SinglePostAddLike }>{"Like" + " " +`${item.like.length}`}</button>
+            <button disabled={user.email ? false : true}>Add Comment</button>
+            <button  disabled={user.email ? false : true} onClick={()=> AddLike(item)} className={item.like.indexOf(user.email) !== -1 ? styles.SinglePostAddLikeactive : styles.SinglePostAddLike }>{"Like" + " " +`${item.like.length}`}</button>
             </span>
             </div >
               <ul className={styles.SinglePostShowCom}>

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import SinglePost from './components/post/singlePost.tsx';
 import LoginPage from './components/user/login';
+import RegisterPage from './components/user/register';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Route path='/' element={<Home />}/>
       <Route path='/post/:postID' element={<SinglePost/>}/>
       <Route path='/login' element={<LoginPage/>}/>
+      <Route path='/register' element={<RegisterPage/>}/>
     </Routes>
     <Footer/>
     </BrowserRouter>

@@ -7,6 +7,8 @@ import { db } from "../../firebase/firebase-config";
 import { collection, getDocs ,doc, updateDoc } from "firebase/firestore";
 import { storage } from "../../firebase/firebase-config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
+import { User, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase/firebase-config";
 
 export type PostType = {
   id: string;
@@ -21,22 +23,39 @@ export type PostType = {
   user: string
 };
 
+export type UserType ={
+  email: string,
+  id:string,
+  password:string,
+  userID:string,
+  username:string
+}
+
 type props = {
   searchPost: string;
   BtnSortPost: BtnSortType;
 
 };
 
+
 const Post = ({ searchPost, BtnSortPost }: props) => {
   const [showPost, setshowPost] = useState<Array<PostType>>([]);
   const [imageList, setimageList] = useState<Array<string>>([]);
-  const usersCollectionRef = collection(db, "Posts");
+  const PostCollectionRef = collection(db, "Posts");
+  const UsersCollectionRef = collection(db, "Users");
   const imageListRef = ref(storage, "image/");
   const [Posts, setPosts] = useState<Array<PostType>>([]);
-
+  const [user, setuser] = useState<UserType>({
+    email: "",
+    id:"",
+    password:"",
+    userID:"",
+    username:""
+  });
+ 
 
   const getPosts = async () => {
-    const data = await getDocs(usersCollectionRef);
+    const data = await getDocs(PostCollectionRef);
     const PostData: any = data.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
@@ -75,22 +94,36 @@ const Post = ({ searchPost, BtnSortPost }: props) => {
   useEffect(() => {
     getImg();
     getPosts();
+    onAuthStateChanged(auth, (currentUser) => {
+     if(currentUser?.email){
+      getUser(currentUser.uid)
+     }
+   })
   }, []);
-
+  
+  const getUser = async (Userid:string)=>{
+    const UsersData = await getDocs(UsersCollectionRef);
+    const Users: any = UsersData.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    })); 
+    const UserObj = Users.filter((item:UserType)=> item.userID === Userid)
+    setuser(UserObj[0]);
+  }
 
   useEffect(() => {
     SortPost();
   }, [searchPost, BtnSortPost, Posts]);
 
   const AddLike = async(post:PostType) =>{
-    if(post.like.indexOf("user") === -1){
+    if(post.like.indexOf(user.email) === -1 ){
       const postDoc = doc(db,"Posts",post.id)
-      const newField = {like: post.like.concat("user")}
+      const newField = {like: post.like.concat(user.email)}
       await updateDoc(postDoc,newField)
       await getPosts()
     }else{
       const postDoc = doc(db,"Posts",post.id)
-      const newField = {like: post.like.filter((it)=> it !== "user")}
+      const newField = {like: post.like.filter((it)=> it !== user.email)}
       await updateDoc(postDoc,newField)
       await getPosts()
     }
@@ -137,7 +170,7 @@ const Post = ({ searchPost, BtnSortPost }: props) => {
               <Link to={`/post/${post.id}`}>
                 <button>Comments</button>
               </Link>
-             <button onClick={()=> AddLike(post)} className={post.like.indexOf("user") !== -1 ? styles.PostAddLikeactive : styles.PostAddLike } >LIKE {post.like.length}</button>
+              <button disabled={user.email ? false : true}  onClick={()=> AddLike(post)} className={post.like.indexOf("user") !== -1 ? styles.PostAddLikeactive : styles.PostAddLike } >LIKE {post.like.length}</button>
             </div>
           </li>
         ))
