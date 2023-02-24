@@ -17,6 +17,7 @@ const Header = () => {
     await signOut(auth);
   };
 
+
   return (
     <div className={styles.Header}>
       <div>
@@ -27,7 +28,6 @@ const Header = () => {
         </a>
       </div>
       <div>
-        <button>Add Post</button>
         {user ? (
           <button onClick={logout}>
             <a href="">Logout</a>

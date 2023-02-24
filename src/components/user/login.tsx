@@ -1,5 +1,5 @@
-import React from "react";
-
+import React,{useState} from "react";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import styles from "../../App.module.css";
 import { useForm } from "react-hook-form";
 import { signInWithEmailAndPassword} from "firebase/auth";
@@ -13,6 +13,8 @@ type Inputs = {
 };
 
 const LoginPage = () => {
+  const [logFail,setlogFail] = useState<boolean>(false)
+  const naviagte:NavigateFunction = useNavigate()
   const {
     handleSubmit,
     register,
@@ -29,8 +31,11 @@ const LoginPage = () => {
         values.email,
         values.password
       );
+      setlogFail(false)
+      naviagte("/")
     } catch (error: any) {
       console.log(error.message);
+      setlogFail(true)
     }
   };
   return (
@@ -38,6 +43,7 @@ const LoginPage = () => {
       <div className={styles.LoginPage}>
         <h2>Login</h2>
         <form onSubmit={handleSubmit(onSubmitt)}>
+        { logFail ? <p className={styles.LogFail} >Email or password is incorrect</p>: null }
           <label>
             <input
               type="email"

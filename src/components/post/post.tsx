@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../App.module.css";
-import { BsDoorOpen } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { BtnSortType } from "../body/homeBody";
 import { db } from "../../firebase/firebase-config";
@@ -40,6 +39,7 @@ type props = {
 export type ComType = {
   user:string,
   date:string,
+  datetime:number
   comment:string
 }
 
@@ -81,11 +81,15 @@ const Post = ({ searchPost, BtnSortPost }: props) => {
   function sortPostNew(a: PostType, b: PostType) {
     return b.datetime - a.datetime;
   }
+  function sortPostLike(a: PostType, b: PostType) {
+    return b.like.length - a.like.length;
+  }
+
   const SortPost = () => {
-    if (BtnSortPost.new) {
+    if (!BtnSortPost.new && searchPost === "") {
       setshowPost(Posts.sort(sortPostNew));
-    } else if (BtnSortPost.like) {
-      return;
+    } else if (!BtnSortPost.like && searchPost === "") {
+      setshowPost(Posts.sort(sortPostLike))
     } else if (searchPost !== "") {
       setshowPost(
         Posts.filter((item) =>
@@ -143,13 +147,13 @@ const Post = ({ searchPost, BtnSortPost }: props) => {
           <li key={id}>
             <div className={styles.PostTop}>
               <span>
-                <p>T0k3M</p>
+                <p>{post.user}</p>
                 <p>{post.date}</p>
               </span>
               <span className={styles.PostOpen}>
                 <Link to={`/post/${post.id}`}>
                   Open
-                  <BsDoorOpen />
+                  
                 </Link>
               </span>
 

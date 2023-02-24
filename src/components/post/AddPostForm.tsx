@@ -19,8 +19,11 @@ type File = {
   size: number;
   type: string;
 };
+type propsType ={
+  closepanel: Function
+}
 
-const AddPostForm = () => {
+const AddPostForm = (props :propsType) => {
   const UsersCollectionRef = collection(db, "Users");
   const PostCollectionRef = collection(db, "Posts");
   const [FormInput, setFormInput] = useState<Inputs>({
@@ -77,6 +80,7 @@ const AddPostForm = () => {
     }
   };
 
+
   const getUser = async (Userid:string)=>{
     const UsersData = await getDocs(UsersCollectionRef);
     const Users: any = UsersData.docs.map((doc) => ({
@@ -123,7 +127,7 @@ const AddPostForm = () => {
         />
 
         <span className={styles.PostFormButtonPanel}>
-          <button>Cancel</button>
+          <button onClick={()=>props.closepanel(false)} >Cancel</button>
           <button
             type="reset"
             onClick={() =>

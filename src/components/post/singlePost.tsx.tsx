@@ -5,7 +5,7 @@ import {AiOutlineDelete} from "react-icons/ai"
 import {BiUserCircle} from "react-icons/bi"
 import { collection ,updateDoc ,doc,getDocs} from "firebase/firestore";
 import { db} from "../../firebase/firebase-config";
-import { PostType } from "./post";
+import { ComType, PostType } from "./post";
 import { storage } from "../../firebase/firebase-config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { UserType } from "./post";
@@ -95,18 +95,26 @@ const SinglePost = () => {
  }
 
  const AddComment = async (item:PostType) =>{
+  if(ComInput !== ""){
+  const date: Date = new Date();
+  const DateTime: number = date.getTime();
   const postDoc = doc(db,"Posts",item.id)
     const newField = {com: item.com.concat({
       user:user.username,
-      date: new Date().toLocaleString(),
+      date: date.toLocaleString(),
+      datetime: DateTime,
       comment: ComInput
     })}
-    await updateDoc(postDoc,newField)
+    const updatefield = {com: newField.com.sort(sortCom)}
+   await updateDoc(postDoc,updatefield)
     await getPosts()
-    setComInput("")
+   setComInput("")
+}
  }
 
-
+ function sortCom(a: ComType, b: ComType) {
+  return b.datetime - a.datetime ;
+}
   return (
     <>
       {PostContainer.length ? PostContainer.map((item) => (
@@ -137,7 +145,7 @@ const SinglePost = () => {
             <button  disabled={user.email ? false : true} onClick={()=> AddLike(item)} className={item.like.indexOf(user.email) !== -1 ? styles.SinglePostAddLikeactive : styles.SinglePostAddLike }>{"Like" + " " +`${item.like.length}`}</button>
             </span>
             </div >
-              <ul className={styles.SinglePostShowCom}>
+              <ul className={styles.SinglePostShowCom} >
                 {item.com.length ? item.com.map((el,id)=>(
                   <li key={id}>
                   <div className={styles.com_user}>

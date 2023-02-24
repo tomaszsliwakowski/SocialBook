@@ -47,9 +47,7 @@
   font-size: 15px;
 }
 
-.Header div:nth-child(2) button:nth-child(1) {
-  display: none;
-}
+
 
 .Footer {
   min-height: 10vh;
@@ -65,6 +63,26 @@
   position: relative;
   top: 6vh;
   padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.HomeAddPost{
+  width: 100%;
+  max-width: 150px;
+  height: 25px;
+  border-radius: 1em;
+  border: 2px solid rgb(0, 130, 250);
+  font-weight: bold;
+  background-color: rgb(0, 130, 250);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.HomeAddPost:hover , .HomeAddPost:active{
+ transform: scale(1.02);
+
 }
 
 .SearchPanel {
@@ -254,12 +272,26 @@
 }
 
 .AddPost {
-  min-height: 20vh;
+  min-height: 5vh;
   background-color: white;
   width: 100%;
   max-width: 700px;
   margin: 0 auto;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
+  border: 1px solid silver;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.AddPostPanel {
+  min-height: 5vh;
+  background-color: white;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 10px;
   border: 1px solid silver;
   position: relative;
   display: flex;
@@ -297,7 +329,7 @@
   border: 1px solid black;
 }
 
-.AddPost span {
+.AddPostPanel span {
   display: flex;
   width: 100%;
   justify-content: center;
@@ -306,7 +338,7 @@
   margin-top: 10px;
 }
 
-.AddPost span button:nth-child(1) {
+.AddPostPanel span button:nth-child(1) {
   border: 1px solid red;
   color: red;
   border-radius: 2em;
@@ -315,8 +347,9 @@
   text-align: center;
   cursor: pointer;
   transition: all 0.3s;
+  background-color: white;
 }
-.AddPost span button:nth-child(2) {
+.AddPostPanel span button:nth-child(2) {
   border: 1px solid rgb(0, 130, 250);
   color: rgb(0, 130, 250);
   border-radius: 2em;
@@ -325,8 +358,9 @@
   text-align: center;
   cursor: pointer;
   transition: all 0.3s;
+  background-color: white;
 }
-.AddPost span button:nth-child(3) {
+.AddPostPanel span button:nth-child(3) {
   border: 1px solid green;
   color: green;
   border-radius: 2em;
@@ -335,17 +369,18 @@
   text-align: center;
   cursor: pointer;
   transition: all 0.3s;
+  background-color: white;
 }
 
-.AddPost button:nth-child(1):hover {
+.AddPostPanel button:nth-child(1):hover {
   background-color: red;
   color: white;
 }
-.AddPost button:nth-child(3):hover {
+.AddPostPanel button:nth-child(3):hover {
   background-color: green;
   color: white;
 }
-.AddPost button:nth-child(2):hover {
+.AddPostPanel button:nth-child(2):hover {
   background-color: rgb(0, 130, 250);
   color: white;
 }
@@ -381,6 +416,7 @@
   flex-direction: column;
   gap: 20px;
   padding: 20px 0;
+  max-width: 800px;
 }
 .LoginPage form label {
   width: 100%;
@@ -415,6 +451,7 @@
   margin-top: 20px;
   text-decoration: none;
   text-align: center;
+  background-color: white;
 }
 .logBtn:hover {
   background-color: rgb(0, 130, 250);
@@ -425,6 +462,10 @@
   transform: scale(1.02);
 }
 
+.LogFail{
+  color: red;
+}
+
 .LoginPage span:nth-child(3) {
   display: flex;
   flex-direction: column;
@@ -433,6 +474,7 @@
   padding-top: 50px;
   gap: 0px;
   width: 100%;
+  max-width: 800px;
 }
 
 .LoginPage span:nth-child(3) p {
@@ -651,10 +693,12 @@ right: 0;
   .LoginPage span:nth-child(3) p {
     font-size: 5vw;
   }
-  .AddPost span {
+  .AddPostPanel span {
     gap: 10px;
   }
- 
+.Header div:nth-child(1) a {
+ padding-left: 5px;
+} 
 
 }
 

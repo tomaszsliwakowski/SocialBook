@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from "react";
 import styles from "../../App.module.css";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { createUserWithEmailAndPassword} from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
@@ -15,6 +16,7 @@ type Inputs = {
 };
 
 const RegisterPage = () => {
+  const naviagte:NavigateFunction = useNavigate()
     const [user, setuser] = useState<Array<UserType>>([]);
     const UsersCollectionRef = collection(db, "Users");
   const {
@@ -65,8 +67,11 @@ const RegisterPage = () => {
                         password:""
                     })
                     alert("Wellcome new User create successfully")
+                    naviagte('/')
+                   
                     } catch (error:any){
                         console.log(error.message)
+                        
                     }
                 }
               )

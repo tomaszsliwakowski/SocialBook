@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import styles from "../../App.module.css";
 import Header from "../header/header";
 import Footer from "../footer/footer";
@@ -6,7 +6,8 @@ import { MdOutlineNewReleases } from "react-icons/md";
 import { AiOutlineStar, AiOutlineSearch } from "react-icons/ai";
 import AddPostForm from "../post/AddPostForm";
 import Post from "../post/post";
-
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase/firebase-config";
 
 export type BtnSortType = {
   new: boolean;
@@ -16,10 +17,19 @@ export type BtnSortType = {
 
 export default function Home() {
   const [search, setsearch] = useState<string>("");
+  const [showpanel,setshowpanel] = useState(false)
   const [BtnSortPost, setBtnSortPost] = useState<BtnSortType>({
     new: true,
     like: false,
   });
+  const [user, setuser] = useState<string | null | undefined>("");
+ 
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setuser(currentUser?.email);
+    });
+  }, []);
+
   const HandlerBtnSort = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -58,13 +68,20 @@ export default function Home() {
     }
   };
 
+  const getClosePanel  =(closeinfo:boolean)=>{
+    setshowpanel(closeinfo)
+  }
+
   return (
     <>
       <Header />
       <div className={styles.Home_body}>
-        <div className={styles.AddPost}>
-          <AddPostForm />
-        </div>
+       {user !== "" && user !== undefined ? showpanel ?  <div className={styles.AddPostPanel}>
+           <AddPostForm closepanel={getClosePanel} />
+        </div> :<div className={styles.AddPost}>
+       <button className={styles.HomeAddPost}  onClick={()=>setshowpanel(prev => !prev)} >Add Post</button>
+     </div>: null   
+        }
         <div className={styles.SearchPanel}>
           <div className={styles.SearchBar}>
             <div>
