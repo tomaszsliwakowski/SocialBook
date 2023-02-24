@@ -8,7 +8,9 @@ import { storage } from "../../firebase/firebase-config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import {  onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
-
+import {AiFillLike} from "react-icons/ai"
+import {FaCommentDots} from "react-icons/fa"
+import {HiOutlineUserCircle} from "react-icons/hi"
 export type PostType = {
   id: string;
   postID: string;
@@ -147,7 +149,7 @@ const Post = ({ searchPost, BtnSortPost }: props) => {
           <li key={id}>
             <div className={styles.PostTop}>
               <span>
-                <p>{post.user}</p>
+                <p><HiOutlineUserCircle/>{post.user}</p>
                 <p>{post.date}</p>
               </span>
               <span className={styles.PostOpen}>
@@ -171,17 +173,14 @@ const Post = ({ searchPost, BtnSortPost }: props) => {
                 </div>
               ) : null}
               <div className={styles.PostDesc}>
-                <p>{post.desc}</p>
+                <p>{post.desc}{<Link to={`/post/${post.id}`}>Read more...</Link>}</p>
               </div>
             </div>
-            <span className={styles.ReadMore}>
-              <Link to={`/post/${post.id}`}>Read more...</Link>
-            </span>
             <div className={styles.PostBottom}>
               <Link to={`/post/${post.id}`}>
-                <button>Comments</button>
+                <button>Comments <FaCommentDots/></button>
               </Link>
-              <button disabled={user.email ? false : true}  onClick={()=> AddLike(post)} className={post.like.indexOf("user") !== -1 ? styles.PostAddLikeactive : styles.PostAddLike } >LIKE {post.like.length}</button>
+              <button disabled={user.email ? false : true}  onClick={()=> AddLike(post)} className={post.like.indexOf(user.email) !== -1 ? styles.PostAddLikeactive : styles.PostAddLike } ><AiFillLike/> {post.like.length}</button>
             </div>
           </li>
         ))

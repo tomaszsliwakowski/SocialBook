@@ -11,6 +11,7 @@ import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { UserType } from "./post";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
+import {AiFillLike} from "react-icons/ai"
 
 type ParamsID = {
   postID :string
@@ -123,7 +124,7 @@ const SinglePost = () => {
           className={styles.SinglePostBody}
         >
           <div className={styles.SinglePostTitle}>
-            <p>{item.title}</p>
+            <p>{item.title} </p>
           </div>
           {
             item.img !== "none"?
@@ -142,7 +143,7 @@ const SinglePost = () => {
             <textarea placeholder="Write Comment..." value={ComInput} onChange={(e:React.ChangeEvent<HTMLTextAreaElement>)=> setComInput(e.target.value)} disabled={user.email ? false : true}></textarea>
             <span>
             <button disabled={user.email ? false : true} onClick={()=> AddComment(item)} >Add Comment</button>
-            <button  disabled={user.email ? false : true} onClick={()=> AddLike(item)} className={item.like.indexOf(user.email) !== -1 ? styles.SinglePostAddLikeactive : styles.SinglePostAddLike }>{"Like" + " " +`${item.like.length}`}</button>
+            <button  disabled={user.email ? false : true} onClick={()=> AddLike(item)} className={item.like.indexOf(user.email) !== -1 ? styles.SinglePostAddLikeactive : styles.SinglePostAddLike }>{"Like" + " "+ `${item.like.length}`}</button>
             </span>
             </div >
               <ul className={styles.SinglePostShowCom} >
