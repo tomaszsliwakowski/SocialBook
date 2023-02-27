@@ -21,6 +21,7 @@ type File = {
 };
 type propsType ={
   closepanel: Function
+  postrender :Function
 }
 
 const AddPostForm = (props :propsType) => {
@@ -77,6 +78,7 @@ const AddPostForm = (props :propsType) => {
       if (img.name) {
         await uploadBytes(imageref, img);
       }
+      props.postrender(uid)
     }
   };
 

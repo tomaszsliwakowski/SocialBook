@@ -17,7 +17,8 @@ export type BtnSortType = {
 
 export default function Home() {
   const [search, setsearch] = useState<string>("");
-  const [showpanel,setshowpanel] = useState(false)
+  const [showpanel,setshowpanel] = useState<boolean>(false)
+  const [PostRender,setPostRender] = useState<string>("")
   const [BtnSortPost, setBtnSortPost] = useState<BtnSortType>({
     new: true,
     like: false,
@@ -72,12 +73,16 @@ export default function Home() {
     setshowpanel(closeinfo)
   }
 
+const getPostsRender =(renderinfo :string) =>{
+  setPostRender(renderinfo)
+}
+
   return (
     <>
       <Header />
       <div className={styles.Home_body}>
        {user !== "" && user !== undefined ? showpanel ?  <div className={styles.AddPostPanel}>
-           <AddPostForm closepanel={getClosePanel} />
+           <AddPostForm closepanel={getClosePanel} postrender={getPostsRender} />
         </div> :<div className={styles.AddPost}>
        <button className={styles.HomeAddPost}  onClick={()=>setshowpanel(prev => !prev)} >Add Post</button>
      </div>: null   
@@ -116,7 +121,7 @@ export default function Home() {
         </div>
         <div className={styles.PostsPanel}>
           <ul>
-            <Post searchPost={search} BtnSortPost={BtnSortPost}   />
+            <Post searchPost={search} BtnSortPost={BtnSortPost} postRedner={PostRender}  />
           </ul>
         </div>
       </div>

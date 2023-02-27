@@ -116,6 +116,14 @@ const SinglePost = () => {
  function sortCom(a: ComType, b: ComType) {
   return b.datetime - a.datetime ;
 }
+
+const deleteCom = async (el:ComType , item:PostType) =>{
+  const postDoc = doc(db,"Posts",item.id)
+  const newField = {com: item.com.filter((item)=> item !== el)}
+  await updateDoc(postDoc,newField)
+  await getPosts()
+}
+
   return (
     <>
       {PostContainer.length ? PostContainer.map((item) => (
@@ -155,7 +163,7 @@ const SinglePost = () => {
                           {el.user}
                         </span>
                         <p className={styles.com_date}>{el.date}</p>
-                          <AiOutlineDelete className={styles.com_svg} />
+                        {el.user === user.username || user.username === item.user || user.username === "admin" ?   <AiOutlineDelete onClick={()=> deleteCom(el,item)} className={styles.com_svg} /> : null}
                       </div>
                       <div className={styles.com_text}>
                       {el.comment}

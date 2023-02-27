@@ -35,7 +35,7 @@ export type UserType ={
 type props = {
   searchPost: string;
   BtnSortPost: BtnSortType;
-
+  postRedner: string;
 };
 
 export type ComType = {
@@ -46,7 +46,7 @@ export type ComType = {
 }
 
 
-const Post = ({ searchPost, BtnSortPost }: props) => {
+const Post = ({ searchPost, BtnSortPost,postRedner }: props) => {
   const [showPost, setshowPost] = useState<Array<PostType>>([]);
   const [imageList, setimageList] = useState<Array<string>>([]);
   const PostCollectionRef = collection(db, "Posts");
@@ -80,39 +80,8 @@ const Post = ({ searchPost, BtnSortPost }: props) => {
     });
   };
 
-  function sortPostNew(a: PostType, b: PostType) {
-    return b.datetime - a.datetime;
-  }
-  function sortPostLike(a: PostType, b: PostType) {
-    return b.like.length - a.like.length;
-  }
 
-  const SortPost = () => {
-    if (!BtnSortPost.new && searchPost === "") {
-      setshowPost(Posts.sort(sortPostNew));
-    } else if (!BtnSortPost.like && searchPost === "") {
-      setshowPost(Posts.sort(sortPostLike))
-    } else if (searchPost !== "") {
-      setshowPost(
-        Posts.filter((item) =>
-          item.title
-            .toLocaleLowerCase()
-            .includes(searchPost.toLocaleLowerCase())
-        )
-      );
-    }
-  };
 
-  useEffect(() => {
-    getImg();
-    getPosts();
-    onAuthStateChanged(auth, (currentUser) => {
-     if(currentUser?.email){
-      getUser(currentUser.uid)
-     }
-   })
-  }, []);
-  
   const getUser = async (Userid:string)=>{
     const UsersData = await getDocs(UsersCollectionRef);
     const Users: any = UsersData.docs.map((doc) => ({
@@ -122,10 +91,6 @@ const Post = ({ searchPost, BtnSortPost }: props) => {
     const UserObj = Users.filter((item:UserType)=> item.userID === Userid)
     setuser(UserObj[0]);
   }
-
-  useEffect(() => {
-    SortPost();
-  }, [searchPost, BtnSortPost, Posts]);
 
   const AddLike = async(post:PostType) =>{
     if(post.like.indexOf(user.email) === -1 ){
@@ -141,11 +106,50 @@ const Post = ({ searchPost, BtnSortPost }: props) => {
     }
    }
 
+   function sortPostNew(a: PostType, b: PostType) {
+    return b.datetime - a.datetime;
+  }
+  function sortPostLike(a: PostType, b: PostType) {
+    return b.like.length - a.like.length;
+  }
 
+  const SortPost = () => {
+    if (BtnSortPost.new && searchPost === "") {
+      return Posts.sort(sortPostNew)
+    } else if (BtnSortPost.like && searchPost === "") {
+      return Posts.sort(sortPostLike)
+    } else if (searchPost !== "") {
+      return  Posts.filter((item) =>
+      item.title
+        .toLocaleLowerCase()
+        .includes(searchPost.toLocaleLowerCase())
+    )
+    }else{
+      return Posts
+    }
+  };
+
+   useEffect(() => {
+    getImg();
+    getPosts();
+    onAuthStateChanged(auth, (currentUser) => {
+     if(currentUser?.email){
+      getUser(currentUser.uid)
+     }
+   })
+  }, []);
+  
+  useEffect(()=>{
+    getPosts();
+    getImg();
+  },[postRedner])
+
+
+  const PostSorted :PostType[] = SortPost()
   return (
     <>
-      {showPost.length ? (
-        showPost.map((post, id) => (
+      {PostSorted?.length ? (
+        PostSorted.map((post, id) => (
           <li key={id}>
             <div className={styles.PostTop}>
               <span>
