@@ -21,7 +21,7 @@ const SinglePost = () => {
   const PostCollectionRef = collection(db, "Posts");
   const UsersCollectionRef = collection(db, "Users");
   let { postID } = useParams<ParamsID>();
-  const [image,setimage] = useState<string>("white")
+  const [image,setimage] = useState<string>("")
   const [imageList, setimageList] = useState<Array<string>>([]);
   const imageListRef = ref(storage, "image/");
   const [Posts, setPosts] = useState<Array<PostType>>([]);
@@ -135,7 +135,7 @@ const deleteCom = async (el:ComType , item:PostType) =>{
             <p>{item.title} </p>
           </div>
           {
-            item.img !== "none"?
+            item.img !== "none" && image !== undefined && image !== ""?
             <div className={styles.SinglePostIMG}>
             <img src={image} alt="photo"  />
           </div>:null
@@ -173,7 +173,7 @@ const deleteCom = async (el:ComType , item:PostType) =>{
               </ul> 
           </div>
         </div>
-      )): <div>ERROR</div> }
+      )): <div className={styles.Loading} >Loading...</div> }
 
     </>
   );

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import styles from "../../App.module.css";
 import { Link } from "react-router-dom";
 import { BtnSortType } from "../body/homeBody";
 import { db } from "../../firebase/firebase-config";
-import { collection, getDocs ,doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs ,doc, updateDoc,deleteDoc } from "firebase/firestore";
 import { storage } from "../../firebase/firebase-config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import {  onAuthStateChanged } from "firebase/auth";
@@ -11,6 +11,7 @@ import { auth } from "../../firebase/firebase-config";
 import {AiFillLike} from "react-icons/ai"
 import {FaCommentDots} from "react-icons/fa"
 import {HiOutlineUserCircle} from "react-icons/hi"
+import {SlOptionsVertical} from "react-icons/sl"
 export type PostType = {
   id: string;
   postID: string;
@@ -44,10 +45,14 @@ export type ComType = {
   datetime:number
   comment:string
 }
-
+type opt = {
+  id:string,
+  show:boolean
+}
 
 const Post = ({ searchPost, BtnSortPost,postRedner }: props) => {
-  const [showPost, setshowPost] = useState<Array<PostType>>([]);
+  const menuRef:any = useRef()
+  const [showOpt, setshowopt] = useState<opt>({id:"",show:false});
   const [imageList, setimageList] = useState<Array<string>>([]);
   const PostCollectionRef = collection(db, "Posts");
   const UsersCollectionRef = collection(db, "Users");
@@ -129,6 +134,21 @@ const Post = ({ searchPost, BtnSortPost,postRedner }: props) => {
     }
   };
 
+  const ShowPostOpt =(id:string) =>{
+    setshowopt((prev)=> ({
+      id:id,
+      show: !prev.show
+    }))
+    
+  }
+
+ const DeletePost = async(id:string) =>{
+  const PostDoc = doc(db,"Posts",id)
+  await deleteDoc(PostDoc)
+  getPosts()
+ }
+
+
    useEffect(() => {
     getImg();
     getPosts();
@@ -156,13 +176,16 @@ const Post = ({ searchPost, BtnSortPost,postRedner }: props) => {
                 <p><HiOutlineUserCircle/>{post.user}</p>
                 <p>{post.date}</p>
               </span>
-              <span className={styles.PostOpen}>
-                <Link to={`/post/${post.id}`}>
-                  Open
-                  
-                </Link>
+              <span className={styles.PostOpen}  ref={menuRef} >
+                <SlOptionsVertical onClick={()=> ShowPostOpt(post.id)}/>
+               {showOpt.show && showOpt.id === post.id ?  <div className={styles.PostOpenPanel}  >
+                  <Link to={`/post/${post.id}`} onClick={()=> (setshowopt({id:post.id , show: false})
+                  )}>Open</Link>
+                  {post.user === user.username ? <button onClick={()=> (
+                    setshowopt({id:post.id , show: false},),
+                    DeletePost(post.id))}>Delete</button> : null}
+                </div> : null}
               </span>
-
               <h3>{post.title}</h3>
             </div>
             <div className={styles.PostContent}>
@@ -189,7 +212,7 @@ const Post = ({ searchPost, BtnSortPost,postRedner }: props) => {
           </li>
         ))
       ) : (
-        <li className={styles.NotFound}>Not Found!</li>
+        <li className={styles.NotFound}>{searchPost !== "" ? "Not Found!" : "Loading..."}</li>
       )}
     </>
   );
