@@ -22,9 +22,9 @@ const Header = () => {
     <div className={styles.Header}>
       <div>
         <a href="/">
-          Holidays
+          Experience
           <ImBlogger />
-          log
+          ook
         </a>
       </div>
       <div>
