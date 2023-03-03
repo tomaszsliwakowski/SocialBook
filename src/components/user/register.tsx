@@ -67,7 +67,7 @@ const RegisterPage = () => {
                         password:""
                     })
                     alert("Wellcome new User create successfully")
-                    naviagte('/')
+                    naviagte('/SocialBook/')
                    
                     } catch (error:any){
                         console.log(error.message)
@@ -139,7 +139,7 @@ const RegisterPage = () => {
         </form>
         <span>
           <p>You have an account, please login</p>
-          <Link to="/login" className={styles.logBtn}>Login</Link>
+          <Link to="/SocialBook/login" className={styles.logBtn}>Login</Link>
         </span>
       </div>
     </>

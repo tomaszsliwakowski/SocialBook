@@ -6,7 +6,7 @@ const NotFoundPage = () => {
  return(
     <div className={styles.NotFoundPage} >
        <h2>Page not found</h2>
-       <Link to="/">Home</Link>
+       <Link to="/SocialBook/">Home</Link>
     </div>
  )
 }

@@ -32,7 +32,7 @@ const LoginPage = () => {
         values.password
       );
       setlogFail(false)
-      naviagte("/")
+      naviagte("/SocialBook/")
     } catch (error: any) {
       console.log(error.message);
       setlogFail(true)
@@ -78,7 +78,7 @@ const LoginPage = () => {
         </form>
         <span>
           <p>You don't have an account, please register</p>
-          <Link to="/register" className={styles.logBtn}>Register</Link>
+          <Link to="/SocialBook/register" className={styles.logBtn}>Register</Link>
         </span>
       </div>
     </>

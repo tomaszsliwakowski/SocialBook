@@ -179,7 +179,7 @@ const Post = ({ searchPost, BtnSortPost,postRedner }: props) => {
               <span className={styles.PostOpen}  ref={menuRef} >
                 <SlOptionsVertical onClick={()=> ShowPostOpt(post.id)}/>
                {showOpt.show && showOpt.id === post.id ?  <div className={styles.PostOpenPanel}  >
-                  <Link to={`/post/${post.id}`} onClick={()=> (setshowopt({id:post.id , show: false})
+                  <Link to={`/SocialBook/post/${post.id}`} onClick={()=> (setshowopt({id:post.id , show: false})
                   )}>Open</Link>
                   {post.user === user.username ? <button onClick={()=> (
                     setshowopt({id:post.id , show: false},),
@@ -191,7 +191,7 @@ const Post = ({ searchPost, BtnSortPost,postRedner }: props) => {
             <div className={styles.PostContent}>
               {post.img !== "none" ? (
                 <div>
-                  <Link to={`/post/${post.id}`}>
+                  <Link to={`/SocialBook/post/${post.id}`}>
                     <img
                       src={imageList.find((item) => item.includes(post.img))}
                       alt={post.img}
@@ -201,11 +201,11 @@ const Post = ({ searchPost, BtnSortPost,postRedner }: props) => {
               ) : null}
               <div className={styles.PostDesc}>
                 <p>{post.desc}</p>
-                <Link to={`/post/${post.id}`}>Read more...</Link>
+                <Link to={`/SocialBook/post/${post.id}`}>Read more...</Link>
               </div>
             </div>
             <div className={styles.PostBottom}>
-              <Link to={`/post/${post.id}`}>
+              <Link to={`/SocialBook/post/${post.id}`}>
                 <button>Comments <FaCommentDots/></button>
               </Link>
               <button disabled={user.email ? false : true}  onClick={()=> AddLike(post)} className={post.like.indexOf(user.email) !== -1 ? styles.PostAddLikeactive : styles.PostAddLike } ><AiFillLike/> {post.like.length}</button>

@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <div className={styles.Header}>
       <div>
-        <a href="/">
+        <a href="/SocialBook">
           Social
           <ImBlogger />
           ook
@@ -30,11 +30,11 @@ const Header = () => {
       <div>
         {user ? (
           <button onClick={logout}>
-            <a href="">Logout</a>
+            <a href="/SocialBook">Logout</a>
           </button>
         ) : (
           <button>
-            <a href="/login">Login</a>
+            <a href="/SocialBook/login">Login</a>
           </button>
         )}
       </div>

@@ -15,10 +15,10 @@ function App() {
     <BrowserRouter>
     <Header/>
     <Routes>
-      <Route path='/' element={<Home />}/>
-      <Route path='/post/:postID' element={<SinglePost/>}/>
-      <Route path='/login' element={<LoginPage/>}/>
-      <Route path='/register' element={<RegisterPage/>}/>
+      <Route path='/SocialBook/' element={<Home />}/>
+      <Route path='/SocialBook/post/:postID' element={<SinglePost/>}/>
+      <Route path='/SocialBook/login' element={<LoginPage/>}/>
+      <Route path='/SocialBook/register' element={<RegisterPage/>}/>
       <Route path='*' element={<NotFoundPage/>}/>
     </Routes>
     <Footer/>
