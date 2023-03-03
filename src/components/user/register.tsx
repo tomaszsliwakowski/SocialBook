@@ -76,13 +76,13 @@ const RegisterPage = () => {
                 }
               )
         }else{
-            if(foundUserEmail.length > 0){
-                alert(`Account with the email ${email} git already exist`)
-             }else if(foundUserName.length > 0){
-                alert(`Account with the Name ${username} already exist`)
-            }else{
+            if(foundUserEmail.length > 0 && foundUserName.length > 0 ){
                 alert(`Account with the Name ${username} and email ${email} already exist`)
-            }
+              }else if(foundUserName.length > 0){
+                alert(`Account with the Name ${username} already exist`)
+              }else if(foundUserEmail.length > 0  ){
+                alert(`Account with the email ${email} already exist`)
+              }
         }
     } catch (error: any) {
       console.log(error.message);

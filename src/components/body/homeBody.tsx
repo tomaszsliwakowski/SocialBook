@@ -1,7 +1,5 @@
 import React, { useState ,useEffect} from "react";
 import styles from "../../App.module.css";
-import Header from "../header/header";
-import Footer from "../footer/footer";
 import { MdOutlineNewReleases } from "react-icons/md";
 import { AiOutlineStar, AiOutlineSearch } from "react-icons/ai";
 import AddPostForm from "../post/AddPostForm";
@@ -79,7 +77,6 @@ const getPostsRender =(renderinfo :string) =>{
 
   return (
     <>
-      <Header />
       <div className={styles.Home_body}>
        {user !== "" && user !== undefined ? showpanel ?  <div className={styles.AddPostPanel}>
            <AddPostForm closepanel={getClosePanel} postrender={getPostsRender} />
@@ -125,7 +122,6 @@ const getPostsRender =(renderinfo :string) =>{
           </ul>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

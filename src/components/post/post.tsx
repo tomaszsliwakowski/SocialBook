@@ -200,7 +200,8 @@ const Post = ({ searchPost, BtnSortPost,postRedner }: props) => {
                 </div>
               ) : null}
               <div className={styles.PostDesc}>
-                <p>{post.desc}{<Link to={`/post/${post.id}`}>Read more...</Link>}</p>
+                <p>{post.desc}</p>
+                <Link to={`/post/${post.id}`}>Read more...</Link>
               </div>
             </div>
             <div className={styles.PostBottom}>

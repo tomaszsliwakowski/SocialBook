@@ -8,7 +8,7 @@ import {
 import SinglePost from './components/post/singlePost.tsx';
 import LoginPage from './components/user/login';
 import RegisterPage from './components/user/register';
-
+import NotFoundPage from './components/body/NotFoundPage';
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
       <Route path='/post/:postID' element={<SinglePost/>}/>
       <Route path='/login' element={<LoginPage/>}/>
       <Route path='/register' element={<RegisterPage/>}/>
+      <Route path='*' element={<NotFoundPage/>}/>
     </Routes>
     <Footer/>
     </BrowserRouter>

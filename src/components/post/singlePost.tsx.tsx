@@ -148,7 +148,7 @@ const deleteCom = async (el:ComType , item:PostType) =>{
           }
           <div className={styles.SinglePostCom}>
             <div className={styles.SinglePostAddCom}>
-            <textarea placeholder="Write Comment..." value={ComInput} onChange={(e:React.ChangeEvent<HTMLTextAreaElement>)=> setComInput(e.target.value)} disabled={user.email ? false : true}></textarea>
+            <textarea placeholder={user.email ? "Write Comment..." : "Sign in to add a comment"} value={ComInput} onChange={(e:React.ChangeEvent<HTMLTextAreaElement>)=> setComInput(e.target.value)} disabled={user.email ? false : true}></textarea>
             <span>
             <button disabled={user.email ? false : true} onClick={()=> AddComment(item)} >Add Comment</button>
             <button  disabled={user.email ? false : true} onClick={()=> AddLike(item)} className={item.like.indexOf(user.email) !== -1 ? styles.SinglePostAddLikeactive : styles.SinglePostAddLike }>{"Like" + " "+ `${item.like.length}`}</button>
