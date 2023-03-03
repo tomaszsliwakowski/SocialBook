@@ -1,6 +1,6 @@
 {
-  "homepage": "https://tomaszsliwakowski.github.io/SocialPage",
-  "name": "blog",
+  "homepage": "https://tomaszsliwakowski.github.io/SocialBook/",
+  "name": "socialbook",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
