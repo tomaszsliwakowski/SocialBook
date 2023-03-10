@@ -17,11 +17,10 @@ const Header = () => {
     await signOut(auth);
   };
 
-
   return (
     <div className={styles.Header}>
       <div>
-        <a href="/SocialBook">
+        <a href="/SocialBook/">
           Social
           <ImBlogger />
           ook
@@ -30,7 +29,7 @@ const Header = () => {
       <div>
         {user ? (
           <button onClick={logout}>
-            <a href="/SocialBook">Logout</a>
+            <a href="/SocialBook/">Logout</a>
           </button>
         ) : (
           <button>
