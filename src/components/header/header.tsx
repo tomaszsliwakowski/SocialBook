@@ -4,6 +4,7 @@ import { ImBlogger } from "react-icons/im";
 import { signOut } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [user, setuser] = useState<string | null | undefined>("");
@@ -29,11 +30,11 @@ const Header = () => {
       <div>
         {user ? (
           <button onClick={logout}>
-            <a href="/SocialBook">Logout</a>
+            <Link to="/SocialBook">Logout</Link>
           </button>
         ) : (
           <button>
-            <a href="/SocialBook/login">Login</a>
+            <Link to="/SocialBook/login">Login</Link>
           </button>
         )}
       </div>
