@@ -33,7 +33,7 @@ const Header = () => {
           </button>
         ) : (
           <button>
-            <a href="/SocialBook/login">Login</a>
+            <a href="/SocialBook/login/">Login</a>
           </button>
         )}
       </div>
