@@ -1,89 +1,80 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../App.module.css";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { createUserWithEmailAndPassword} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import { Link } from "react-router-dom";
-import { collection, addDoc ,getDocs} from "firebase/firestore";
-import { db} from "../../firebase/firebase-config";
-import { UserType } from "../post/post";
-
-type Inputs = {
- username:string;
-  email: string;
-  password: string;
-};
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/firebase-config";
+import { UserType } from "../types/type";
+import { InputsReg } from "../types/type";
 
 const RegisterPage = () => {
-  const naviagte:NavigateFunction = useNavigate()
-    const [user, setuser] = useState<Array<UserType>>([]);
-    const UsersCollectionRef = collection(db, "Users");
+  const naviagte: NavigateFunction = useNavigate();
+  const [user, setuser] = useState<Array<UserType>>([]);
+  const UsersCollectionRef = collection(db, "Users");
   const {
     handleSubmit,
     register,
     reset,
     formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmitt = (values: Inputs) => {
+  } = useForm<InputsReg>();
+  const onSubmitt = (values: InputsReg) => {
     registerUser(values);
   };
 
-  const getUser = async ()=>{
+  const getUser = async () => {
     const UsersData = await getDocs(UsersCollectionRef);
     const Users: any = UsersData.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
-    })); 
+    }));
+    console.log(Users);
     setuser(Users);
-  }
-  useEffect(()=>{
-    getUser()
-  },[])
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
 
-  console.log(user)
-
-  const registerUser = async (values: Inputs) => {
-    const {email,password,username} = values
-    const foundUserEmail:UserType[] = user.filter((item)=> item.email === email)
-    const foundUserName:UserType[] = user.filter((item)=> item.username === username)
+  const registerUser = async (values: InputsReg) => {
+    const { email, password, username } = values;
+    const foundUserEmail: UserType[] = user.filter(
+      (item) => item.email === email
+    );
+    const foundUserName: UserType[] = user.filter(
+      (item) => item.username === username
+    );
     try {
-        if(foundUserEmail.length < 1 && foundUserName.length < 1){
-            await createUserWithEmailAndPassword(
-                auth,
+      if (foundUserEmail.length < 1 && foundUserName.length < 1) {
+        await createUserWithEmailAndPassword(auth, email, password).then(
+          async (reasult) => {
+            try {
+              await addDoc(UsersCollectionRef, {
+                username,
                 email,
-                password
-              ).then(
-                async (reasult) =>{
-                    try{
-                        await addDoc(UsersCollectionRef,{
-                         username,
-                         email,
-                         password,
-                         userID: `${reasult.user.uid}`
-                        })
-                        reset({username:"",
-                        email:"",
-                        password:""
-                    })
-                    alert("Wellcome new User create successfully")
-                    naviagte('/SocialBook/')
-                   
-                    } catch (error:any){
-                        console.log(error.message)
-                        
-                    }
-                }
-              )
-        }else{
-            if(foundUserEmail.length > 0 && foundUserName.length > 0 ){
-                alert(`Account with the Name ${username} and email ${email} already exist`)
-              }else if(foundUserName.length > 0){
-                alert(`Account with the Name ${username} already exist`)
-              }else if(foundUserEmail.length > 0  ){
-                alert(`Account with the email ${email} already exist`)
-              }
+                password,
+                userID: `${reasult.user.uid}`,
+              });
+              reset({ username: "", email: "", password: "" });
+              alert("Wellcome new User create successfully");
+              naviagte("/SocialBook/");
+            } catch (error: any) {
+              console.log(error.message);
+            }
+          }
+        );
+      } else {
+        if (foundUserEmail.length > 0 && foundUserName.length > 0) {
+          alert(
+            `Account with the Name ${username} and email ${email} already exist`
+          );
+        } else if (foundUserName.length > 0) {
+          alert(`Account with the Name ${username} already exist`);
+        } else if (foundUserEmail.length > 0) {
+          alert(`Account with the email ${email} already exist`);
         }
+      }
     } catch (error: any) {
       console.log(error.message);
     }
@@ -93,7 +84,7 @@ const RegisterPage = () => {
       <div className={styles.LoginPage}>
         <h2>Register</h2>
         <form onSubmit={handleSubmit(onSubmitt)}>
-        <label>
+          <label>
             <input
               type="username"
               placeholder="UserName"
@@ -139,7 +130,9 @@ const RegisterPage = () => {
         </form>
         <span>
           <p>You have an account, please login</p>
-          <Link to="/SocialBook/login" className={styles.logBtn}>Login</Link>
+          <Link to="/SocialBook/login" className={styles.logBtn}>
+            Login
+          </Link>
         </span>
       </div>
     </>

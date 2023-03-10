@@ -1,42 +1,30 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../App.module.css";
-import { collection, addDoc,getDocs } from "firebase/firestore";
-import { db} from "../../firebase/firebase-config";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/firebase-config";
 import { storage } from "../../firebase/firebase-config";
-import { ref , uploadBytes } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
-import { UserType } from "./post";
-import {  onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
+import { InputsForm } from "../types/type";
+import { File } from "../types/type";
+import { propsType } from "../types/type";
+import { UserType } from "../types/type";
 
-type Inputs = {
-  title: string;
-  description: string;
-};
-
-type File = {
-  name: string;
-  size: number;
-  type: string;
-};
-type propsType ={
-  closepanel: Function
-  postrender :Function
-}
-
-const AddPostForm = (props :propsType) => {
+const AddPostForm = (props: propsType) => {
   const UsersCollectionRef = collection(db, "Users");
   const PostCollectionRef = collection(db, "Posts");
-  const [FormInput, setFormInput] = useState<Inputs>({
+  const [FormInput, setFormInput] = useState<InputsForm>({
     title: "",
     description: "",
   });
   const [user, setuser] = useState<UserType>({
     email: "",
-    id:"",
-    password:"",
-    userID:"",
-    username:""
+    id: "",
+    password: "",
+    userID: "",
+    username: "",
   });
   const [img, setimg] = useState<any>({});
   const HandleInput = (
@@ -61,7 +49,7 @@ const AddPostForm = (props :propsType) => {
     if (FormInput.title !== "") {
       const date: Date = new Date();
       const DateTime: number = date.getTime();
-      const uid:string = uuidv4();
+      const uid: string = uuidv4();
       const imageref = ref(storage, `image/${img?.name + "_" + uid}`);
       await addDoc(PostCollectionRef, {
         postID: uid,
@@ -72,34 +60,33 @@ const AddPostForm = (props :propsType) => {
         datetime: DateTime,
         like: [],
         com: [],
-        user: `${user.username}`
+        user: `${user.username}`,
       });
-     
+
       if (img.name) {
         await uploadBytes(imageref, img);
       }
-      props.postrender(uid)
+      props.postrender(uid);
     }
   };
 
-
-  const getUser = async (Userid:string)=>{
+  const getUser = async (Userid: string) => {
     const UsersData = await getDocs(UsersCollectionRef);
     const Users: any = UsersData.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
-    })); 
-    const UserObj = Users.filter((item:UserType)=> item.userID === Userid)
+    }));
+    const UserObj = Users.filter((item: UserType) => item.userID === Userid);
     setuser(UserObj[0]);
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      if(currentUser?.email){
-       getUser(currentUser.uid)
+      if (currentUser?.email) {
+        getUser(currentUser.uid);
       }
-    })
-  },[])
+    });
+  }, []);
 
   return (
     <>
@@ -129,7 +116,7 @@ const AddPostForm = (props :propsType) => {
         />
 
         <span className={styles.PostFormButtonPanel}>
-          <button onClick={()=>props.closepanel(false)} >Cancel</button>
+          <button onClick={() => props.closepanel(false)}>Cancel</button>
           <button
             type="reset"
             onClick={() =>

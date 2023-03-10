@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../App.module.css";
 import { MdOutlineNewReleases } from "react-icons/md";
 import { AiOutlineStar, AiOutlineSearch } from "react-icons/ai";
@@ -6,23 +6,18 @@ import AddPostForm from "../post/AddPostForm";
 import Post from "../post/post";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
-
-export type BtnSortType = {
-  new: boolean;
-  like: boolean;
-};
-
+import { BtnSortType } from "../types/type";
 
 export default function Home() {
   const [search, setsearch] = useState<string>("");
-  const [showpanel,setshowpanel] = useState<boolean>(false)
-  const [PostRender,setPostRender] = useState<string>("")
+  const [showpanel, setshowpanel] = useState<boolean>(false);
+  const [PostRender, setPostRender] = useState<string>("");
   const [BtnSortPost, setBtnSortPost] = useState<BtnSortType>({
     new: true,
     like: false,
   });
   const [user, setuser] = useState<string | null | undefined>("");
- 
+
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setuser(currentUser?.email);
@@ -67,23 +62,36 @@ export default function Home() {
     }
   };
 
-  const getClosePanel  =(closeinfo:boolean)=>{
-    setshowpanel(closeinfo)
-  }
+  const getClosePanel = (closeinfo: boolean) => {
+    setshowpanel(closeinfo);
+  };
 
-const getPostsRender =(renderinfo :string) =>{
-  setPostRender(renderinfo)
-}
+  const getPostsRender = (renderinfo: string) => {
+    setPostRender(renderinfo);
+  };
 
   return (
     <>
       <div className={styles.Home_body}>
-       {user !== "" && user !== undefined ? showpanel ?  <div className={styles.AddPostPanel}>
-           <AddPostForm closepanel={getClosePanel} postrender={getPostsRender} />
-        </div> :<div className={styles.AddPost}>
-       <button className={styles.HomeAddPost}  onClick={()=>setshowpanel(prev => !prev)} >Add Post</button>
-     </div>: null   
-        }
+        {user !== "" && user !== undefined ? (
+          showpanel ? (
+            <div className={styles.AddPostPanel}>
+              <AddPostForm
+                closepanel={getClosePanel}
+                postrender={getPostsRender}
+              />
+            </div>
+          ) : (
+            <div className={styles.AddPost}>
+              <button
+                className={styles.HomeAddPost}
+                onClick={() => setshowpanel((prev) => !prev)}
+              >
+                Add Post
+              </button>
+            </div>
+          )
+        ) : null}
         <div className={styles.SearchPanel}>
           <div className={styles.SearchBar}>
             <div>
@@ -118,7 +126,11 @@ const getPostsRender =(renderinfo :string) =>{
         </div>
         <div className={styles.PostsPanel}>
           <ul>
-            <Post searchPost={search} BtnSortPost={BtnSortPost} postRedner={PostRender}  />
+            <Post
+              searchPost={search}
+              BtnSortPost={BtnSortPost}
+              postRedner={PostRender}
+            />
           </ul>
         </div>
       </div>

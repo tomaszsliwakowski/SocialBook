@@ -1,20 +1,15 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import styles from "../../App.module.css";
 import { useForm } from "react-hook-form";
-import { signInWithEmailAndPassword} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import { Link } from "react-router-dom";
-
-
-type Inputs = {
-  email: string;
-  password: string;
-};
+import { Inputs } from "../types/type";
 
 const LoginPage = () => {
-  const [logFail,setlogFail] = useState<boolean>(false)
-  const naviagte:NavigateFunction = useNavigate()
+  const [logFail, setlogFail] = useState<boolean>(false);
+  const naviagte: NavigateFunction = useNavigate();
   const {
     handleSubmit,
     register,
@@ -31,11 +26,11 @@ const LoginPage = () => {
         values.email,
         values.password
       );
-      setlogFail(false)
-      naviagte("/SocialBook/")
+      setlogFail(false);
+      naviagte("/SocialBook/");
     } catch (error: any) {
       console.log(error.message);
-      setlogFail(true)
+      setlogFail(true);
     }
   };
   return (
@@ -43,7 +38,9 @@ const LoginPage = () => {
       <div className={styles.LoginPage}>
         <h2>Login</h2>
         <form onSubmit={handleSubmit(onSubmitt)}>
-        { logFail ? <p className={styles.LogFail} >Email or password is incorrect</p>: null }
+          {logFail ? (
+            <p className={styles.LogFail}>Email or password is incorrect</p>
+          ) : null}
           <label>
             <input
               type="email"
@@ -78,7 +75,9 @@ const LoginPage = () => {
         </form>
         <span>
           <p>You don't have an account, please register</p>
-          <Link to="/SocialBook/register" className={styles.logBtn}>Register</Link>
+          <Link to="/SocialBook/register" className={styles.logBtn}>
+            Register
+          </Link>
         </span>
       </div>
     </>
