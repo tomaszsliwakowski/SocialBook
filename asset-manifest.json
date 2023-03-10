@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/SocialBook/static/css/main.71578f16.css",
-    "main.js": "/SocialBook/static/js/main.14b58b1b.js",
+    "main.js": "/SocialBook/static/js/main.09ee5b60.js",
     "static/js/787.5d5d6f80.chunk.js": "/SocialBook/static/js/787.5d5d6f80.chunk.js",
     "index.html": "/SocialBook/index.html",
     "main.71578f16.css.map": "/SocialBook/static/css/main.71578f16.css.map",
-    "main.14b58b1b.js.map": "/SocialBook/static/js/main.14b58b1b.js.map",
+    "main.09ee5b60.js.map": "/SocialBook/static/js/main.09ee5b60.js.map",
     "787.5d5d6f80.chunk.js.map": "/SocialBook/static/js/787.5d5d6f80.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.71578f16.css",
-    "static/js/main.14b58b1b.js"
+    "static/js/main.09ee5b60.js"
   ]
 }
