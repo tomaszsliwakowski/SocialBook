@@ -29,11 +29,11 @@ const Header = () => {
       <div>
         {user ? (
           <button onClick={logout}>
-            <a href="/SocialBook/">Logout</a>
+            <a href="/SocialBook">Logout</a>
           </button>
         ) : (
           <button>
-            <a href="/SocialBook/login/">Login</a>
+            <a href="/SocialBook/login">Login</a>
           </button>
         )}
       </div>

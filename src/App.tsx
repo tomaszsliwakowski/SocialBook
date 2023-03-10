@@ -15,8 +15,8 @@ function App() {
       <Routes>
         <Route path="/SocialBook/" element={<Home />} />
         <Route path="/SocialBook/post/:postID" element={<SinglePost />} />
-        <Route path="/SocialBook/login/" element={<LoginPage />} />
-        <Route path="/SocialBook/register/" element={<RegisterPage />} />
+        <Route path="/SocialBook/login" element={<LoginPage />} />
+        <Route path="/SocialBook/register" element={<RegisterPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
