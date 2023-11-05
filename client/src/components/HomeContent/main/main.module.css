@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  height: 700px;
+  min-height: 700px;
   padding: 1rem 2rem;
   border-radius: 1rem;
   margin-top: 1rem;
@@ -14,6 +14,7 @@
 .main__content {
   width: 50%;
   height: 100%;
+  min-height: 700px;
   display: flex;
   flex-direction: column;
 }
@@ -24,9 +25,10 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  height: 700px;
 }
 
-.main__content p {
+.main__content .main__container {
   width: 100%;
   height: fit-content;
   padding: 3rem 0;
@@ -84,6 +86,104 @@
   background-color: var(--primary-blue-color);
   color: var(--hover-color);
 }
+
+.popular {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  margin-top: 6rem;
+  margin-bottom: 4rem;
+}
+.popular__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.popular h2 {
+  margin-bottom: 1rem;
+}
+.popular__list li {
+  display: flex;
+  box-shadow: 0 2px 8px var(--border-color);
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  max-height: 375px;
+}
+.popular__list img {
+  max-width: 250px;
+  border-radius: 1rem 0 0 1rem;
+}
+
+.blog__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem 0.8rem;
+  width: 100%;
+}
+
+.blog__content__one {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.blog__content__two {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1rem 0;
+}
+.blog__content__two span {
+  overflow: hidden;
+  word-break: break-all;
+}
+.blog__content__two span {
+  font-family: "Courier New", Courier, monospace;
+}
+.blog__content__three {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.blog__content__three a {
+  text-decoration: none;
+  color: var(--font-color);
+  border: 1px solid var(--primary-blue-color);
+  padding: 5px 10px;
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+.blog__content__three a:hover {
+  background-color: var(--primary-blue-color);
+  color: var(--hover-color);
+}
+
+.blog__like {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.blog__like svg {
+  font-size: 22px;
+}
+
+.blog__like span {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-weight: 500;
+}
+
+.heart {
+  color: #ff006e;
+}
+.comment {
+  color: var(--primary-blue-color);
+}
+
 @media screen and (max-width: 768px) {
   .main {
     display: flex;

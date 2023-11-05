@@ -21,8 +21,8 @@ body {
 .dark {
   --font-color: white;
   --bg-color: #212121;
-  --border-color: #212121;
+  --border-color: silver;
   background-color: var(--bg-color);
   color: var(--font-color);
-  height: 100vh;
+  min-height: 100vh;
 }
