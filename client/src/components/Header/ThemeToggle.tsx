@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext } from "react";
 import styles from "./header.module.css";
+import { ThemeContext } from "../../context/ThemeContext";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState("light");
+  const { theme, toggle } = useContext(ThemeContext);
   return (
     <div
       className={styles.header__theme}
+      onClick={() => toggle()}
       style={
         theme === "dark"
           ? { backgroundColor: "white" }

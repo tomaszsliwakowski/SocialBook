@@ -2,6 +2,8 @@
   width: 100%;
   color: var(--font-color);
   display: flex;
+  margin: 0 auto;
+  max-width: 1460px;
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
@@ -36,6 +38,16 @@
   gap: 1.5rem;
   align-items: center;
 }
+
+.hamburger {
+  display: none;
+  align-items: center;
+}
+.hamburger svg {
+  font-size: 25px;
+  cursor: pointer;
+}
+
 .header__nav a {
   text-decoration: none;
   color: var(--font-color);
@@ -52,7 +64,7 @@
   font-size: 25px;
 }
 .header__auth span {
-  border: 1px solid black;
+  border: 1px solid var(--font-color);
   border-radius: 50%;
   padding: 4px 5px;
   display: flex;
@@ -71,8 +83,12 @@
   justify-content: space-between;
   position: relative;
   padding: 0 2px;
-  margin-right: 1rem;
   margin-top: 3px;
+}
+@media screen and (max-width: 450px) {
+  .header__theme {
+    margin-right: 1rem;
+  }
 }
 .header__theme__ball {
   width: 15px;
@@ -80,4 +96,76 @@
   border-radius: 50%;
   position: absolute;
   margin-right: 1px;
+}
+
+.header__nav__mobile {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  z-index: 1000;
+}
+.header__nav__mobile a {
+  text-decoration: none;
+  color: var(--font-color);
+  font-weight: 500;
+  font-size: 25px;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+.hamburger__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+.hamburger__close svg {
+  font-size: 35px;
+}
+
+@media screen and (max-width: 768px) {
+  .header__nav {
+    display: none;
+  }
+
+  .header__menu {
+    gap: 1rem;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+@media screen and (max-width: 450px) {
+  .header__logo a {
+    font-size: 25px;
+  }
+  .header__theme {
+    margin-right: 1rem;
+  }
+  .header {
+    padding: 0 0.8rem;
+    height: 4rem;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .header__logo a {
+    font-size: 22px;
+  }
+  .header__auth svg {
+    font-size: 22px;
+  }
+  .hamburger svg {
+    font-size: 22px;
+  }
+  .header {
+    padding: 0 0.5rem;
+  }
 }
