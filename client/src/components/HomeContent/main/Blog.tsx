@@ -22,7 +22,7 @@ export default function Blog() {
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Reprehenderit beatae earum accusantium perferendis nulla numquam
             officia impedit esse dolore fugit distinctio, magni ad ipsa error.
-            Similique quia natus sint error?
+            Similique quia natus sint error? lorem
           </span>
         </div>
         <div className={styles.blog__content__three}>
