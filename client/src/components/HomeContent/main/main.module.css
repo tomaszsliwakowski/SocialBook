@@ -81,6 +81,7 @@
   height: 35px;
   width: 40px;
   border-radius: 50%;
+  object-fit: cover;
 }
 .main__category:hover {
   background-color: var(--primary-blue-color);
