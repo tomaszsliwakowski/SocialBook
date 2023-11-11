@@ -1,11 +1,32 @@
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import styles from "./main.module.css";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
+import { motion, useAnimation, useInView } from "framer-motion";
 
 export default function Blog() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const slideControls = useAnimation();
+
+  useEffect(() => {
+    if (isInView) {
+      slideControls.start("visible");
+    }
+  }, [isInView]);
+
   return (
-    <li>
+    <motion.li
+      variants={{
+        hidden: { opacity: 0, y: 85 },
+        visible: { opacity: 1, y: 0 },
+      }}
+      initial="hidden"
+      animate={slideControls}
+      transition={{ duration: 1.5, delay: 0.25 }}
+      ref={ref}
+    >
       <img src="./cars.jpg" alt="blog" />
       <div className={styles.blog__content}>
         <div className={styles.blog__content__one}>
@@ -39,6 +60,6 @@ export default function Blog() {
           </div>
         </div>
       </div>
-    </li>
+    </motion.li>
   );
 }

@@ -2,11 +2,22 @@ import PhotoSlider from "../slider/PhotoSlider";
 import styles from "./main.module.css";
 import Explore from "./explore";
 import PupularBlogs from "./PupularBlogs";
+import Typed from "react-typed";
+import { motion } from "framer-motion";
 
 export default function Main() {
   return (
     <>
-      <div className={styles.main}>
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: 85 },
+          visible: { opacity: 1, y: 0 },
+        }}
+        initial="hidden"
+        animate="visible"
+        transition={{ duration: 2, delay: 0.25 }}
+        className={styles.main}
+      >
         <div className={styles.main__content}>
           <div className={styles.main__container}>
             <h1>
@@ -15,8 +26,16 @@ export default function Main() {
             </h1>
             <br />
             <div className={styles.smallText}>
-              <span>Share and discover your stories and creative ideas.</span>
-              <span>Talk to other people and share your opinions.</span>
+              <Typed
+                strings={[
+                  "Share and discover your stories and creative ideas.",
+                  "Talk to other people and share your opinions.",
+                ]}
+                typeSpeed={80}
+                backSpeed={50}
+                startDelay={1000}
+                loop
+              />
             </div>
           </div>
           <Explore />
@@ -24,7 +43,7 @@ export default function Main() {
         <div className={styles.main__images}>
           <PhotoSlider />
         </div>
-      </div>
+      </motion.div>
       <PupularBlogs />
     </>
   );

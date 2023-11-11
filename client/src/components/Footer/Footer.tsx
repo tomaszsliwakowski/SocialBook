@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import styles from "./footer.module.css";
 import { AiOutlineCopyrightCircle } from "react-icons/ai";
@@ -7,10 +8,30 @@ import {
   HOME_ROUTE,
   POSTS_ROUTE,
 } from "../../routes";
+import { motion, useAnimation, useInView } from "framer-motion";
 
 export default function Footer() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const slideControls = useAnimation();
+
+  useEffect(() => {
+    if (isInView) {
+      slideControls.start("visible");
+    }
+  }, [isInView]);
   return (
-    <div className={styles.footer}>
+    <motion.div
+      className={styles.footer}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1 },
+      }}
+      initial="hidden"
+      animate={slideControls}
+      transition={{ duration: 1.5, delay: 0.25 }}
+      ref={ref}
+    >
       <div>
         <div className={styles.footer__info}>
           <div className={styles.footer__logo}>
@@ -49,6 +70,6 @@ export default function Footer() {
           <p>{new Date().getFullYear()}</p>
         </span>
       </div>
-    </div>
+    </motion.div>
   );
 }

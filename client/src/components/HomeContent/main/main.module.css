@@ -48,6 +48,8 @@
 }
 .smallText span {
   font-family: "Courier New", Courier, monospace;
+  min-height: 52px;
+  margin-bottom: 2rem;
 }
 .strong {
   color: var(--primary-blue-color);
@@ -124,11 +126,13 @@
   .popular__list li {
     display: flex;
     flex-direction: column;
+    align-items: center;
     max-height: 1000px;
   }
   .popular__list img {
     max-width: fit-content;
     border-radius: 1rem 1rem 0 0;
+    max-height: 500px;
   }
   .popular {
     padding: 0 1rem;
@@ -174,7 +178,7 @@
 .blog__content__three a {
   text-decoration: none;
   color: var(--font-color);
-  border: 1px solid var(--primary-blue-color);
+  border: 1px solid black;
   padding: 5px 10px;
   border-radius: 0.5rem;
   font-weight: 500;
@@ -182,6 +186,7 @@
 .blog__content__three a:hover {
   background-color: var(--primary-blue-color);
   color: var(--hover-color);
+  border-color: var(--primary-blue-color);
 }
 
 .blog__like {
