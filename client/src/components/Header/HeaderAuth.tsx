@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "./header.module.css";
 import { BiUser } from "react-icons/bi";
 import { Link } from "react-router-dom";

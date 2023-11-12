@@ -2,9 +2,11 @@ import { useState } from "react";
 import SignUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
 import "./SignInUp.css";
+import { useParams } from "react-router-dom";
 
 export default function AuthSection() {
-  const [type, setType] = useState("signIn");
+  const { action } = useParams();
+  const [type, setType] = useState(action === "login" ? "signIn" : "signUp");
   const handleOnClick = (text: string) => {
     if (text !== type) {
       setType(text);

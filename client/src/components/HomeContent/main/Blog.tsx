@@ -27,7 +27,9 @@ export default function Blog() {
       transition={{ duration: 1.5, delay: 0.25 }}
       ref={ref}
     >
-      <img src="./cars.jpg" alt="blog" />
+      <Link to={"/"}>
+        <img src="./cars.jpg" alt="blog" />
+      </Link>
       <div className={styles.blog__content}>
         <div className={styles.blog__content__one}>
           <span>2023-11-05</span>

@@ -12,7 +12,7 @@ export default function App() {
           <Route path="/posts" element={<Home />} />
           <Route path="/blogs" element={<Home />} />
           <Route path="/chats" element={<Home />} />
-          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/auth/:action" element={<AuthPage />} />
         </Routes>
       </Routers>
     </ThemeProvider>
