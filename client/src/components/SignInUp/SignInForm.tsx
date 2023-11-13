@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./SignInUp.css";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../../mutations/userMutations";
 
 export default function SignInForm() {
   const [state, setState] = useState({
@@ -14,11 +16,24 @@ export default function SignInForm() {
     });
   };
 
+  const [loginUser] = useMutation(LOGIN_USER, {
+    variables: {
+      email: state.email,
+      password: state.password,
+    },
+    onCompleted(data) {
+      return console.log(data.loginUser);
+    },
+  });
+
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const { email, password } = state;
-    alert(`You are login with email: ${email} and password: ${password}`);
+    if (email !== "" && password !== "") {
+      loginUser().then(() => setState({ email: "", password: "" }));
+    }
+    //alert(`You are login with email: ${email} and password: ${password}`);
 
     for (const key in state) {
       setState({

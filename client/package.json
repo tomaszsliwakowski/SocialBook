@@ -10,8 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.7",
     "framer-motion": "^10.16.4",
+    "graphql": "^16.8.1",
     "or": "^0.2.0",
+    "ra-data-graphql": "^4.14.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
