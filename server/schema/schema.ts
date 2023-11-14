@@ -5,7 +5,7 @@ import { loginUser, registerUser } from "./mutations/mutations";
 const RootQuery = new GraphQLObjectType({
   name: "Query",
   fields: {
-    USER_ME: USER_ME,
+    GetUser: USER_ME,
   },
 });
 const Mutation = new GraphQLObjectType({

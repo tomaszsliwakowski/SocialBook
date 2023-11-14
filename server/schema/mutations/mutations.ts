@@ -4,8 +4,7 @@ import bcrypt from "bcrypt";
 import { pool } from "../../database/mySqlConnect";
 import crypto from "crypto";
 import { sign } from "jsonwebtoken";
-const RefreshToken = "awfjefojw3w2fi3fji";
-const AccessToken = "a4r3f43f35ty5g4g";
+import { AccessToken } from "../../assets/assets";
 
 export const loginUser = {
   type: UserType,
@@ -30,14 +29,12 @@ export const loginUser = {
     if (!valid) {
       return null;
     }
-    const refreshToken = sign({ userId: user.id }, RefreshToken, {
+    const Token = sign({ userId: user.id }, AccessToken, {
       expiresIn: "7d",
     });
-    const accessToken = sign({ userId: user.id }, AccessToken, {
-      expiresIn: "15min",
-    });
-    res.cookie("refresh-token", refreshToken);
-    res.cookie("access-token", accessToken);
+
+    res.cookie("IdUser", Token);
+
     return { id: user.id, name: user.name, email: user.email };
   },
 };

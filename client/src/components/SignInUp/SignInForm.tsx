@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./SignInUp.css";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../mutations/userMutations";
+import { AuthContext, UserAuth } from "../../context/Auth";
 
 export default function SignInForm() {
   const [state, setState] = useState({
     email: "",
     password: "",
   });
+  const { setUser }: UserAuth = useContext(AuthContext);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setState({
@@ -22,7 +25,7 @@ export default function SignInForm() {
       password: state.password,
     },
     onCompleted(data) {
-      return console.log(data.loginUser);
+      setUser(data.loginUser);
     },
   });
 
