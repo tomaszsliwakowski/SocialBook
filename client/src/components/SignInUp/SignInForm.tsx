@@ -3,13 +3,16 @@ import "./SignInUp.css";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../mutations/userMutations";
 import { AuthContext, UserAuth } from "../../context/Auth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function SignInForm() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [state, setState] = useState({
     email: "",
     password: "",
   });
-  const { setUser }: UserAuth = useContext(AuthContext);
+  const { refetch }: UserAuth = useContext(AuthContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -24,8 +27,9 @@ export default function SignInForm() {
       email: state.email,
       password: state.password,
     },
-    onCompleted(data) {
-      setUser(data.loginUser);
+    onCompleted() {
+      navigate("/");
+      refetch();
     },
   });
 
@@ -34,9 +38,10 @@ export default function SignInForm() {
 
     const { email, password } = state;
     if (email !== "" && password !== "") {
-      loginUser().then(() => setState({ email: "", password: "" }));
+      loginUser().then(() => {
+        setState({ email: "", password: "" });
+      });
     }
-    //alert(`You are login with email: ${email} and password: ${password}`);
 
     for (const key in state) {
       setState({

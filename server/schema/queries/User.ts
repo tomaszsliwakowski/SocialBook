@@ -1,15 +1,19 @@
-import { GraphQLID } from "graphql";
 import { UserType } from "../types/userType";
 import { pool } from "../../database/mySqlConnect";
+import { verify } from "jsonwebtoken";
+import { AccessToken } from "../../assets/assets";
 
 export const USER_ME = {
   type: UserType,
-  args: { id: { type: GraphQLID } },
-  async resolve(parent: any, args: { id: string }) {
-    //  const [rows]: any = await pool.query(
-    //  `SELECT * FROM users WHERE id = '${args.id}'`
-    // );
-
-    return args;
+  async resolve(parent: any, args: any, req: any) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return { name: "", email: "" };
+    const data = verify(cookie, AccessToken) as any;
+    if (!data) return { name: "", email: "" };
+    const [rows]: any = await pool.query(
+      `SELECT * FROM users WHERE id = '${data.userId}'`
+    );
+    const { name, email } = rows[0];
+    return { name: name, email: email };
   },
 };

@@ -19,9 +19,9 @@ export default function App() {
     cache: new InMemoryCache(),
   });
   return (
-    <AuthProvider>
-      <ThemeProvider>
-        <ApolloProvider client={client}>
+    <ApolloProvider client={client}>
+      <AuthProvider>
+        <ThemeProvider>
           <Routers>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -31,8 +31,8 @@ export default function App() {
               <Route path="/auth/:action" element={<AuthPage />} />
             </Routes>
           </Routers>
-        </ApolloProvider>
-      </ThemeProvider>
-    </AuthProvider>
+        </ThemeProvider>
+      </AuthProvider>
+    </ApolloProvider>
   );
 }
