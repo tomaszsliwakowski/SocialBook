@@ -9,6 +9,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { AuthProvider } from "./context/Auth";
+import ProtectAuthRoute from "./context/ProtectAuthRoute";
 
 export default function App() {
   const client = new ApolloClient({
@@ -25,9 +26,30 @@ export default function App() {
           <Routers>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/posts" element={<Home />} />
-              <Route path="/blogs" element={<Home />} />
-              <Route path="/chats" element={<Home />} />
+              <Route
+                path="/posts"
+                element={
+                  <ProtectAuthRoute>
+                    <Home />
+                  </ProtectAuthRoute>
+                }
+              />
+              <Route
+                path="/blogs"
+                element={
+                  <ProtectAuthRoute>
+                    <Home />
+                  </ProtectAuthRoute>
+                }
+              />
+              <Route
+                path="/chats"
+                element={
+                  <ProtectAuthRoute>
+                    <Home />
+                  </ProtectAuthRoute>
+                }
+              />
               <Route path="/auth/:action" element={<AuthPage />} />
             </Routes>
           </Routers>

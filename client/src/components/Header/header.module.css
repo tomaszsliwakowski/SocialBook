@@ -60,6 +60,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  z-index: 5000;
 }
 
 .dropDown {
@@ -74,15 +75,16 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  z-index: 120;
+  z-index: 5000;
   display: none;
+  background-color: var(--bg-color);
 }
 .dropDown:hover {
   display: flex;
 }
 
 .authBtn {
-  border: 1px solid black;
+  border: 1px solid var(--font-color);
   border-radius: 0.6rem;
   text-decoration: none;
   width: 100%;
@@ -95,6 +97,7 @@
   width: 100%;
   height: 100%;
   transition: 0.3s all;
+  background-color: var(--bg-color);
 }
 
 .header__auth:hover .dropDown {
@@ -180,6 +183,15 @@
 }
 .hamburger__close svg {
   font-size: 35px;
+}
+.SetBtn {
+  text-decoration: none;
+  color: var(--font-color);
+  width: 100%;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0.25rem 0;
 }
 
 @media screen and (max-width: 768px) {

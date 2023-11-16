@@ -22,11 +22,13 @@ type UserType = {
 export interface UserAuth {
   User: UserType;
   refetch: Function;
+  loading: boolean;
 }
 
 export const AuthContext = createContext<UserAuth>({
   User: { name: "", email: "" },
   refetch: () => {},
+  loading: true,
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -46,7 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   if (error) return <div>Error</div>;
 
   return (
-    <AuthContext.Provider value={{ User, refetch }}>
+    <AuthContext.Provider value={{ User, refetch, loading }}>
       {!loading ? (
         children
       ) : (
