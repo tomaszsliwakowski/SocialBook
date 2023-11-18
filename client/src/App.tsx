@@ -10,6 +10,7 @@ import {
 } from "@apollo/client";
 import { AuthProvider } from "./context/Auth";
 import ProtectAuthRoute from "./context/ProtectAuthRoute";
+import PostsPage from "./pages/PostsPage";
 
 export default function App() {
   const client = new ApolloClient({
@@ -30,7 +31,7 @@ export default function App() {
                 path="/posts"
                 element={
                   <ProtectAuthRoute>
-                    <Home />
+                    <PostsPage />
                   </ProtectAuthRoute>
                 }
               />

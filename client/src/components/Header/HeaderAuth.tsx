@@ -14,7 +14,7 @@ export default function HeaderAuth() {
         <BiUser />
       </span>
       <div className={styles.dropDown}>
-        {User.email === "" ? <NotLogged /> : <Logged refetch={refetch} />}
+        {User.id === "" ? <NotLogged /> : <Logged refetch={refetch} />}
       </div>
     </div>
   );
@@ -42,10 +42,13 @@ const Logged = ({ refetch }: { refetch: Function }) => {
   return (
     <>
       <Link className={styles.SetBtn} to={"/"}>
-        Settings
+        Profile
       </Link>
       <Link className={styles.SetBtn} to={"/"}>
         Saved
+      </Link>
+      <Link className={styles.SetBtn} to={"/"}>
+        Settings
       </Link>
       <button className={styles.authBtn} onClick={() => logOut()}>
         Logout

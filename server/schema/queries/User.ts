@@ -13,7 +13,7 @@ export const USER_ME = {
     const [rows]: any = await pool.query(
       `SELECT * FROM users WHERE id = '${data.userId}'`
     );
-    const { name, email } = rows[0];
-    return { name: name, email: email };
+    const { id, name, email } = rows[0];
+    return { id: id, name: name, email: email };
   },
 };

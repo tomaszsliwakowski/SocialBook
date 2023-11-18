@@ -16,6 +16,7 @@ const override: CSSProperties = {
 };
 
 type UserType = {
+  id: string;
   name: string;
   email: string;
 };
@@ -26,13 +27,14 @@ export interface UserAuth {
 }
 
 export const AuthContext = createContext<UserAuth>({
-  User: { name: "", email: "" },
+  User: { id: "", name: "", email: "" },
   refetch: () => {},
   loading: true,
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [User, setUser] = useState<UserType>({
+    id: "",
     name: "",
     email: "",
   });
@@ -41,7 +43,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!loading && !error && data) {
-      setUser({ name: data.GetUser.name, email: data.GetUser.email });
+      setUser({
+        id: data.GetUser.id,
+        name: data.GetUser.name,
+        email: data.GetUser.email,
+      });
     }
   }, [data]);
 
