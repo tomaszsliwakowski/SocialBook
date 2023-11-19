@@ -165,7 +165,7 @@
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  z-index: 1000;
+  z-index: 10000;
 }
 .header__nav__mobile a {
   text-decoration: none;

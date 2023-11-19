@@ -14,10 +14,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-body {
-  background-color: var(--bg-color);
-  color: var(--font-color);
-}
 
 .dark {
   --font-color: white;
@@ -26,7 +22,12 @@ body {
   --shadow-color: #212121;
   background-color: var(--bg-color);
   color: var(--font-color);
-  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+}
+body {
+  background-color: var(--bg-color);
+  color: var(--font-color);
 }
 
 .loader {
@@ -34,4 +35,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  #posts {
+    padding-bottom: 5rem;
+  }
 }

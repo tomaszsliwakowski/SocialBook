@@ -6,6 +6,7 @@ export default function Posts() {
     <div className={styles.posts__content}>
       <ul className={styles.posts__list}>
         <Post />
+        <Post />
       </ul>
     </div>
   );

@@ -10,7 +10,7 @@ import {
 } from "../../routes";
 import { motion, useAnimation, useInView } from "framer-motion";
 
-export default function Footer() {
+export default function Footer({ id }: { id: string }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const slideControls = useAnimation();
@@ -23,6 +23,7 @@ export default function Footer() {
   return (
     <motion.div
       className={styles.footer}
+      id={id}
       variants={{
         hidden: { opacity: 0 },
         visible: { opacity: 1 },

@@ -3,8 +3,11 @@ import { FiHome, FiSearch } from "react-icons/fi";
 import { MdPeopleOutline } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { BiUser } from "react-icons/bi";
+import { useState } from "react";
+import { IoMdClose } from "react-icons/io";
 
 export default function Menu() {
+  const [searchActive, setSearchActive] = useState(false);
   return (
     <div className={styles.posts__menu}>
       <div className={styles.posts__add}>
@@ -20,8 +23,25 @@ export default function Menu() {
           <span>Watched</span>
         </li>
         <li>
-          <FiSearch />
-          <span>Search</span>
+          <div
+            className={styles.posts__menu__el}
+            onClick={() => setSearchActive(true)}
+          >
+            <FiSearch />
+            <span>Search</span>
+          </div>
+          {searchActive ? (
+            <div className={styles.search__wrapper}>
+              <div className={styles.search__header}>
+                <p>Search</p>
+                <IoMdClose size={30} onClick={() => setSearchActive(false)} />
+              </div>
+              <div className={styles.search__input}>
+                <input type="text" />
+              </div>
+              <button>Search</button>
+            </div>
+          ) : null}
         </li>
         <li>
           <FaRegHeart />

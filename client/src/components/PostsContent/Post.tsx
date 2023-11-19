@@ -2,8 +2,11 @@ import { BiUser } from "react-icons/bi";
 import styles from "./posts.module.css";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
+import { useState } from "react";
+import { MdDone } from "react-icons/md";
 
 export default function Post() {
+  const [sub, setSub] = useState(false);
   return (
     <li>
       <div className={styles.post__header}>
@@ -12,7 +15,13 @@ export default function Post() {
           <span>admin</span>
           <span>{new Date().toLocaleDateString()}</span>
         </div>
-        <button>Follow</button>
+        {!sub ? (
+          <button onClick={() => setSub(true)}>Follow</button>
+        ) : (
+          <div className={styles.follow} onClick={() => setSub(false)}>
+            <MdDone />
+          </div>
+        )}
       </div>
       <div className={styles.post__content}>
         <h3>test</h3>

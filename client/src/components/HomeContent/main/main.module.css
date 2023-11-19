@@ -107,12 +107,14 @@
 }
 .popular__list li {
   display: flex;
-  box-shadow: 0 2px 8px var(--border-color);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  border: 1px solid white;
   border-radius: 1rem;
   width: 100%;
   max-width: 600px;
   height: 100%;
   max-height: 375px;
+  overflow: hidden;
 }
 
 .popular__list img {
