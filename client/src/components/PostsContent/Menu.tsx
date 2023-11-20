@@ -6,12 +6,16 @@ import { BiUser } from "react-icons/bi";
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
-export default function Menu() {
+type PROPS = {
+  setAddPostModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function Menu({ setAddPostModal }: PROPS) {
   const [searchActive, setSearchActive] = useState(false);
   return (
     <div className={styles.posts__menu}>
       <div className={styles.posts__add}>
-        <button>Add Post</button>
+        <button onClick={() => setAddPostModal(true)}>Add Post</button>
       </div>
       <ul>
         <li>
