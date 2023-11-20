@@ -42,7 +42,7 @@ export default function Main() {
           className={styles.posts__addPost}
           onClick={(e) => closeModal(e)}
         >
-          <AddPost />
+          <AddPost setAddPostModal={setAddPostModal} />
         </div>
       ) : null}
     </>

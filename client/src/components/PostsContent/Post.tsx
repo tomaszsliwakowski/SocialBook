@@ -24,7 +24,6 @@ export default function Post() {
         )}
       </div>
       <div className={styles.post__content}>
-        <h3>test</h3>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, odit
           laboriosam blanditiis qui reprehenderit dolore aliquid molestiae,
