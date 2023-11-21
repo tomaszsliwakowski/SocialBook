@@ -4,16 +4,21 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { useState } from "react";
 import { MdDone } from "react-icons/md";
+import { POST_TYPE } from "./Posts";
 
-export default function Post() {
+type PROPS = {
+  postData: POST_TYPE;
+};
+
+export default function Post({ postData }: PROPS) {
   const [sub, setSub] = useState(false);
   return (
     <li>
       <div className={styles.post__header}>
         <div>
           <BiUser />
-          <span>admin</span>
-          <span>{new Date().toLocaleDateString()}</span>
+          <span>{postData.user.name}</span>
+          <span>{postData.data}</span>
         </div>
         {!sub ? (
           <button onClick={() => setSub(true)}>Follow</button>
@@ -24,19 +29,18 @@ export default function Post() {
         )}
       </div>
       <div className={styles.post__content}>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, odit
-          laboriosam blanditiis qui reprehenderit dolore aliquid molestiae,
-          impedit placeat nulla suscipit necessitatibus mollitia. Molestias et
-          nemo beatae ut, veniam dolor!
-        </p>
+        {postData.content.image !== "" ? (
+          <img src={postData.content.image} alt="post" />
+        ) : null}
+
+        {postData.content.text !== "" ? <p>{postData.content.text}</p> : null}
       </div>
       <div className={styles.post__action}>
         <span>
-          <AiOutlineHeart /> Like
+          <AiOutlineHeart /> {postData.like}
         </span>
         <span>
-          <FaRegCommentAlt /> Comments
+          <FaRegCommentAlt /> {postData.comments}
         </span>
       </div>
     </li>
