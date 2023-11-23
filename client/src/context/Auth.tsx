@@ -15,10 +15,12 @@ const override: CSSProperties = {
   margin: "0 auto",
 };
 
-type UserType = {
+export type UserType = {
   id: string;
   name: string;
   email: string;
+  followers: string[];
+  observed: string[];
 };
 export interface UserAuth {
   User: UserType;
@@ -27,7 +29,7 @@ export interface UserAuth {
 }
 
 export const AuthContext = createContext<UserAuth>({
-  User: { id: "", name: "", email: "" },
+  User: { id: "", name: "", email: "", followers: [], observed: [] },
   refetch: () => {},
   loading: true,
 });
@@ -37,6 +39,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     id: "",
     name: "",
     email: "",
+    followers: [],
+    observed: [],
   });
 
   const { loading, error, data, refetch } = useQuery(GET_USER);
@@ -47,6 +51,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         id: data.GetUser.id,
         name: data.GetUser.name,
         email: data.GetUser.email,
+        followers: [],
+        observed: [],
       });
     }
   }, [data]);

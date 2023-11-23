@@ -26,8 +26,17 @@ export default function AddPost({ setAddPostModal }: PROPS) {
     }
   };
 
+  const handleTextPost = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setPostText((prev: string) => {
+      if (prev.split("").length <= 300) {
+        return e.target.value;
+      } else {
+        return prev;
+      }
+    });
+  };
+
   useEffect(() => {
-    console.log(image);
     setShareDisable(() => {
       if (postText !== "" || (image !== null && image)) {
         return false;
@@ -46,9 +55,7 @@ export default function AddPost({ setAddPostModal }: PROPS) {
       <div className={styles.addPosts__content}>
         <textarea
           value={postText}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-            setPostText(e.target.value)
-          }
+          onChange={(e) => handleTextPost(e)}
           placeholder="What are you thinking about?"
         />
         <div onClick={() => handleImageClick()}>
