@@ -1,8 +1,9 @@
 import { BiUser } from "react-icons/bi";
 import styles from "./posts.module.css";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+
 import { FaRegCommentAlt } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdDone } from "react-icons/md";
 import { UserType } from "../../context/Auth";
 import { POST_TYPE } from "./Main";
@@ -22,10 +23,32 @@ export default function Post({ postData, User }: PROPS) {
     postId: postData.id,
     active: false,
   });
+
+  useEffect(() => {
+    if (!postAction.active) return;
+    const parent = document.querySelector("body");
+
+    function closeModal(e: Event) {
+      let target = e.target as HTMLElement;
+      if (target.id !== "modal") {
+        setPostAction((prev) => ({ active: false, postId: prev.postId }));
+      }
+    }
+
+    if (parent) {
+      parent.addEventListener("click", closeModal);
+    }
+    return () => {
+      if (parent) {
+        parent.removeEventListener("click", closeModal);
+      }
+    };
+  }, [postAction.active]);
+
   return (
     <li>
       <div className={styles.post__header}>
-        <div>
+        <div className={styles.post__header__info}>
           <BiUser />
           <span>{postData.user.name}</span>
           <span>{postData.data}</span>
@@ -46,8 +69,21 @@ export default function Post({ postData, User }: PROPS) {
             </div>
           )
         ) : (
-          <div className={styles.postSet}>
-            <SlOptionsVertical />
+          <div className={styles.postSet} id="modal">
+            <SlOptionsVertical
+              id="modal"
+              onClick={() =>
+                setPostAction((prev) => ({
+                  active: !prev.active,
+                  postId: prev.postId,
+                }))
+              }
+            />
+            {postAction.active ? (
+              <div className={styles.postSet__opt} id="modal">
+                <div id="modal">Delete</div>
+              </div>
+            ) : null}
           </div>
         )}
       </div>
@@ -60,7 +96,12 @@ export default function Post({ postData, User }: PROPS) {
       </div>
       <div className={styles.post__action}>
         <span>
-          <AiOutlineHeart /> {postData.like}
+          {postData.like.includes(User.id) ? (
+            <AiFillHeart />
+          ) : (
+            <AiOutlineHeart />
+          )}
+          {postData.like.length}
         </span>
         <span>
           <FaRegCommentAlt /> {postData.comments}

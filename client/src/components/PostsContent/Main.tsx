@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Menu from "./Menu";
 import Posts from "./Posts";
 import styles from "./posts.module.css";
 import AddPost from "./AddPost";
 import { useSearchParams } from "react-router-dom";
+import { AuthContext, UserAuth } from "../../context/Auth";
 
 export interface POST_TYPE {
   id: string;
@@ -17,7 +18,7 @@ export interface POST_TYPE {
     text: string;
     image: string;
   };
-  like: string;
+  like: string[];
   comments: string;
 }
 
@@ -35,7 +36,7 @@ const postsDataExample: POST_TYPE[] = [
       image:
         "https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
-    like: "892",
+    like: ["fawffaf", "9dca4302444e2281dfe3", "AWdawda"],
     comments: "102",
   },
   {
@@ -51,7 +52,7 @@ const postsDataExample: POST_TYPE[] = [
       image:
         "https://x-kom.pl/img/media/inspiration/large-20231117134508-black-week-4-2023-1920x600.jpg",
     },
-    like: "892",
+    like: ["adwawdawd", "awdawdawd"],
     comments: "102",
   },
 ];
@@ -60,14 +61,16 @@ export default function Main() {
   const [addPostModal, setAddPostModal] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams({});
   const [postsData, setPostsData] = useState(postsDataExample);
+  const { User }: UserAuth = useContext(AuthContext);
   const nav = searchParams.get("nav");
   const search = searchParams.get("search");
 
   useEffect(() => {
+    if (!addPostModal) return;
     const parent = document.querySelector("body");
     const documentWidth = document.documentElement.clientWidth;
     const scrollbarWidth = Math.abs(window.innerWidth - documentWidth);
-    if (parent && addPostModal) {
+    if (parent) {
       parent.style.overflow = "hidden";
       parent.style.paddingRight = `${scrollbarWidth}px`;
     }
@@ -94,7 +97,7 @@ export default function Main() {
           setSearchParams={setSearchParams}
           navParams={{ nav: nav, search: search }}
         />
-        <Posts postsData={postsData} />
+        <Posts postsData={postsData} User={User} />
       </div>
       {addPostModal ? (
         <div
