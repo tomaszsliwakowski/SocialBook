@@ -22,7 +22,7 @@ app.use(
 );
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Server on");
+  res.send("Server On");
 });
 
 app.listen(port, () => {

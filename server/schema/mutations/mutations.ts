@@ -3,9 +3,10 @@ import { UserType } from "../types/userType";
 import bcrypt from "bcrypt";
 import { pool } from "../../database/mySqlConnect";
 import crypto from "crypto";
-import { sign } from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
 import { AccessToken } from "../../assets/assets";
 import { CommentsType, LikesType, PostType } from "../types/postType";
+import { Request } from "express";
 
 export const loginUser = {
   type: UserType,
@@ -60,16 +61,41 @@ export const registerUser = {
   },
 };
 
+type addPostArgType = {
+  post_id: string;
+  user_id: string;
+  post_text: string;
+  post_img: string;
+};
+
 export const addPost = {
   type: PostType,
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
-    createdAt: { type: new GraphQLNonNull(GraphQLString) },
     post_text: { type: new GraphQLNonNull(GraphQLString) },
     post_img: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve() {},
+  async resolve(parent: any, args: addPostArgType, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return;
+    const verifyUser = verify(cookie, AccessToken) as any;
+    if (!verifyUser) return;
+    const res: any = await pool
+      .query(
+        `INSERT INTO posts VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.post_text}','${args.post_img}')`
+      )
+      .then(() => {
+        return args;
+      })
+      .catch((res) => console.log(res));
+    if (!res.post_id) return;
+    return res;
+  },
+};
+
+type deletePostArgType = {
+  post_id: string;
 };
 
 export const deletePost = {
@@ -77,7 +103,25 @@ export const deletePost = {
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve() {},
+  async resolve(parent: any, args: deletePostArgType, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return;
+    const verifyUser = verify(cookie, AccessToken) as any;
+    if (!verifyUser) return;
+    const res: any = await pool
+      .query(`DELETE FROM posts WHERE post_id='${args.post_id}'`)
+      .then(() => {
+        return args;
+      })
+      .catch((res) => console.log(res));
+    if (!res.post_id) return;
+    return res;
+  },
+};
+
+type LikeArgType = {
+  post_id: string;
+  user_id: string;
 };
 
 export const addLikePost = {
@@ -86,7 +130,20 @@ export const addLikePost = {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve() {},
+  async resolve(parent: any, args: LikeArgType, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return;
+    const verifyUser = verify(cookie, AccessToken) as any;
+    if (!verifyUser) return;
+    const res: any = await pool
+      .query(`INSERT INTO likes VALUES ('${args.post_id}','${args.user_id}')`)
+      .then(() => {
+        return args;
+      })
+      .catch((res) => console.log(res));
+    if (!res.post_id) return;
+    return res;
+  },
 };
 
 export const deleteLikePost = {
@@ -95,7 +152,28 @@ export const deleteLikePost = {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve() {},
+  async resolve(parent: any, args: LikeArgType, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return;
+    const verifyUser = verify(cookie, AccessToken) as any;
+    if (!verifyUser) return;
+    const res: any = await pool
+      .query(
+        `DELETE FROM likes WHERE (post_id='${args.post_id}' AND user_id='${args.user_id}')`
+      )
+      .then(() => {
+        return args;
+      })
+      .catch((res) => console.log(res));
+    if (!res.post_id) return;
+    return res;
+  },
+};
+
+type addCommentArgType = {
+  post_id: string;
+  user_id: string;
+  comment_text: string;
 };
 
 export const addCommentPost = {
@@ -103,17 +181,50 @@ export const addCommentPost = {
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
-    createdAt: { type: new GraphQLNonNull(GraphQLString) },
     comment_text: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve() {},
+  async resolve(parent: any, args: addCommentArgType, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return;
+    const verifyUser = verify(cookie, AccessToken) as any;
+    if (!verifyUser) return;
+    const res: any = await pool
+      .query(
+        `INSERT INTO comments VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.comment_text}')`
+      )
+      .then(() => {
+        return args;
+      })
+      .catch((res) => console.log(res));
+    if (!res.post_id) return;
+    return res;
+  },
 };
 
+type deleteCommentArgType = {
+  post_id: string;
+  user_id: string;
+};
 export const deleteCommentPost = {
   type: CommentsType,
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve() {},
+  async resolve(parent: any, args: deleteCommentArgType, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return;
+    const verifyUser = verify(cookie, AccessToken) as any;
+    if (!verifyUser) return;
+    const res: any = await pool
+      .query(
+        `DELETE FROM comments WHERE (post_id='${args.post_id}' AND user_id='${args.user_id}')`
+      )
+      .then(() => {
+        return args;
+      })
+      .catch((res) => console.log(res));
+    if (!res.post_id) return;
+    return res;
+  },
 };

@@ -1,6 +1,15 @@
 import { GraphQLObjectType, GraphQLSchema } from "graphql";
 import { USER_ME } from "./queries/User";
-import { loginUser, registerUser } from "./mutations/mutations";
+import {
+  addCommentPost,
+  addLikePost,
+  addPost,
+  deleteCommentPost,
+  deleteLikePost,
+  deletePost,
+  loginUser,
+  registerUser,
+} from "./mutations/mutations";
 
 const RootQuery = new GraphQLObjectType({
   name: "Query",
@@ -10,7 +19,16 @@ const RootQuery = new GraphQLObjectType({
 });
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
-  fields: { loginUser: loginUser, registerUser: registerUser },
+  fields: {
+    loginUser: loginUser,
+    registerUser: registerUser,
+    addPost: addPost,
+    deletePost: deletePost,
+    addLikePost: addLikePost,
+    deleteLikePost: deleteLikePost,
+    addCommentPost: addCommentPost,
+    deleteCommentPost: deleteCommentPost,
+  },
 });
 
 export const schema = new GraphQLSchema({

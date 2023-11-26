@@ -2,10 +2,11 @@ import { UserType } from "../types/userType";
 import { pool } from "../../database/mySqlConnect";
 import { verify } from "jsonwebtoken";
 import { AccessToken } from "../../assets/assets";
+import { Request } from "express";
 
 export const USER_ME = {
   type: UserType,
-  async resolve(parent: any, args: any, req: any) {
+  async resolve(parent: any, args: any, req: Request) {
     const cookie = req.cookies.IdUser;
     if (!cookie) return { name: "", email: "" };
     const data = verify(cookie, AccessToken) as any;
