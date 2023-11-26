@@ -5,6 +5,7 @@ import { pool } from "../../database/mySqlConnect";
 import crypto from "crypto";
 import { sign } from "jsonwebtoken";
 import { AccessToken } from "../../assets/assets";
+import { CommentsType, LikesType, PostType } from "../types/postType";
 
 export const loginUser = {
   type: UserType,
@@ -57,4 +58,62 @@ export const registerUser = {
     );
     return { id: id };
   },
+};
+
+export const addPost = {
+  type: PostType,
+  args: {
+    post_id: { type: new GraphQLNonNull(GraphQLString) },
+    user_id: { type: new GraphQLNonNull(GraphQLString) },
+    createdAt: { type: new GraphQLNonNull(GraphQLString) },
+    post_text: { type: new GraphQLNonNull(GraphQLString) },
+    post_img: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve() {},
+};
+
+export const deletePost = {
+  type: PostType,
+  args: {
+    post_id: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve() {},
+};
+
+export const addLikePost = {
+  type: LikesType,
+  args: {
+    post_id: { type: new GraphQLNonNull(GraphQLString) },
+    user_id: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve() {},
+};
+
+export const deleteLikePost = {
+  type: LikesType,
+  args: {
+    post_id: { type: new GraphQLNonNull(GraphQLString) },
+    user_id: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve() {},
+};
+
+export const addCommentPost = {
+  type: CommentsType,
+  args: {
+    post_id: { type: new GraphQLNonNull(GraphQLString) },
+    user_id: { type: new GraphQLNonNull(GraphQLString) },
+    createdAt: { type: new GraphQLNonNull(GraphQLString) },
+    comment_text: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve() {},
+};
+
+export const deleteCommentPost = {
+  type: CommentsType,
+  args: {
+    post_id: { type: new GraphQLNonNull(GraphQLString) },
+    user_id: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve() {},
 };

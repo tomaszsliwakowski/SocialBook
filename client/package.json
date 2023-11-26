@@ -20,7 +20,8 @@
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.18.0",
     "react-spinners": "^0.13.8",
-    "react-typed": "^1.2.0"
+    "react-typed": "^1.2.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
