@@ -3,10 +3,9 @@ import "./SignInUp.css";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../mutations/userMutations";
 import { AuthContext, UserAuth } from "../../context/Auth";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function SignInForm() {
-  const location = useLocation();
   const navigate = useNavigate();
   const [state, setState] = useState({
     email: "",
@@ -28,19 +27,23 @@ export default function SignInForm() {
       password: state.password,
     },
     onCompleted() {
-      navigate("/");
       refetch();
     },
   });
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     const { email, password } = state;
     if (email !== "" && password !== "") {
-      loginUser().then(() => {
-        setState({ email: "", password: "" });
-      });
+      loginUser()
+        .then((res) => {
+          const response = res.data;
+          if (response.loginUser) {
+            setState({ email: "", password: "" });
+            navigate("/");
+          }
+        })
+        .catch((res) => console.log(res));
     }
 
     for (const key in state) {

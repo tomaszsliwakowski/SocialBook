@@ -5,7 +5,7 @@ import { pool } from "../../database/mySqlConnect";
 import crypto from "crypto";
 import { sign, verify } from "jsonwebtoken";
 import { AccessToken } from "../../assets/assets";
-import { CommentsType, LikesType, PostType } from "../types/postType";
+import { CommentType, LikeType, PostType } from "../types/postType";
 import { Request } from "express";
 
 export const loginUser = {
@@ -23,7 +23,8 @@ export const loginUser = {
       `SELECT * FROM users WHERE email = '${args.email}'`
     );
     const user = rows[0];
-    if (!rows[0].email) {
+
+    if (!user) {
       return null;
     }
 
@@ -125,7 +126,7 @@ type LikeArgType = {
 };
 
 export const addLikePost = {
-  type: LikesType,
+  type: LikeType,
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
@@ -147,7 +148,7 @@ export const addLikePost = {
 };
 
 export const deleteLikePost = {
-  type: LikesType,
+  type: LikeType,
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
@@ -177,7 +178,7 @@ type addCommentArgType = {
 };
 
 export const addCommentPost = {
-  type: CommentsType,
+  type: CommentType,
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
@@ -206,7 +207,7 @@ type deleteCommentArgType = {
   user_id: string;
 };
 export const deleteCommentPost = {
-  type: CommentsType,
+  type: CommentType,
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },

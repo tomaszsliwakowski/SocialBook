@@ -6,8 +6,6 @@ export const GET_USER = gql`
       id
       name
       email
-      followers
-      observed
     }
   }
 `;

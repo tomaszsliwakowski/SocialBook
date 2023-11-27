@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./SignInUp.css";
+import { REGISTER_USER } from "../../mutations/userMutations";
+import { useMutation } from "@apollo/client";
+import { AuthContext, UserAuth } from "../../context/Auth";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUpForm() {
   const [state, setState] = React.useState({
@@ -7,6 +11,8 @@ export default function SignUpForm() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
+  const { refetch }: UserAuth = useContext(AuthContext);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setState({
@@ -15,13 +21,28 @@ export default function SignUpForm() {
     });
   };
 
+  const [registerUser] = useMutation(REGISTER_USER, {
+    variables: {
+      name: state.name,
+      email: state.email,
+      password: state.password,
+    },
+    onCompleted() {
+      refetch();
+    },
+  });
+
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const { name, email, password } = state;
-    alert(
-      `You are sign up with name: ${name} email: ${email} and password: ${password}`
-    );
+
+    if (email !== "" && password !== "" && name !== "") {
+      registerUser().then(() => {
+        setState({ name: "", email: "", password: "" });
+        navigate("/");
+      });
+    }
 
     for (const key in state) {
       setState({

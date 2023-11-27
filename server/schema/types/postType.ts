@@ -11,8 +11,8 @@ export const PostType = new GraphQLObjectType({
   }),
 });
 
-export const CommentsType = new GraphQLObjectType({
-  name: "Comments",
+export const CommentType = new GraphQLObjectType({
+  name: "Comment",
   fields: () => ({
     post_id: { type: GraphQLID },
     user_id: { type: GraphQLID },
@@ -21,8 +21,8 @@ export const CommentsType = new GraphQLObjectType({
   }),
 });
 
-export const LikesType = new GraphQLObjectType({
-  name: "Likes",
+export const LikeType = new GraphQLObjectType({
+  name: "Like",
   fields: () => ({
     post_id: { type: GraphQLID },
     user_id: { type: GraphQLID },

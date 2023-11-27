@@ -15,6 +15,12 @@ export const USER_ME = {
       `SELECT * FROM users WHERE id = '${data.userId}'`
     );
     const { id, name, email } = rows[0];
-    return { id: id, name: name, email: email };
+    return {
+      id: id,
+      name: name,
+      email: email,
+      followers: ["one"],
+      observed: ["one"],
+    };
   },
 };

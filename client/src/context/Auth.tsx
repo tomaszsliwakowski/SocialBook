@@ -51,8 +51,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         id: data.GetUser.id,
         name: data.GetUser.name,
         email: data.GetUser.email,
-        followers: [],
-        observed: [],
+        followers: data.GetUser.followers,
+        observed: data.GetUser.observed,
       });
     }
   }, [data]);
