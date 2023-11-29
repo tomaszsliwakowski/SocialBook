@@ -5,6 +5,8 @@ import styles from "./posts.module.css";
 import AddPost from "./AddPost";
 import { useSearchParams } from "react-router-dom";
 import { AuthContext, UserAuth } from "../../context/Auth";
+import { useQuery } from "@apollo/client";
+import { GET_POSTS } from "../../Query/postsQuery";
 
 export interface POST_TYPE {
   id: string;
@@ -64,6 +66,7 @@ export default function Main() {
   const { User }: UserAuth = useContext(AuthContext);
   const nav = searchParams.get("nav");
   const search = searchParams.get("search");
+  //const { loading, error, data, refetch } = useQuery(GET_POSTS);
 
   useEffect(() => {
     if (!addPostModal) return;

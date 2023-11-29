@@ -10,11 +10,13 @@ import {
   loginUser,
   registerUser,
 } from "./mutations/mutations";
+import { GET_POSTS } from "./queries/Posts";
 
 const RootQuery = new GraphQLObjectType({
   name: "Query",
   fields: {
     GetUser: USER_ME,
+    GetPosts: GET_POSTS,
   },
 });
 const Mutation = new GraphQLObjectType({
