@@ -11,12 +11,14 @@ import {
   registerUser,
 } from "./mutations/mutations";
 import { GET_POSTS } from "./queries/Posts";
+import { GET_Likes } from "./queries/Like";
 
 const RootQuery = new GraphQLObjectType({
   name: "Query",
   fields: {
     GetUser: USER_ME,
     GetPosts: GET_POSTS,
+    GetLikes: GET_Likes,
   },
 });
 const Mutation = new GraphQLObjectType({

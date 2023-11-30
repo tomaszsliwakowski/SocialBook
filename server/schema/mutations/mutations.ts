@@ -65,6 +65,8 @@ export const registerUser = {
 type addPostArgType = {
   post_id: string;
   user_id: string;
+  user_name: string;
+  user_email: string;
   post_text: string;
   post_img: string;
 };
@@ -74,6 +76,8 @@ export const addPost = {
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
+    user_name: { type: new GraphQLNonNull(GraphQLString) },
+    user_email: { type: new GraphQLNonNull(GraphQLString) },
     post_text: { type: new GraphQLNonNull(GraphQLString) },
     post_img: { type: new GraphQLNonNull(GraphQLString) },
   },
@@ -84,7 +88,7 @@ export const addPost = {
     if (!verifyUser) return;
     const res: any = await pool
       .query(
-        `INSERT INTO posts VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.post_text}','${args.post_img}')`
+        `INSERT INTO posts VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.post_text}','${args.post_img}','${args.user_name}','${args.user_email}')`
       )
       .then(() => {
         return args;
