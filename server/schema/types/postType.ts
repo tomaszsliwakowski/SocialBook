@@ -3,6 +3,7 @@ import {
   GraphQLID,
   GraphQLString,
   GraphQLList,
+  GraphQLInt,
 } from "graphql";
 
 export const PostType = new GraphQLObjectType({
@@ -38,7 +39,7 @@ export const LikeType = new GraphQLObjectType({
 export const LikesType = new GraphQLObjectType({
   name: "Likes",
   fields: () => ({
-    likes: { type: new GraphQLList(LikeType) },
+    likes: { type: GraphQLString },
     comments_count: { type: GraphQLString },
   }),
 });
