@@ -4,6 +4,7 @@ import {
   GraphQLString,
   GraphQLList,
   GraphQLInt,
+  GraphQLBoolean,
 } from "graphql";
 
 export const PostType = new GraphQLObjectType({
@@ -41,5 +42,6 @@ export const LikesType = new GraphQLObjectType({
   fields: () => ({
     likes: { type: GraphQLString },
     comments_count: { type: GraphQLString },
+    liked: { type: GraphQLBoolean },
   }),
 });

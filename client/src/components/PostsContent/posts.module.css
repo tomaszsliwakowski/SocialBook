@@ -478,6 +478,9 @@
     padding: 1rem 0 1.5rem 0;
     background-color: var(--bg-color);
   }
+  .posts__menu li span {
+    display: none;
+  }
   .posts__menu a span {
     display: none;
   }
