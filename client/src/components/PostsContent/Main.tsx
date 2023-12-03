@@ -92,7 +92,7 @@ export default function Main() {
           className={styles.posts__addPost}
           onClick={(e) => closeModal(e)}
         >
-          <AddPost setAddPostModal={setAddPostModal} />
+          <AddPost setAddPostModal={setAddPostModal} User={User} />
         </div>
       ) : null}
     </>

@@ -26,13 +26,9 @@ export default function Post({ postData, User }: PROPS) {
     active: false,
   });
 
-  const { loading, error, data, refetch } = useQuery(GET_LIKES, {
+  const { error, data } = useQuery(GET_LIKES, {
     variables: { post_id: postData.post_id, user_id: User.id },
   });
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   useEffect(() => {
     if (!postAction.active) return;
@@ -57,7 +53,7 @@ export default function Post({ postData, User }: PROPS) {
 
   return (
     <>
-      {!error ? (
+      {!error && data ? (
         <li>
           <div className={styles.post__header}>
             <div className={styles.post__header__info}>

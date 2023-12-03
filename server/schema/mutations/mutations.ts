@@ -5,8 +5,14 @@ import { pool } from "../../database/mySqlConnect";
 import crypto from "crypto";
 import { sign, verify } from "jsonwebtoken";
 import { AccessToken } from "../../assets/assets";
-import { CommentType, LikeType, PostType } from "../types/postType";
+import {
+  AddPostType,
+  CommentType,
+  LikeType,
+  PostType,
+} from "../types/postType";
 import { Request } from "express";
+import { Blob } from "buffer";
 
 export const loginUser = {
   type: UserType,
@@ -65,37 +71,39 @@ export const registerUser = {
 type addPostArgType = {
   post_id: string;
   user_id: string;
-  user_name: string;
-  user_email: string;
   post_text: string;
   post_img: string;
+  user_name: string;
+  user_email: string;
 };
 
 export const addPost = {
-  type: PostType,
+  type: AddPostType,
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
-    user_name: { type: new GraphQLNonNull(GraphQLString) },
-    user_email: { type: new GraphQLNonNull(GraphQLString) },
     post_text: { type: new GraphQLNonNull(GraphQLString) },
     post_img: { type: new GraphQLNonNull(GraphQLString) },
+    user_name: { type: new GraphQLNonNull(GraphQLString) },
+    user_email: { type: new GraphQLNonNull(GraphQLString) },
   },
   async resolve(parent: any, args: addPostArgType, req: Request) {
     const cookie = req.cookies.IdUser;
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: any = await pool
-      .query(
-        `INSERT INTO posts VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.post_text}','${args.post_img}','${args.user_name}','${args.user_email}')`
-      )
-      .then(() => {
-        return args;
-      })
-      .catch((res) => console.log(res));
-    if (!res.post_id) return;
-    return res;
+    //   const res: any = await pool
+    //   .query(
+    //    `INSERT INTO posts VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.post_text}','${args.post_img}','${args.user_name}','${args.user_email}')`
+    // )
+    // .then(() => {
+    //   return args;
+    //  })
+    //  .catch((res) => console.log(res));
+
+    console.log(args.post_img);
+
+    return args;
   },
 };
 

@@ -30,7 +30,6 @@ export const GET_Likes = {
           ? true
           : false,
     };
-    console.log(data);
     if (!data) return;
 
     return data;

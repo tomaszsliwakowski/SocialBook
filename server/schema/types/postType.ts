@@ -2,8 +2,6 @@ import {
   GraphQLObjectType,
   GraphQLID,
   GraphQLString,
-  GraphQLList,
-  GraphQLInt,
   GraphQLBoolean,
 } from "graphql";
 
@@ -13,6 +11,18 @@ export const PostType = new GraphQLObjectType({
     post_id: { type: GraphQLID },
     user_id: { type: GraphQLID },
     createdAt: { type: GraphQLString },
+    post_text: { type: GraphQLString },
+    post_img: { type: GraphQLString },
+    user_name: { type: GraphQLString },
+    user_email: { type: GraphQLString },
+  }),
+});
+
+export const AddPostType = new GraphQLObjectType({
+  name: "AddPost",
+  fields: () => ({
+    post_id: { type: GraphQLID },
+    user_id: { type: GraphQLID },
     post_text: { type: GraphQLString },
     post_img: { type: GraphQLString },
     user_name: { type: GraphQLString },

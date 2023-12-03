@@ -3,14 +3,18 @@ import styles from "./posts.module.css";
 import { FaImage } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useMutation } from "@apollo/client";
+import { ADD_POST } from "../../mutations/postsMutations";
+import { UserType } from "../../context/Auth";
 
 type PROPS = {
   setAddPostModal: React.Dispatch<React.SetStateAction<boolean>>;
+  User: UserType;
 };
 
-export default function AddPost({ setAddPostModal }: PROPS) {
+export default function AddPost({ setAddPostModal, User }: PROPS) {
   const [postText, setPostText] = useState("");
-  const [image, setImage] = useState<null | File>(null);
+  const [image, setImage] = useState<null | string>(null);
   const [shareDisable, setShareDisable] = useState(true);
   const inputRef: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
@@ -23,7 +27,13 @@ export default function AddPost({ setAddPostModal }: PROPS) {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
-      setImage(file);
+      const red = new FileReader();
+      red.readAsDataURL(file);
+      red.onload = () => {
+        if (typeof red.result === "string") {
+          setImage(red.result);
+        }
+      };
     }
   };
 
@@ -47,6 +57,29 @@ export default function AddPost({ setAddPostModal }: PROPS) {
     });
   }, [image, postText]);
 
+  function saveImage() {
+    if (!image) return;
+    const formData = new FormData();
+    formData.append("image", image);
+    return formData;
+  }
+  const [addPost] = useMutation(ADD_POST, {
+    variables: {
+      post_id: uuidv4(),
+      user_id: User.id,
+      post_text: postText,
+      post_img: image,
+      user_name: User.name,
+      user_email: User.email,
+    },
+  });
+  const sharePost = async () => {
+    if (postText === "" && !image) return;
+    await addPost()
+      .then((res) => console.log(res))
+      .catch((res) => console.log(res));
+  };
+
   return (
     <div className={styles.posts__addPost__body}>
       <div className={styles.addPosts__header}>
@@ -61,11 +94,7 @@ export default function AddPost({ setAddPostModal }: PROPS) {
         />
         <div onClick={() => handleImageClick()}>
           <span>Add image to post</span>
-          {image ? (
-            <img src={URL.createObjectURL(image)} alt="Image to add" />
-          ) : (
-            <FaImage />
-          )}
+          {image ? <img src={image} alt="Image to add" /> : <FaImage />}
           <input
             ref={inputRef}
             id="image-upload"
@@ -76,7 +105,9 @@ export default function AddPost({ setAddPostModal }: PROPS) {
         </div>
       </div>
       <div className={styles.addPost__action}>
-        <button disabled={shareDisable}>Share Post</button>
+        <button disabled={shareDisable} onClick={() => sharePost()}>
+          Share Post
+        </button>
       </div>
     </div>
   );
