@@ -92,18 +92,16 @@ export const addPost = {
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    //   const res: any = await pool
-    //   .query(
-    //    `INSERT INTO posts VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.post_text}','${args.post_img}','${args.user_name}','${args.user_email}')`
-    // )
-    // .then(() => {
-    //   return args;
-    //  })
-    //  .catch((res) => console.log(res));
+    const res: any = await pool
+      .query(
+        `INSERT INTO posts VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.post_text}','${args.post_img}','${args.user_name}','${args.user_email}')`
+      )
+      .then(() => {
+        return args;
+      })
+      .catch((res) => console.log(res));
 
-    console.log(args.post_img);
-
-    return args;
+    return res;
   },
 };
 

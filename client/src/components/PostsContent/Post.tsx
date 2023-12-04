@@ -1,15 +1,19 @@
 import { BiUser } from "react-icons/bi";
 import styles from "./posts.module.css";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-
 import { FaRegCommentAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { MdDone } from "react-icons/md";
 import { UserType } from "../../context/Auth";
 import { SlOptionsVertical } from "react-icons/sl";
 import { PostType } from "./Main";
-import { GET_LIKES } from "../../Query/postsQuery";
-import { useQuery } from "@apollo/client";
+import { GET_LIKES, GET_POSTS } from "../../Query/postsQuery";
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  ADD_LIKE_POST,
+  DELETE_LIKE_POST,
+  DELETE_POST,
+} from "../../mutations/postsMutations";
 
 type PROPS = {
   postData: PostType;
@@ -29,6 +33,50 @@ export default function Post({ postData, User }: PROPS) {
   const { error, data } = useQuery(GET_LIKES, {
     variables: { post_id: postData.post_id, user_id: User.id },
   });
+
+  const [deletePost] = useMutation(DELETE_POST, {
+    variables: {
+      post_id: postData.post_id,
+    },
+    refetchQueries: [{ query: GET_POSTS }],
+  });
+
+  const [addLikePost] = useMutation(ADD_LIKE_POST, {
+    variables: {
+      post_id: postData.post_id,
+      user_id: User.id,
+    },
+    refetchQueries: [
+      {
+        query: GET_LIKES,
+        variables: { post_id: postData.post_id, user_id: User.id },
+      },
+    ],
+  });
+  const [deleteLikePost] = useMutation(DELETE_LIKE_POST, {
+    variables: {
+      post_id: postData.post_id,
+      user_id: User.id,
+    },
+    refetchQueries: [
+      {
+        query: GET_LIKES,
+        variables: { post_id: postData.post_id, user_id: User.id },
+      },
+    ],
+  });
+
+  const handleDeletePost = async () => {
+    await deletePost()
+      .then(() => setPostAction((prev) => ({ ...prev, active: false })))
+      .catch((res) => console.log(res));
+  };
+  const handleLikePost = async () => {
+    await addLikePost().catch((res) => console.log(res));
+  };
+  const handleDeleteLikePost = async () => {
+    await deleteLikePost().catch((res) => console.log(res));
+  };
 
   useEffect(() => {
     if (!postAction.active) return;
@@ -91,7 +139,9 @@ export default function Post({ postData, User }: PROPS) {
                 />
                 {postAction.active ? (
                   <div className={styles.postSet__opt} id="modal">
-                    <div id="modal">Delete</div>
+                    <div id="modal" onClick={() => handleDeletePost()}>
+                      Delete
+                    </div>
                   </div>
                 ) : null}
               </div>
@@ -106,7 +156,11 @@ export default function Post({ postData, User }: PROPS) {
           </div>
           <div className={styles.post__action}>
             <span>
-              {data.GetLikes.liked ? <AiFillHeart /> : <AiOutlineHeart />}
+              {data.GetLikes.liked ? (
+                <AiFillHeart onClick={() => handleDeleteLikePost()} />
+              ) : (
+                <AiOutlineHeart onClick={() => handleLikePost()} />
+              )}
               {data.GetLikes.likes}
             </span>
             <span>

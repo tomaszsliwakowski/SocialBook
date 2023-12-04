@@ -4,11 +4,15 @@ import cors from "cors";
 import { graphqlHTTP } from "express-graphql";
 import { schema } from "./schema/schema";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
+
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));

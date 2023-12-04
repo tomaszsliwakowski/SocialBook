@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useMutation } from "@apollo/client";
 import { ADD_POST } from "../../mutations/postsMutations";
 import { UserType } from "../../context/Auth";
+import { GET_POSTS } from "../../Query/postsQuery";
 
 type PROPS = {
   setAddPostModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,6 +27,10 @@ export default function AddPost({ setAddPostModal, User }: PROPS) {
   };
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      if (e.target.files[0].size > 2097152) {
+        alert("File is too big!");
+        return setImage(null);
+      }
       const file = e.target.files[0];
       const red = new FileReader();
       red.readAsDataURL(file);
@@ -57,26 +62,22 @@ export default function AddPost({ setAddPostModal, User }: PROPS) {
     });
   }, [image, postText]);
 
-  function saveImage() {
-    if (!image) return;
-    const formData = new FormData();
-    formData.append("image", image);
-    return formData;
-  }
   const [addPost] = useMutation(ADD_POST, {
     variables: {
       post_id: uuidv4(),
       user_id: User.id,
       post_text: postText,
-      post_img: image,
+      post_img: image || "",
       user_name: User.name,
       user_email: User.email,
     },
+    refetchQueries: [{ query: GET_POSTS }],
   });
+
   const sharePost = async () => {
     if (postText === "" && !image) return;
     await addPost()
-      .then((res) => console.log(res))
+      .then(() => setAddPostModal(false))
       .catch((res) => console.log(res));
   };
 
