@@ -139,7 +139,7 @@
 
 .post__content {
   width: 100%;
-  height: 100%;
+  height: fit-content;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -177,12 +177,12 @@
 }
 
 .post__action {
-  padding: 1rem;
+  padding: 0.8rem 1rem;
   width: 100%;
-  height: 100%;
+  height: fit-content;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.6rem;
   font-size: 16px;
   font-weight: 500;
 }
@@ -193,6 +193,7 @@
   align-items: center;
   gap: 0.3rem;
   cursor: pointer;
+  width: 50px;
 }
 
 .post__action span:last-of-type {
@@ -208,6 +209,116 @@
 }
 .post__action span:last-of-type svg {
   font-size: 25px;
+}
+
+.comments {
+  height: 100%;
+  width: 100%;
+  max-height: 500px;
+  overflow: hidden;
+  padding: 0rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.comment {
+  width: 100%;
+  background-color: var(--bg-color);
+  height: fit-content;
+  display: flex;
+}
+
+.comment div:nth-child(1) {
+  width: 50px;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.comment div:nth-child(1) svg {
+  font-size: 30px;
+  width: fit-content;
+  height: fit-content;
+}
+
+.comment div:nth-child(2) {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.2rem 0 0.5rem 0;
+}
+.comment div:nth-child(2) div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.comment div:nth-child(2) span:last-of-type {
+  color: var(--border-2-color);
+}
+.addComment {
+  height: fit-content;
+  width: 100%;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+}
+.addComment div:nth-child(2) {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-right: 1rem;
+}
+.addComment div:nth-child(1) {
+  width: 60px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.addComment div:nth-child(1) svg {
+  font-size: 30px;
+  width: fit-content;
+}
+.addComment div:nth-child(3) {
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.addComment div:nth-child(3) button {
+  width: fit-content;
+  height: 65%;
+  padding: 4px 1rem;
+  font-size: 16px;
+  color: var(--primary-blue-color);
+  font-weight: 500;
+  background-color: var(--bg-color);
+  border-color: var(--primary-blue-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.addComment div:nth-child(3) button:hover {
+  background-color: var(--primary-blue-color);
+  color: white;
+}
+.addComment textarea {
+  resize: none;
+  overflow: auto;
+  border: none;
+  outline: none;
+  height: auto;
+  max-height: 65%;
+  width: 100%;
+  border: 1px solid var(--border-2-color);
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 0.5rem 0.5rem;
 }
 
 .follow {

@@ -6,6 +6,7 @@
   --hover-color: white;
   --shadow-color: silver;
   --sec-shadow-color: rgb(224, 222, 222);
+  --border-2-color: silver;
 }
 
 * {
@@ -21,6 +22,7 @@
   --bg-color: #212121;
   --border-color: silver;
   --shadow-color: #212121;
+  --border-2-color: white;
   --sec-shadow-color: rgb(56, 55, 55);
   background-color: var(--bg-color);
   color: var(--font-color);

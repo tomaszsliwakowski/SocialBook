@@ -19,13 +19,21 @@ type PROPS = {
   postData: PostType;
   User: UserType;
 };
+type StateStatusType = {
+  postId: string;
+  active: boolean;
+};
 
 export default function Post({ postData, User }: PROPS) {
-  const [sub, setSub] = useState({
+  const [sub, setSub] = useState<StateStatusType>({
     postId: postData.post_id,
     active: false,
   });
-  const [postAction, setPostAction] = useState({
+  const [postAction, setPostAction] = useState<StateStatusType>({
+    postId: postData.post_id,
+    active: false,
+  });
+  const [commentsStatus, setCommentsStatus] = useState<StateStatusType>({
     postId: postData.post_id,
     active: false,
   });
@@ -163,10 +171,50 @@ export default function Post({ postData, User }: PROPS) {
               )}
               {data.GetLikes.likes}
             </span>
-            <span>
+            <span
+              onClick={() =>
+                setCommentsStatus((prev) => ({ ...prev, active: !prev.active }))
+              }
+            >
               <FaRegCommentAlt /> {data.GetLikes.comments_count}
             </span>
           </div>
+          {commentsStatus.active ? (
+            <div className={styles.comments}>
+              <div className={styles.addComment}>
+                <div>
+                  <BiUser />
+                </div>
+                <div>
+                  <textarea
+                    maxLength={250}
+                    placeholder="Write a comment"
+                  ></textarea>
+                </div>
+                <div>
+                  <button>Share</button>
+                </div>
+              </div>
+              <div className={styles.comment}>
+                <div>
+                  <BiUser />
+                </div>
+                <div>
+                  <div>
+                    <span>Username</span>
+                    <span>1 hours ago</span>
+                  </div>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Enim dolor aliquid obcaecati reiciendis magni deserunt.
+                    Reprehenderit cum voluptates cumque, ratione, debitis
+                    voluptatibus odio iure, veniam labore unde facere neque
+                    ipsa.
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </li>
       ) : null}
     </>
