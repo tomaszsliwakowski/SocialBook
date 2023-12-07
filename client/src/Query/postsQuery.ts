@@ -23,3 +23,15 @@ export const GET_LIKES = gql`
     }
   }
 `;
+
+export const GET_COMMENTS = gql`
+  query GetComments($post_id: String!) {
+    GetComments(post_id: $post_id) {
+      post_id
+      user_id
+      createdAt
+      comment_text
+      username
+    }
+  }
+`;

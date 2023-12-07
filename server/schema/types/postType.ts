@@ -37,6 +37,7 @@ export const CommentType = new GraphQLObjectType({
     user_id: { type: GraphQLID },
     createdAt: { type: GraphQLString },
     comment_text: { type: GraphQLString },
+    username: { type: GraphQLString },
   }),
 });
 

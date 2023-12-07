@@ -228,20 +228,20 @@
   display: flex;
 }
 
-.comment div:nth-child(1) {
-  width: 50px;
+.comment .comment_user {
   height: 100%;
+  width: 50px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
 }
-.comment div:nth-child(1) svg {
+.comment .comment_user svg {
   font-size: 30px;
   width: fit-content;
   height: fit-content;
 }
 
-.comment div:nth-child(2) {
+.comment__container {
   width: 100%;
   height: fit-content;
   display: flex;
@@ -249,15 +249,29 @@
   gap: 0.5rem;
   padding: 0.2rem 0 0.5rem 0;
 }
-.comment div:nth-child(2) div {
+.comment__container .comment__header {
   width: 100%;
   display: flex;
   justify-content: space-between;
   gap: 2rem;
 }
-
-.comment div:nth-child(2) span:last-of-type {
+.comment__header .comment__header__sec {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+.comment__header .comment__header__sec svg {
+  font-size: 18px;
+  cursor: pointer;
+}
+.comment__header div span {
   color: var(--border-2-color);
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px 0 10px;
+  align-items: center;
 }
 .addComment {
   height: fit-content;

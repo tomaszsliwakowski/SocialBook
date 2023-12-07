@@ -54,15 +54,18 @@ export const ADD_COMMENT_POST = gql`
     $post_id: String!
     $user_id: String!
     $comment_text: String!
+    $username: String!
   ) {
     addCommentPost(
       post_id: $post_id
       user_id: $user_id
       comment_text: $comment_text
+      username: $username
     ) {
       post_id
       user_id
       comment_text
+      username
     }
   }
 `;

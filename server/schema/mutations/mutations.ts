@@ -185,6 +185,7 @@ type addCommentArgType = {
   post_id: string;
   user_id: string;
   comment_text: string;
+  username: string;
 };
 
 export const addCommentPost = {
@@ -193,6 +194,7 @@ export const addCommentPost = {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
     comment_text: { type: new GraphQLNonNull(GraphQLString) },
+    username: { type: new GraphQLNonNull(GraphQLString) },
   },
   async resolve(parent: any, args: addCommentArgType, req: Request) {
     const cookie = req.cookies.IdUser;
@@ -201,7 +203,7 @@ export const addCommentPost = {
     if (!verifyUser) return;
     const res: any = await pool
       .query(
-        `INSERT INTO comments VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.comment_text}')`
+        `INSERT INTO comments VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.comment_text}','${args.username}')`
       )
       .then(() => {
         return args;

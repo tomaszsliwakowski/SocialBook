@@ -14,6 +14,7 @@ import {
   DELETE_LIKE_POST,
   DELETE_POST,
 } from "../../mutations/postsMutations";
+import Comments from "./Comments";
 
 type PROPS = {
   postData: PostType;
@@ -180,40 +181,7 @@ export default function Post({ postData, User }: PROPS) {
             </span>
           </div>
           {commentsStatus.active ? (
-            <div className={styles.comments}>
-              <div className={styles.addComment}>
-                <div>
-                  <BiUser />
-                </div>
-                <div>
-                  <textarea
-                    maxLength={250}
-                    placeholder="Write a comment"
-                  ></textarea>
-                </div>
-                <div>
-                  <button>Share</button>
-                </div>
-              </div>
-              <div className={styles.comment}>
-                <div>
-                  <BiUser />
-                </div>
-                <div>
-                  <div>
-                    <span>Username</span>
-                    <span>1 hours ago</span>
-                  </div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Enim dolor aliquid obcaecati reiciendis magni deserunt.
-                    Reprehenderit cum voluptates cumque, ratione, debitis
-                    voluptatibus odio iure, veniam labore unde facere neque
-                    ipsa.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <Comments postData={postData} User={User} />
           ) : null}
         </li>
       ) : null}
