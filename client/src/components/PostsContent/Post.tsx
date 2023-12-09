@@ -39,7 +39,7 @@ export default function Post({ postData, User }: PROPS) {
     active: false,
   });
 
-  const { error, data } = useQuery(GET_LIKES, {
+  const { error, data, refetch } = useQuery(GET_LIKES, {
     variables: { post_id: postData.post_id, user_id: User.id },
   });
 
@@ -181,7 +181,7 @@ export default function Post({ postData, User }: PROPS) {
             </span>
           </div>
           {commentsStatus.active ? (
-            <Comments postData={postData} User={User} />
+            <Comments postData={postData} User={User} refetch={refetch} />
           ) : null}
         </li>
       ) : null}

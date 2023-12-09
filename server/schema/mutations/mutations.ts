@@ -122,6 +122,8 @@ export const deletePost = {
     const res: any = await pool
       .query(`DELETE FROM posts WHERE post_id='${args.post_id}'`)
       .then(() => {
+        pool.query(`DELETE FROM comments WHERE post_id='${args.post_id}'`);
+        pool.query(`DELETE FROM likes WHERE post_id='${args.post_id}'`);
         return args;
       })
       .catch((res) => console.log(res));
@@ -186,6 +188,7 @@ type addCommentArgType = {
   user_id: string;
   comment_text: string;
   username: string;
+  com_id: string;
 };
 
 export const addCommentPost = {
@@ -195,6 +198,7 @@ export const addCommentPost = {
     user_id: { type: new GraphQLNonNull(GraphQLString) },
     comment_text: { type: new GraphQLNonNull(GraphQLString) },
     username: { type: new GraphQLNonNull(GraphQLString) },
+    com_id: { type: new GraphQLNonNull(GraphQLString) },
   },
   async resolve(parent: any, args: addCommentArgType, req: Request) {
     const cookie = req.cookies.IdUser;
@@ -203,7 +207,7 @@ export const addCommentPost = {
     if (!verifyUser) return;
     const res: any = await pool
       .query(
-        `INSERT INTO comments VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.comment_text}','${args.username}')`
+        `INSERT INTO comments VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.comment_text}','${args.username}','${args.com_id}')`
       )
       .then(() => {
         return args;
@@ -217,12 +221,14 @@ export const addCommentPost = {
 type deleteCommentArgType = {
   post_id: string;
   user_id: string;
+  com_id: string;
 };
 export const deleteCommentPost = {
   type: CommentType,
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
+    com_id: { type: new GraphQLNonNull(GraphQLString) },
   },
   async resolve(parent: any, args: deleteCommentArgType, req: Request) {
     const cookie = req.cookies.IdUser;
@@ -231,7 +237,7 @@ export const deleteCommentPost = {
     if (!verifyUser) return;
     const res: any = await pool
       .query(
-        `DELETE FROM comments WHERE (post_id='${args.post_id}' AND user_id='${args.user_id}')`
+        `DELETE FROM comments WHERE (post_id='${args.post_id}' AND user_id='${args.user_id}' AND com_id='${args.com_id}')`
       )
       .then(() => {
         return args;

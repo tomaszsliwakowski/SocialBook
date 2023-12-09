@@ -8,13 +8,18 @@ import { DOMAIN, deleteCookie } from "../../assets/assets";
 
 export default function HeaderAuth() {
   const { User, refetch }: UserAuth = useContext(AuthContext);
+
   return (
     <div className={styles.header__auth}>
       <span className={styles.user}>
         <BiUser />
       </span>
       <div className={styles.dropDown}>
-        {User.id === "" ? <NotLogged /> : <Logged refetch={refetch} />}
+        {User.id === "" || !User.id ? (
+          <NotLogged />
+        ) : (
+          <Logged refetch={refetch} />
+        )}
       </div>
     </div>
   );

@@ -55,25 +55,33 @@ export const ADD_COMMENT_POST = gql`
     $user_id: String!
     $comment_text: String!
     $username: String!
+    $com_id: String!
   ) {
     addCommentPost(
       post_id: $post_id
       user_id: $user_id
       comment_text: $comment_text
       username: $username
+      com_id: $com_id
     ) {
       post_id
       user_id
       comment_text
       username
+      com_id
     }
   }
 `;
 export const DELETE_COMMENT_POST = gql`
-  mutation deleteCommentPost($post_id: String!, $user_id: String!) {
-    deleteCommentPost(post_id: $post_id, user_id: $user_id) {
+  mutation deleteCommentPost(
+    $post_id: String!
+    $user_id: String!
+    $com_id: String!
+  ) {
+    deleteCommentPost(post_id: $post_id, user_id: $user_id, com_id: $com_id) {
       post_id
       user_id
+      com_id
     }
   }
 `;

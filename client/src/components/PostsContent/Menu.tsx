@@ -99,6 +99,7 @@ export default function Menu({
               <div className={styles.search__input}>
                 <input
                   type="text"
+                  placeholder="Search posts"
                   value={searchValue}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setSearchValue(e.target.value)

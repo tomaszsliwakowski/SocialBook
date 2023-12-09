@@ -4,24 +4,46 @@ import { BiUser } from "react-icons/bi";
 import { useMutation, useQuery } from "@apollo/client";
 import { PostType } from "./Main";
 import { UserType } from "../../context/Auth";
-import { ADD_COMMENT_POST } from "../../mutations/postsMutations";
+import {
+  ADD_COMMENT_POST,
+  DELETE_COMMENT_POST,
+} from "../../mutations/postsMutations";
 import { GET_COMMENTS } from "../../Query/postsQuery";
 import { SlOptionsVertical } from "react-icons/sl";
+import { v4 as uuidv4 } from "uuid";
 
 type PROPS = {
   postData: PostType;
   User: UserType;
+  refetch: Function;
+};
+
+type TimerType = {
+  minutes: number;
+  hours: number;
+  days: number;
 };
 
 type CommentType = {
+  post_id: string;
+  user_id: string;
   username: string;
   comment_text: string;
   createdAt: string;
+  com_id: string;
+};
+type StateStatusType = {
+  comId: string;
+  active: boolean;
 };
 
-export default function Comments({ postData, User }: PROPS) {
+export default function Comments({ postData, User, refetch }: PROPS) {
   const [comValue, setComValue] = useState("");
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState<CommentType[]>([]);
+  const [comAction, setComAction] = useState<StateStatusType>({
+    comId: "",
+    active: false,
+  });
   const { loading, error, data } = useQuery(GET_COMMENTS, {
     variables: { post_id: postData.post_id },
   });
@@ -38,6 +60,7 @@ export default function Comments({ postData, User }: PROPS) {
       user_id: User.id,
       comment_text: comValue,
       username: User.name,
+      com_id: uuidv4(),
     },
     refetchQueries: [
       { query: GET_COMMENTS, variables: { post_id: postData.post_id } },
@@ -47,8 +70,72 @@ export default function Comments({ postData, User }: PROPS) {
   const addComment = async () => {
     if (comValue === "") return;
     await addCommentPost()
-      .then(() => setComValue(""))
+      .then(() => {
+        refetch();
+        setComValue("");
+      })
       .catch((res) => console.log(res));
+  };
+
+  const [deleteCommentPost] = useMutation(DELETE_COMMENT_POST, {
+    variables: {
+      post_id: postData.post_id,
+      user_id: User.id,
+      com_id: comAction.comId,
+    },
+    refetchQueries: [
+      { query: GET_COMMENTS, variables: { post_id: postData.post_id } },
+    ],
+  });
+
+  const handelDeleteComment = async () => {
+    if (comAction.comId === "") return;
+    await deleteCommentPost()
+      .then(() => {
+        refetch();
+        setComAction({ comId: "", active: false });
+      })
+      .catch((res) => console.log(res));
+  };
+
+  useEffect(() => {
+    if (!comAction.active) return;
+    const parent = document.querySelector("body");
+
+    function closeModal(e: Event) {
+      let target = e.target as HTMLElement;
+      if (target.id !== "ComModal") {
+        setComAction({ active: false, comId: "" });
+      }
+    }
+
+    if (parent) {
+      parent.addEventListener("click", closeModal);
+    }
+    return () => {
+      if (parent) {
+        parent.removeEventListener("click", closeModal);
+      }
+    };
+  }, [comAction.active]);
+
+  const timeExpiredFrom = (createdAt: string) => {
+    if (!comments[0]) return;
+    const createTime = parseInt(createdAt);
+    const date = new Date();
+    const expired = date.getTime() - createTime;
+    let timer: TimerType = {
+      minutes: Math.floor((expired / 1000 / 60) % 60),
+      hours: Math.floor((expired / 1000 / 60 / 60) % 60),
+      days: Math.floor(((expired / 1000 / 60 / 60) % 60) / 24),
+    };
+    if (timer.minutes < 1 && timer.hours === 0) return `now`;
+    if (timer.minutes < 60 && timer.hours === 0)
+      return `${timer.minutes} minutes ago`;
+    if (timer.hours >= 1 && timer.hours < 24 && timer.days === 0)
+      return `${timer.hours} hours ago`;
+    if (timer.days > 0 && timer.days <= 7) return `${timer.days} days ago`;
+    if (timer.days > 7) return `${new Date(createTime).toLocaleDateString()}`;
   };
 
   return (
@@ -81,11 +168,28 @@ export default function Comments({ postData, User }: PROPS) {
                 <div className={styles.comment__header}>
                   <span>{item.username}</span>
                   <div className={styles.comment__header__sec}>
-                    <span>{`${new Date(
-                      parseInt(item.createdAt)
-                    ).toLocaleString()}`}</span>
-
-                    <SlOptionsVertical />
+                    <span>{timeExpiredFrom(item.createdAt)}</span>
+                    <div id="ComModal" className={styles.comSet}>
+                      <SlOptionsVertical
+                        id="ComModal"
+                        onClick={() =>
+                          setComAction((prev) => ({
+                            active: !prev.active,
+                            comId: item.com_id,
+                          }))
+                        }
+                      />
+                      {comAction.active && comAction.comId === item.com_id ? (
+                        <div className={styles.comSet__opt} id="ComModal">
+                          <div
+                            id="ComModal"
+                            onClick={() => handelDeleteComment()}
+                          >
+                            Delete
+                          </div>
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
                 <p>{item.comment_text}</p>
