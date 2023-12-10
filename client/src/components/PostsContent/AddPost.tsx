@@ -7,6 +7,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_POST } from "../../mutations/postsMutations";
 import { UserType } from "../../context/Auth";
 import { GET_POSTS } from "../../Query/postsQuery";
+import imageCompression from "browser-image-compression";
 
 type PROPS = {
   setAddPostModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,15 +26,22 @@ export default function AddPost({ setAddPostModal, User }: PROPS) {
       inputRef.current.click();
     }
   };
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       if (e.target.files[0].size > 2097152) {
         alert("File is too big!");
         return setImage(null);
       }
       const file = e.target.files[0];
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 800,
+        useWebWorker: true,
+      };
+      const compressedFile = await imageCompression(file, options);
       const red = new FileReader();
-      red.readAsDataURL(file);
+      red.readAsDataURL(compressedFile);
       red.onload = () => {
         if (typeof red.result === "string") {
           setImage(red.result);

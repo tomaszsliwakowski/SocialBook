@@ -15,6 +15,7 @@ import {
   DELETE_POST,
 } from "../../mutations/postsMutations";
 import Comments from "./Comments";
+import { timeExpiredFrom } from "../../assets/assets";
 
 type PROPS = {
   postData: PostType;
@@ -116,9 +117,7 @@ export default function Post({ postData, User }: PROPS) {
             <div className={styles.post__header__info}>
               <BiUser />
               <span>{postData.user_name}</span>
-              <span>{`${new Date(
-                parseInt(postData.createdAt)
-              ).toLocaleString()}`}</span>
+              <span>{timeExpiredFrom(postData.createdAt)}</span>
             </div>
             {User.id !== postData.user_id ? (
               !sub.active ? (
