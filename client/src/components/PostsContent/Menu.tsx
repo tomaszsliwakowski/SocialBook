@@ -50,7 +50,7 @@ export default function Menu({
           onClick={() =>
             setSearchParams((prev) => {
               prev.delete("search");
-              prev.delete("nav");
+              prev.set("nav", "all");
               return prev;
             })
           }

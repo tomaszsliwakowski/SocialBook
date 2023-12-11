@@ -12,7 +12,6 @@ import {
   PostType,
 } from "../types/postType";
 import { Request } from "express";
-import { Blob } from "buffer";
 
 export const loginUser = {
   type: UserType,

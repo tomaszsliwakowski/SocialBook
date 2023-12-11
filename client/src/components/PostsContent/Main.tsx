@@ -32,13 +32,19 @@ export default function Main() {
   const { User }: UserAuth = useContext(AuthContext);
   const nav = searchParams.get("nav");
   const search = searchParams.get("search");
-  const { loading, error, data, refetch } = useQuery(GET_POSTS);
+  const { loading, error, data, refetch } = useQuery(GET_POSTS, {
+    variables: { type: nav ? nav : search, user_id: User.id },
+  });
 
   useEffect(() => {
     if (!loading && !error && data) {
       setPostsData(data.GetPosts);
     }
   }, [data]);
+
+  useEffect(() => {
+    refetch();
+  }, [nav, search]);
 
   useEffect(() => {
     if (!addPostModal) return;

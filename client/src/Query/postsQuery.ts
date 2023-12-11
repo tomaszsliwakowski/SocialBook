@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_POSTS = gql`
-  query GetPosts {
-    GetPosts {
+  query GetPosts($type: String!, $user_id: String!) {
+    GetPosts(type: $type, user_id: $user_id) {
       post_id
       user_id
       createdAt
