@@ -43,7 +43,7 @@ export default function Menu({
       <ul>
         <li
           style={
-            navParams.nav === null && navParams.search === null
+            navParams.nav === "all" && navParams.search === null
               ? { fontWeight: "500", color: "#3a86ff" }
               : {}
           }
