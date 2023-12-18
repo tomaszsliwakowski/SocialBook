@@ -20,13 +20,15 @@ import { timeExpiredFrom } from "../../assets/assets";
 type PROPS = {
   postData: PostType;
   User: UserType;
+  postsType: string;
+  pageCount: string;
 };
 type StateStatusType = {
   postId: string;
   active: boolean;
 };
 
-export default function Post({ postData, User }: PROPS) {
+export default function Post({ postData, User, postsType, pageCount }: PROPS) {
   const [sub, setSub] = useState<StateStatusType>({
     postId: postData.post_id,
     active: false,
@@ -48,7 +50,12 @@ export default function Post({ postData, User }: PROPS) {
     variables: {
       post_id: postData.post_id,
     },
-    refetchQueries: [{ query: GET_POSTS }],
+    refetchQueries: [
+      {
+        query: GET_POSTS,
+        variables: { type: postsType, user_id: User.id, count: pageCount },
+      },
+    ],
   });
 
   const [addLikePost] = useMutation(ADD_LIKE_POST, {

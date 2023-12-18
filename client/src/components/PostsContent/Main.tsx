@@ -29,11 +29,16 @@ export default function Main() {
   const [addPostModal, setAddPostModal] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams({});
   const [postsData, setPostsData] = useState<PostType[]>([]);
+  const [postsPage, setPostsPage] = useState<number>(1);
   const { User }: UserAuth = useContext(AuthContext);
   const nav = searchParams.get("nav");
   const search = searchParams.get("search");
   const { loading, error, data, refetch } = useQuery(GET_POSTS, {
-    variables: { type: nav ? nav : search, user_id: User.id },
+    variables: {
+      type: nav ? nav : search,
+      user_id: User.id,
+      count: postsPage ? postsPage.toString() : "1",
+    },
   });
 
   useEffect(() => {
@@ -89,7 +94,13 @@ export default function Main() {
           />
         ) : null}
         {postsData.length > 0 ? (
-          <Posts postsData={postsData} User={User} />
+          <Posts
+            postsData={postsData}
+            User={User}
+            setPostsPage={setPostsPage}
+            postsType={nav ? nav : search || "all"}
+            pageCount={postsPage.toString() || "1"}
+          />
         ) : null}
       </div>
       {addPostModal ? (
@@ -98,7 +109,12 @@ export default function Main() {
           className={styles.posts__addPost}
           onClick={(e) => closeModal(e)}
         >
-          <AddPost setAddPostModal={setAddPostModal} User={User} />
+          <AddPost
+            setAddPostModal={setAddPostModal}
+            User={User}
+            postsType={nav ? nav : search || "all"}
+            pageCount={postsPage.toString() || "1"}
+          />
         </div>
       ) : null}
     </>

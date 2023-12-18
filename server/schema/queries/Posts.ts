@@ -5,6 +5,7 @@ import { pool } from "../../database/mySqlConnect";
 type PostPropsType = {
   type: string;
   user_id: string;
+  count: string;
 };
 
 type likedType = {
@@ -31,6 +32,7 @@ export const GET_POSTS = {
   args: {
     type: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
+    count: { type: new GraphQLNonNull(GraphQLString) },
   },
   async resolve(parent: any, args: PostPropsType) {
     let PostsToSend: any = [];
@@ -97,7 +99,7 @@ export const GET_POSTS = {
       }
     }
 
-    return PostsToSend.slice(0, 11);
+    return PostsToSend.slice(0, parseInt(args.count) * 10);
   },
 };
 

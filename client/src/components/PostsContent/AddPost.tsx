@@ -12,9 +12,16 @@ import imageCompression from "browser-image-compression";
 type PROPS = {
   setAddPostModal: React.Dispatch<React.SetStateAction<boolean>>;
   User: UserType;
+  postsType: string;
+  pageCount: string;
 };
 
-export default function AddPost({ setAddPostModal, User }: PROPS) {
+export default function AddPost({
+  setAddPostModal,
+  User,
+  postsType,
+  pageCount,
+}: PROPS) {
   const [postText, setPostText] = useState("");
   const [image, setImage] = useState<null | string>(null);
   const [shareDisable, setShareDisable] = useState(true);
@@ -79,7 +86,12 @@ export default function AddPost({ setAddPostModal, User }: PROPS) {
       user_name: User.name,
       user_email: User.email,
     },
-    refetchQueries: [{ query: GET_POSTS }],
+    refetchQueries: [
+      {
+        query: GET_POSTS,
+        variables: { type: postsType, user_id: User.id, count: pageCount },
+      },
+    ],
   });
 
   const sharePost = async () => {
