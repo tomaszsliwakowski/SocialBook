@@ -44,22 +44,28 @@ export const GET_POSTS = {
       const observedData = await pool.query(
         `SELECT * FROM observed WHERE user_id = '${args.user_id}'`
       );
+
       const observed: any = observedData[0];
-      const observedUser: string[] = observed.map(
-        (item: observedType) => item.observed_id
-      );
-      let observed_idList = "";
-      for (let i = 0; i < observedUser.length; i++) {
-        const item = observedUser[i];
-        observed_idList += `'${item}'`;
-        if (i !== observedUser.length - 1) {
-          observed_idList += ", ";
+      if (observed.length === 0) {
+        PostsToSend = [];
+      } else {
+        const observedUser: string[] = observed.map(
+          (item: observedType) => item.observed_id
+        );
+        let observed_idList = "";
+        for (let i = 0; i < observedUser.length; i++) {
+          const item = observedUser[i];
+          observed_idList += `'${item}'`;
+          if (i !== observedUser.length - 1) {
+            observed_idList += ", ";
+          }
         }
+        const Data = await pool.query(
+          `SELECT * FROM posts WHERE user_id IN (${observed_idList})`
+        );
+
+        PostsToSend = Data[0];
       }
-      const Data = await pool.query(
-        `SELECT * FROM posts WHERE user_id IN (${observed_idList})`
-      );
-      PostsToSend = Data[0];
     }
     if (args.type === "liked") {
       const likeData = await pool.query(
@@ -99,7 +105,10 @@ export const GET_POSTS = {
       }
     }
 
-    return PostsToSend.slice(0, parseInt(args.count) * 10);
+    return PostsToSend.slice(
+      parseInt(args.count) * 10 - 10,
+      parseInt(args.count) * 10
+    );
   },
 };
 

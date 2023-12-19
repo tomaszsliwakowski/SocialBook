@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useContext, useEffect } from "react";
+import { CSSProperties, ReactNode, useContext } from "react";
 import { AuthContext, UserAuth } from "./Auth";
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";

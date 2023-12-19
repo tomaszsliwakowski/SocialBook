@@ -43,11 +43,24 @@ export default function Main() {
 
   useEffect(() => {
     if (!loading && !error && data) {
-      setPostsData(data.GetPosts);
+      setPostsData((prev) => {
+        if (prev.length === 0) return data.GetPosts;
+        if (postsPage === 1 && data.GetPosts.length === 0) return [];
+        if (postsPage * 10 > prev.length) {
+          return [...prev, ...data.GetPosts];
+        } else {
+          const exist = prev.filter((item) => data.GetPosts.includes(item));
+          if (postsPage === 1) return data.GetPosts;
+          if (postsPage > 1 && exist.length < 1)
+            return [...prev, ...data.GetPosts];
+          if (exist.length > 0) return prev;
+        }
+      });
     }
   }, [data]);
 
   useEffect(() => {
+    setPostsPage(1);
     refetch();
   }, [nav, search]);
 
@@ -101,7 +114,9 @@ export default function Main() {
             postsType={nav ? nav : search || "all"}
             pageCount={postsPage.toString() || "1"}
           />
-        ) : null}
+        ) : (
+          <div>Not Found Any Posts</div>
+        )}
       </div>
       {addPostModal ? (
         <div

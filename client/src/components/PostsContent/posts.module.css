@@ -19,6 +19,7 @@
   display: flex;
   padding-left: 6rem;
   flex-direction: column;
+  margin-bottom: 4rem;
 }
 
 .posts__menu ul {
@@ -621,8 +622,21 @@
 }
 .posts__loadingMore {
   width: 100%;
-  height: 50px;
-  background-color: silver;
+  height: 40px;
+  background-color: var(--bg-color);
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border: 1px solid var(--primary-blue-color);
+  color: var(--primary-blue-color);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.posts__loadingMore:hover {
+  background-color: var(--primary-blue-color);
+  color: white;
 }
 
 @media screen and (max-width: 1024px) {

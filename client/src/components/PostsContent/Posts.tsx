@@ -20,19 +20,12 @@ export default function Posts({
   pageCount,
   setPostsPage,
 }: PROPS) {
-  const [ref, isVisible] = useInView({
-    threshold: 1,
-  });
-
-  useEffect(() => {
-    if (isVisible) {
-      if (postsData.length === parseInt(pageCount) * 10) {
-        setPostsPage((prev) => prev + 1);
-      }
+  const GetMorePosts = () => {
+    if (postsData.length === parseInt(pageCount) * 10) {
+      setPostsPage((prev) => prev + 1);
     }
-  }, [isVisible]);
+  };
 
-  console.log(postsData);
   return (
     <div className={styles.posts__content}>
       <ul className={styles.posts__list}>
@@ -47,12 +40,15 @@ export default function Posts({
               />
             ))
           : null}
+        {postsData.length >= 10 ? (
+          <div
+            className={styles.posts__loadingMore}
+            onClick={() => GetMorePosts()}
+          >
+            Show More
+          </div>
+        ) : null}
       </ul>
-      {postsData.length >= 10 ? (
-        <div ref={ref} className={styles.posts__loadingMore}>
-          end
-        </div>
-      ) : null}
     </div>
   );
 }
