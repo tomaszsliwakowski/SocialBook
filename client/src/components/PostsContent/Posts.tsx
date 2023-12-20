@@ -2,8 +2,7 @@ import styles from "./posts.module.css";
 import Post from "./Post";
 import { PostType } from "./Main";
 import { UserType } from "../../context/Auth";
-import { useEffect } from "react";
-import { useInView } from "react-hook-inview";
+import { useEffect, useState } from "react";
 
 type PROPS = {
   postsData: PostType[];
@@ -20,11 +19,19 @@ export default function Posts({
   pageCount,
   setPostsPage,
 }: PROPS) {
+  const [maxPosts, setMaxPosts] = useState<boolean>(false);
   const GetMorePosts = () => {
     if (postsData.length === parseInt(pageCount) * 10) {
       setPostsPage((prev) => prev + 1);
     }
   };
+  useEffect(() => {
+    if (postsData.length === parseInt(pageCount) * 10) {
+      setMaxPosts((prev) => (prev ? false : prev));
+    } else {
+      setMaxPosts(true);
+    }
+  }, [postsData]);
 
   return (
     <div className={styles.posts__content}>
@@ -41,12 +48,13 @@ export default function Posts({
             ))
           : null}
         {postsData.length >= 10 ? (
-          <div
+          <button
+            disabled={maxPosts}
             className={styles.posts__loadingMore}
             onClick={() => GetMorePosts()}
           >
-            Show More
-          </div>
+            {maxPosts ? "End of posts" : "Show more"}
+          </button>
         ) : null}
       </ul>
     </div>

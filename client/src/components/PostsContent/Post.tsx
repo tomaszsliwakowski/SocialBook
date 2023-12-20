@@ -85,7 +85,9 @@ export default function Post({ postData, User, postsType, pageCount }: PROPS) {
 
   const handleDeletePost = async () => {
     await deletePost()
-      .then(() => setPostAction((prev) => ({ ...prev, active: false })))
+      .then(() => {
+        setPostAction((prev) => ({ ...prev, active: false }));
+      })
       .catch((res) => console.log(res));
   };
   const handleLikePost = async () => {

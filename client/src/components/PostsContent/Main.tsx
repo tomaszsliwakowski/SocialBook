@@ -21,7 +21,6 @@ export interface PostType {
 
 const override: CSSProperties = {
   display: "block",
-  margin: "0 auto",
   marginTop: "10%",
 };
 
@@ -43,6 +42,8 @@ export default function Main() {
 
   useEffect(() => {
     if (!loading && !error && data) {
+      //PROBLEM -  double data after add and delete post
+      // to change
       setPostsData((prev) => {
         if (prev.length === 0) return data.GetPosts;
         if (postsPage === 1 && data.GetPosts.length === 0) return [];
@@ -88,6 +89,10 @@ export default function Main() {
     }
   };
 
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
   return (
     <>
       <div className={styles.posts}>
@@ -97,26 +102,33 @@ export default function Main() {
           navParams={{ nav: nav, search: search }}
         />
         {loading ? (
-          <ClipLoader
-            color="#3a86ff"
-            loading={loading}
-            cssOverride={override}
-            size={150}
-            aria-label="ClipLoader"
-            speedMultiplier={0.6}
-          />
+          <div className={styles.posts__loading}>
+            <ClipLoader
+              color="#3a86ff"
+              loading={loading}
+              cssOverride={override}
+              size={150}
+              aria-label="ClipLoader"
+              speedMultiplier={0.6}
+            />
+          </div>
         ) : null}
-        {postsData.length > 0 ? (
-          <Posts
-            postsData={postsData}
-            User={User}
-            setPostsPage={setPostsPage}
-            postsType={nav ? nav : search || "all"}
-            pageCount={postsPage.toString() || "1"}
-          />
-        ) : (
-          <div>Not Found Any Posts</div>
-        )}
+        {!loading ? (
+          postsData.length > 0 ? (
+            <Posts
+              postsData={postsData}
+              User={User}
+              setPostsPage={setPostsPage}
+              postsType={nav ? nav : search || "all"}
+              pageCount={postsPage.toString() || "1"}
+            />
+          ) : (
+            <div className={styles.posts__notFound}>
+              <span>Not Found Any Posts</span>
+              <button onClick={() => refreshPage()}>Refresh</button>
+            </div>
+          )
+        ) : null}
       </div>
       {addPostModal ? (
         <div
