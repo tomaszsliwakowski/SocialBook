@@ -19,6 +19,8 @@ export interface PostType {
   user_email: string;
 }
 
+type PostsKeyType = keyof PostType;
+
 const override: CSSProperties = {
   display: "block",
   marginTop: "10%",
@@ -40,22 +42,17 @@ export default function Main() {
     },
   });
 
+  function getUniqueListBy(arr: PostType[], key: PostsKeyType) {
+    return [...new Map(arr.map((item) => [item[key], item])).values()];
+  }
+
   useEffect(() => {
     if (!loading && !error && data) {
-      //PROBLEM -  double data after add and delete post
-      // to change
       setPostsData((prev) => {
-        if (prev.length === 0) return data.GetPosts;
-        if (postsPage === 1 && data.GetPosts.length === 0) return [];
-        if (postsPage * 10 > prev.length) {
-          return [...prev, ...data.GetPosts];
-        } else {
-          const exist = prev.filter((item) => data.GetPosts.includes(item));
-          if (postsPage === 1) return data.GetPosts;
-          if (postsPage > 1 && exist.length < 1)
-            return [...prev, ...data.GetPosts];
-          if (exist.length > 0) return prev;
-        }
+        const newData = data.GetPosts;
+        let allData: PostType[] = prev.concat(newData);
+        return getUniqueListBy(allData, "post_id");
+        //delete post handler not remove post
       });
     }
   }, [data]);
