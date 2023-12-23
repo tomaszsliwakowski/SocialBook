@@ -2,9 +2,11 @@ import { GraphQLObjectType, GraphQLSchema } from "graphql";
 import { USER_ME } from "./queries/User";
 import {
   addCommentPost,
+  addFollow,
   addLikePost,
   addPost,
   deleteCommentPost,
+  deleteFollow,
   deleteLikePost,
   deletePost,
   loginUser,
@@ -34,6 +36,8 @@ const Mutation = new GraphQLObjectType({
     deleteLikePost: deleteLikePost,
     addCommentPost: addCommentPost,
     deleteCommentPost: deleteCommentPost,
+    addFollow: addFollow,
+    deleteFollow: deleteFollow,
   },
 });
 

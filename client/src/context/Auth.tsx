@@ -15,23 +15,30 @@ const override: CSSProperties = {
   margin: "0 auto",
 };
 
+export type FollowerObjectType = {
+  user_id: string;
+  followers_id: string;
+};
+
 export type UserType = {
   id: string;
   name: string;
   email: string;
-  followers: string[];
-  observed: string[];
+  followers: FollowerObjectType[];
+  observed: FollowerObjectType[];
 };
 export interface UserAuth {
   User: UserType;
-  refetch: Function;
+  setUser: React.Dispatch<React.SetStateAction<UserType>>;
+  refetchUser: Function;
   loading: boolean;
 }
 
 export const AuthContext = createContext<UserAuth>({
   User: { id: "", name: "", email: "", followers: [], observed: [] },
-  refetch: () => {},
+  refetchUser: () => {},
   loading: true,
+  setUser: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -44,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const { loading, error, data, refetch } = useQuery(GET_USER);
+  const refetchUser = refetch;
 
   useEffect(() => {
     if (!loading && !error && data) {
@@ -66,7 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     );
 
   return (
-    <AuthContext.Provider value={{ User, refetch, loading }}>
+    <AuthContext.Provider value={{ User, refetchUser, loading, setUser }}>
       {!loading ? (
         children
       ) : (

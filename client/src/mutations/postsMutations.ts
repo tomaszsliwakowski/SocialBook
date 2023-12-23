@@ -85,3 +85,20 @@ export const DELETE_COMMENT_POST = gql`
     }
   }
 `;
+
+export const ADD_FOLLOW = gql`
+  mutation addFollow($user_id: String!, $follower_id: String!) {
+    addFollow(user_id: $user_id, follower_id: $follower_id) {
+      user_id
+      follower_id
+    }
+  }
+`;
+export const DELETE_FOLLOW = gql`
+  mutation deleteFollow($user_id: String!, $follower_id: String!) {
+    deleteFollow(user_id: $user_id, follower_id: $follower_id) {
+      user_id
+      follower_id
+    }
+  }
+`;

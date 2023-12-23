@@ -5,6 +5,14 @@ import {
   GraphQLList,
 } from "graphql";
 
+const FollowerObjectType = new GraphQLObjectType({
+  name: "FollowersType",
+  fields: () => ({
+    user_id: { type: GraphQLString },
+    followers_id: { type: GraphQLString },
+  }),
+});
+
 export const UserType = new GraphQLObjectType({
   name: "User",
   fields: () => ({
@@ -12,7 +20,7 @@ export const UserType = new GraphQLObjectType({
     name: { type: GraphQLString },
     email: { type: GraphQLString },
     password: { type: GraphQLString },
-    followers: { type: new GraphQLList(GraphQLString) },
-    observed: { type: new GraphQLList(GraphQLString) },
+    followers: { type: new GraphQLList(FollowerObjectType) },
+    observed: { type: new GraphQLList(FollowerObjectType) },
   }),
 });

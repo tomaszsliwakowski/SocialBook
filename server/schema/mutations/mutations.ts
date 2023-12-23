@@ -8,6 +8,7 @@ import { AccessToken } from "../../assets/assets";
 import {
   AddPostType,
   CommentType,
+  FollowerType,
   LikeType,
   PostType,
 } from "../types/postType";
@@ -43,7 +44,11 @@ export const loginUser = {
 
     res.cookie("IdUser", Token);
 
-    return { id: user.id, name: user.name, email: user.email };
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
   },
 };
 
@@ -243,6 +248,59 @@ export const deleteCommentPost = {
       })
       .catch((res) => console.log(res));
     if (!res.post_id) return;
+    return res;
+  },
+};
+
+type FollowerType = {
+  user_id: string;
+  follower_id: string;
+};
+
+export const addFollow = {
+  type: FollowerType,
+  args: {
+    user_id: { type: new GraphQLNonNull(GraphQLString) },
+    follower_id: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve(parent: any, args: FollowerType, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return;
+    const verifyUser = verify(cookie, AccessToken) as any;
+    if (!verifyUser) return;
+    const res: any = await pool
+      .query(
+        `INSERT INTO followers VALUES ('${args.user_id}','${args.follower_id}')`
+      )
+      .then(() => {
+        return args;
+      })
+      .catch((res) => console.log(res));
+    if (!res.user_id) return;
+    return res;
+  },
+};
+
+export const deleteFollow = {
+  type: FollowerType,
+  args: {
+    user_id: { type: new GraphQLNonNull(GraphQLString) },
+    follower_id: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve(parent: any, args: FollowerType, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return;
+    const verifyUser = verify(cookie, AccessToken) as any;
+    if (!verifyUser) return;
+    const res: any = await pool
+      .query(
+        `DELETE FROM followers WHERE (user_id='${args.user_id}' AND followers_id='${args.follower_id}')`
+      )
+      .then(() => {
+        return args;
+      })
+      .catch((res) => console.log(res));
+    if (!res.user_id) return;
     return res;
   },
 };

@@ -31,7 +31,7 @@ export default function Main() {
   const [searchParams, setSearchParams] = useSearchParams({});
   const [postsData, setPostsData] = useState<PostType[]>([]);
   const [postsPage, setPostsPage] = useState<number>(1);
-  const { User }: UserAuth = useContext(AuthContext);
+  const { User, setUser, refetchUser }: UserAuth = useContext(AuthContext);
   const nav = searchParams.get("nav");
   const search = searchParams.get("search");
   const { loading, error, data, refetch } = useQuery(GET_POSTS, {
@@ -52,7 +52,6 @@ export default function Main() {
         const newData = data.GetPosts;
         let allData: PostType[] = prev.concat(newData);
         return getUniqueListBy(allData, "post_id");
-        //delete post handler not remove post
       });
     }
   }, [data]);
@@ -115,9 +114,11 @@ export default function Main() {
             <Posts
               postsData={postsData}
               User={User}
+              setUser={setUser}
               setPostsPage={setPostsPage}
-              postsType={nav ? nav : search || "all"}
               pageCount={postsPage.toString() || "1"}
+              setPostsData={setPostsData}
+              refetchUser={refetchUser}
             />
           ) : (
             <div className={styles.posts__notFound}>
@@ -136,8 +137,7 @@ export default function Main() {
           <AddPost
             setAddPostModal={setAddPostModal}
             User={User}
-            postsType={nav ? nav : search || "all"}
-            pageCount={postsPage.toString() || "1"}
+            setPostsData={setPostsData}
           />
         </div>
       ) : null}

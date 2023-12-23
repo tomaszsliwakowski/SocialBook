@@ -57,3 +57,11 @@ export const LikesType = new GraphQLObjectType({
     liked: { type: GraphQLBoolean },
   }),
 });
+
+export const FollowerType = new GraphQLObjectType({
+  name: "Follower",
+  fields: () => ({
+    user_id: { type: GraphQLID },
+    follower_id: { type: GraphQLID },
+  }),
+});

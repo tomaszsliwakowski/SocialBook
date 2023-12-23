@@ -4,13 +4,15 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { MdDone } from "react-icons/md";
-import { UserType } from "../../context/Auth";
+import { FollowerObjectType, UserType } from "../../context/Auth";
 import { SlOptionsVertical } from "react-icons/sl";
 import { PostType } from "./Main";
-import { GET_LIKES, GET_POSTS } from "../../Query/postsQuery";
+import { GET_LIKES } from "../../Query/postsQuery";
 import { useMutation, useQuery } from "@apollo/client";
 import {
+  ADD_FOLLOW,
   ADD_LIKE_POST,
+  DELETE_FOLLOW,
   DELETE_LIKE_POST,
   DELETE_POST,
 } from "../../mutations/postsMutations";
@@ -20,18 +22,25 @@ import { timeExpiredFrom } from "../../assets/assets";
 type PROPS = {
   postData: PostType;
   User: UserType;
-  postsType: string;
-  pageCount: string;
+  setPostsData: React.Dispatch<React.SetStateAction<PostType[]>>;
+  setUser: React.Dispatch<React.SetStateAction<UserType>>;
+  refetchUser: Function;
 };
 type StateStatusType = {
   postId: string;
   active: boolean;
 };
 
-export default function Post({ postData, User, postsType, pageCount }: PROPS) {
+export default function Post({
+  postData,
+  User,
+  setPostsData,
+  setUser,
+  refetchUser,
+}: PROPS) {
   const [sub, setSub] = useState<StateStatusType>({
     postId: postData.post_id,
-    active: false,
+    active: followCheck(),
   });
   const [postAction, setPostAction] = useState<StateStatusType>({
     postId: postData.post_id,
@@ -50,13 +59,33 @@ export default function Post({ postData, User, postsType, pageCount }: PROPS) {
     variables: {
       post_id: postData.post_id,
     },
-    refetchQueries: [
-      {
-        query: GET_POSTS,
-        variables: { type: postsType, user_id: User.id, count: pageCount },
-      },
-    ],
   });
+  const [addFollow] = useMutation(ADD_FOLLOW, {
+    variables: {
+      user_id: User.id,
+      follower_id: postData.user_id,
+    },
+  });
+  const [deleteFollow] = useMutation(DELETE_FOLLOW, {
+    variables: {
+      user_id: User.id,
+      follower_id: postData.user_id,
+    },
+  });
+  const handleAddFollow = async () => {
+    await addFollow()
+      .then(() => {
+        refetchUser();
+      })
+      .catch((res) => console.log(res));
+  };
+  const handleDeleteFollow = async () => {
+    await deleteFollow()
+      .then(() => {
+        refetchUser();
+      })
+      .catch((res) => console.log(res));
+  };
 
   const [addLikePost] = useMutation(ADD_LIKE_POST, {
     variables: {
@@ -83,9 +112,24 @@ export default function Post({ postData, User, postsType, pageCount }: PROPS) {
     ],
   });
 
+  function followCheck(): boolean {
+    const check = User.followers.filter(
+      (item) => item.followers_id === postData.user_id
+    );
+    return check.length > 0;
+  }
+
+  useEffect(() => {
+    setSub((prev) => ({ ...prev, active: followCheck() }));
+  }, [User.followers]);
+
   const handleDeletePost = async () => {
     await deletePost()
-      .then(() => {
+      .then((res) => {
+        let { deletePost }: { deletePost: { post_id: string } } = res.data;
+        setPostsData((prev) =>
+          prev.filter((item) => item.post_id !== deletePost.post_id)
+        );
         setPostAction((prev) => ({ ...prev, active: false }));
       })
       .catch((res) => console.log(res));
@@ -130,17 +174,13 @@ export default function Post({ postData, User, postsType, pageCount }: PROPS) {
             </div>
             {User.id !== postData.user_id ? (
               !sub.active ? (
-                <button
-                  onClick={() => setSub((prev) => ({ ...prev, active: true }))}
-                >
-                  Follow
-                </button>
+                <button onClick={() => handleAddFollow()}>Follow</button>
               ) : (
                 <div
                   className={styles.follow}
                   onClick={() => setSub((prev) => ({ ...prev, active: false }))}
                 >
-                  <MdDone />
+                  <MdDone onClick={() => handleDeleteFollow()} />
                 </div>
               )
             ) : (

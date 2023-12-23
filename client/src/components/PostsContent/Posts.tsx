@@ -7,17 +7,21 @@ import { useEffect, useState } from "react";
 type PROPS = {
   postsData: PostType[];
   User: UserType;
-  postsType: string;
+  setUser: React.Dispatch<React.SetStateAction<UserType>>;
   setPostsPage: React.Dispatch<React.SetStateAction<number>>;
   pageCount: string;
+  setPostsData: React.Dispatch<React.SetStateAction<PostType[]>>;
+  refetchUser: Function;
 };
 
 export default function Posts({
   postsData,
   User,
-  postsType,
+  setUser,
   pageCount,
   setPostsPage,
+  setPostsData,
+  refetchUser,
 }: PROPS) {
   const [maxPosts, setMaxPosts] = useState<boolean>(false);
   const GetMorePosts = () => {
@@ -42,8 +46,9 @@ export default function Posts({
                 key={id}
                 postData={item}
                 User={User}
-                postsType={postsType}
-                pageCount={pageCount}
+                setUser={setUser}
+                setPostsData={setPostsData}
+                refetchUser={refetchUser}
               />
             ))
           : null}

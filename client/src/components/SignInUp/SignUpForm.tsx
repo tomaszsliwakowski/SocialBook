@@ -12,7 +12,7 @@ export default function SignUpForm() {
     password: "",
   });
   const navigate = useNavigate();
-  const { refetch }: UserAuth = useContext(AuthContext);
+  const { refetchUser }: UserAuth = useContext(AuthContext);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setState({
@@ -28,7 +28,7 @@ export default function SignUpForm() {
       password: state.password,
     },
     onCompleted() {
-      refetch();
+      refetchUser();
     },
   });
 

@@ -6,21 +6,19 @@ import { v4 as uuidv4 } from "uuid";
 import { useMutation } from "@apollo/client";
 import { ADD_POST } from "../../mutations/postsMutations";
 import { UserType } from "../../context/Auth";
-import { GET_POSTS } from "../../Query/postsQuery";
 import imageCompression from "browser-image-compression";
+import { PostType } from "./Main";
 
 type PROPS = {
   setAddPostModal: React.Dispatch<React.SetStateAction<boolean>>;
   User: UserType;
-  postsType: string;
-  pageCount: string;
+  setPostsData: React.Dispatch<React.SetStateAction<PostType[]>>;
 };
 
 export default function AddPost({
   setAddPostModal,
   User,
-  postsType,
-  pageCount,
+  setPostsData,
 }: PROPS) {
   const [postText, setPostText] = useState("");
   const [image, setImage] = useState<null | string>(null);
@@ -86,18 +84,17 @@ export default function AddPost({
       user_name: User.name,
       user_email: User.email,
     },
-    refetchQueries: [
-      {
-        query: GET_POSTS,
-        variables: { type: postsType, user_id: User.id, count: pageCount },
-      },
-    ],
   });
 
   const sharePost = async () => {
     if (postText === "" && !image) return;
     await addPost()
-      .then(() => setAddPostModal(false))
+      .then((res) => {
+        let { addPost }: { addPost: PostType } = res.data;
+        Object.assign(addPost, { createdAt: new Date().getTime().toString() });
+        setPostsData((prev) => prev.concat(addPost));
+        setAddPostModal(false);
+      })
       .catch((res) => console.log(res));
   };
 

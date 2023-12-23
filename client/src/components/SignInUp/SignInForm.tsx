@@ -11,7 +11,7 @@ export default function SignInForm() {
     email: "",
     password: "",
   });
-  const { refetch }: UserAuth = useContext(AuthContext);
+  const { refetchUser }: UserAuth = useContext(AuthContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -27,7 +27,7 @@ export default function SignInForm() {
       password: state.password,
     },
     onCompleted() {
-      refetch();
+      refetchUser();
     },
   });
 

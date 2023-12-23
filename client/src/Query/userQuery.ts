@@ -6,8 +6,14 @@ export const GET_USER = gql`
       id
       name
       email
-      followers
-      observed
+      followers {
+        user_id
+        followers_id
+      }
+      observed {
+        user_id
+        followers_id
+      }
     }
   }
 `;

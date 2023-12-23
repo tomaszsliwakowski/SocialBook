@@ -14,13 +14,21 @@ export const USER_ME = {
     const [rows]: any = await pool.query(
       `SELECT * FROM users WHERE id = '${data.userId}'`
     );
+    const followersData: any = await pool.query(
+      `SELECT * FROM followers WHERE user_id = '${data.userId}'`
+    );
+    const observedData: any = await pool.query(
+      `SELECT * FROM followers WHERE followers_id = '${data.userId}'`
+    );
+    const followers = followersData[0];
+    const observed = observedData[0];
     const { id, name, email } = rows[0];
     return {
       id: id,
       name: name,
       email: email,
-      followers: ["one"],
-      observed: ["one"],
+      followers: followers,
+      observed: observed,
     };
   },
 };
