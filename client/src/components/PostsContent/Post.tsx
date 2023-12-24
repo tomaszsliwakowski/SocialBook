@@ -23,7 +23,6 @@ type PROPS = {
   postData: PostType;
   User: UserType;
   setPostsData: React.Dispatch<React.SetStateAction<PostType[]>>;
-  setUser: React.Dispatch<React.SetStateAction<UserType>>;
   refetchUser: Function;
 };
 type StateStatusType = {
@@ -35,7 +34,6 @@ export default function Post({
   postData,
   User,
   setPostsData,
-  setUser,
   refetchUser,
 }: PROPS) {
   const [sub, setSub] = useState<StateStatusType>({
@@ -121,7 +119,7 @@ export default function Post({
 
   useEffect(() => {
     setSub((prev) => ({ ...prev, active: followCheck() }));
-  }, [User.followers]);
+  }, [User.followers, postData]);
 
   const handleDeletePost = async () => {
     await deletePost()

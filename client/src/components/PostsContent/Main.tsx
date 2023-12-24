@@ -50,6 +50,8 @@ export default function Main() {
     if (!loading && !error && data) {
       setPostsData((prev) => {
         const newData = data.GetPosts;
+        if (prev.length === 0) return newData;
+        if (postsPage === 1) return newData;
         let allData: PostType[] = prev.concat(newData);
         return getUniqueListBy(allData, "post_id");
       });
@@ -114,7 +116,6 @@ export default function Main() {
             <Posts
               postsData={postsData}
               User={User}
-              setUser={setUser}
               setPostsPage={setPostsPage}
               pageCount={postsPage.toString() || "1"}
               setPostsData={setPostsData}

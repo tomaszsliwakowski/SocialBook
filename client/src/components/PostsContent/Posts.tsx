@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 type PROPS = {
   postsData: PostType[];
   User: UserType;
-  setUser: React.Dispatch<React.SetStateAction<UserType>>;
   setPostsPage: React.Dispatch<React.SetStateAction<number>>;
   pageCount: string;
   setPostsData: React.Dispatch<React.SetStateAction<PostType[]>>;
@@ -17,7 +16,6 @@ type PROPS = {
 export default function Posts({
   postsData,
   User,
-  setUser,
   pageCount,
   setPostsPage,
   setPostsData,
@@ -46,7 +44,6 @@ export default function Posts({
                 key={id}
                 postData={item}
                 User={User}
-                setUser={setUser}
                 setPostsData={setPostsData}
                 refetchUser={refetchUser}
               />

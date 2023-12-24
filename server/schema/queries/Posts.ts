@@ -14,7 +14,7 @@ type likedType = {
 };
 type observedType = {
   post_id: string;
-  observed_id: string;
+  followers_id: string;
 };
 
 type PostsDataType = {
@@ -42,15 +42,16 @@ export const GET_POSTS = {
     }
     if (args.type === "watched") {
       const observedData = await pool.query(
-        `SELECT * FROM observed WHERE user_id = '${args.user_id}'`
+        `SELECT * FROM followers WHERE user_id = '${args.user_id}'`
       );
 
       const observed: any = observedData[0];
+
       if (observed.length === 0) {
         PostsToSend = [];
       } else {
         const observedUser: string[] = observed.map(
-          (item: observedType) => item.observed_id
+          (item: observedType) => item.followers_id
         );
         let observed_idList = "";
         for (let i = 0; i < observedUser.length; i++) {
