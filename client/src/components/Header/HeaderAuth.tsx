@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { DOMAIN, deleteCookie } from "../../assets/assets";
 
 export default function HeaderAuth() {
-  const { User, refetch }: UserAuth = useContext(AuthContext);
+  const { User, refetchUser }: UserAuth = useContext(AuthContext);
 
   return (
     <div className={styles.header__auth}>
@@ -18,7 +18,7 @@ export default function HeaderAuth() {
         {User.id === "" || !User.id ? (
           <NotLogged />
         ) : (
-          <Logged refetch={refetch} />
+          <Logged refetch={refetchUser} />
         )}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./SignInUp.css";
 import { REGISTER_USER } from "../../mutations/userMutations";
 import { useMutation } from "@apollo/client";
@@ -6,7 +6,7 @@ import { AuthContext, UserAuth } from "../../context/Auth";
 import { useNavigate } from "react-router-dom";
 
 export default function SignUpForm() {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     name: "",
     email: "",
     password: "",
@@ -15,10 +15,10 @@ export default function SignUpForm() {
   const { refetchUser }: UserAuth = useContext(AuthContext);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setState({
-      ...state,
+    setState((prev) => ({
+      ...prev,
       [e.target.name]: value,
-    });
+    }));
   };
 
   const [registerUser] = useMutation(REGISTER_USER, {
@@ -45,10 +45,10 @@ export default function SignUpForm() {
     }
 
     for (const key in state) {
-      setState({
-        ...state,
+      setState((prev) => ({
+        ...prev,
         [key]: "",
-      });
+      }));
     }
   };
 

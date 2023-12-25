@@ -31,12 +31,12 @@ export const loginUser = {
     const user = rows[0];
 
     if (!user) {
-      return null;
+      throw new Error("User does not exist");
     }
 
     const valid = await bcrypt.compare(args.password, user.password);
     if (!valid) {
-      return null;
+      throw new Error("Wrong password");
     }
     const Token = sign({ userId: user.id }, AccessToken, {
       expiresIn: "7d",

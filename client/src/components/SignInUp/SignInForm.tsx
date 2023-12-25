@@ -4,6 +4,8 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../mutations/userMutations";
 import { AuthContext, UserAuth } from "../../context/Auth";
 import { useNavigate } from "react-router-dom";
+import { GraphQLError } from "graphql";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function SignInForm() {
   const navigate = useNavigate();
@@ -11,14 +13,15 @@ export default function SignInForm() {
     email: "",
     password: "",
   });
+
   const { refetchUser }: UserAuth = useContext(AuthContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setState({
-      ...state,
+    setState((prev) => ({
+      ...prev,
       [e.target.name]: value,
-    });
+    }));
   };
 
   const [loginUser] = useMutation(LOGIN_USER, {
@@ -43,14 +46,16 @@ export default function SignInForm() {
             navigate("/");
           }
         })
-        .catch((res) => console.log(res));
+        .catch((res: GraphQLError) => {
+          toast.error(res.message);
+        });
     }
 
     for (const key in state) {
-      setState({
-        ...state,
+      setState((prev) => ({
+        ...prev,
         [key]: "",
-      });
+      }));
     }
   };
 
@@ -58,7 +63,6 @@ export default function SignInForm() {
     <div className="form-container sign-in-container">
       <form onSubmit={handleOnSubmit}>
         <h1>Sign in</h1>
-
         <input
           type="email"
           placeholder="Email"
@@ -76,6 +80,7 @@ export default function SignInForm() {
         <a href="#">Forgot your password?</a>
         <button>Sign In</button>
       </form>
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 }
