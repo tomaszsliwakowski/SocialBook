@@ -146,6 +146,12 @@
   opacity: 0;
   z-index: 1;
 }
+.sign-in-container form h1 {
+  color: black;
+}
+.sign-up-container form h1 {
+  color: black;
+}
 
 .container.right-panel-active .sign-up-container {
   transform: translateX(100%);
