@@ -1,0 +1,9 @@
+.blogs {
+  width: 100%;
+  min-height: 100vh;
+  max-width: 1460px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
