@@ -7,3 +7,139 @@
   display: flex;
   flex-direction: column;
 }
+
+.blogs__filterBar {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+  width: 100%;
+  padding: 1rem 2rem;
+}
+.blogs__searchBar {
+  display: flex;
+  padding: 0rem;
+  border-radius: 2rem;
+  width: fit-content;
+  height: 40px;
+}
+.blogs__searchBar input {
+  font-size: 16px;
+  border-radius: 2rem 0 0 2rem;
+  padding: 0 0.5rem 0 1rem;
+  height: 100%;
+  width: fit-content;
+  min-width: 100px;
+  max-width: 200px;
+  outline: none;
+  border: none;
+  border: 1px solid var(--border-2-color);
+  border-right: none;
+}
+
+.blogs__searchBar__options {
+  height: 100%;
+  width: fit-content;
+  display: flex;
+}
+.blogs__searchBar__options div {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  padding: 0 0.85rem 0 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1px solid var(--primary-blue-color);
+  border-radius: 0 2rem 2rem 0rem;
+  background-color: var(--primary-blue-color);
+}
+
+.blogs__searchBar__options div svg {
+  font-size: 25px;
+  color: white;
+}
+.blogs__searchBar__options select {
+  height: 100%;
+  min-width: 60px;
+  border: none;
+  border: 1px solid var(--border-2-color);
+  border-right: none;
+  border-left: none;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+}
+.blogs__searchBar__options select option {
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+}
+
+.blogs__selectBar {
+  display: flex;
+  align-items: center;
+}
+.blogs__selectBar h3 {
+  font-size: 18px;
+}
+
+.blogs__selectBar select {
+  height: 40px;
+  border-radius: 2rem;
+  width: fit-content;
+}
+.blogs__selectBar div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 100%;
+}
+.blogs__selectBar__tag {
+  position: relative;
+  font-size: 18px;
+  font-weight: 500;
+  border: 1px solid silver;
+  height: 100%;
+  min-width: 125px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+.blogs__selectBar__tag svg {
+  font-size: 22px;
+}
+.blogs__selectBar__tagList {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  height: fit-content;
+  top: 2.8rem;
+  list-style: none;
+  left: 0rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-2-color);
+}
+.blogs__selectBar__tagList li {
+  width: 100%;
+  cursor: pointer;
+  padding: 2px 0.2rem 0 0.8rem;
+}
+.blogs__selectBar__tagList li:first-of-type {
+  border-radius: 0.9rem 0.9rem 0 0;
+  padding-top: 2px;
+}
+.blogs__selectBar__tagList li:last-of-type {
+  border-radius: 0 0 0.9rem 0.9rem;
+  padding-bottom: 2px;
+}
+.blogs__selectBar__tagList li:hover {
+  background-color: var(--primary-blue-color);
+}
+.blogs__selectBar__tagList_hidden {
+  display: none;
+}
