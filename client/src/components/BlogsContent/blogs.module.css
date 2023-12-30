@@ -3,7 +3,7 @@
   min-height: 100vh;
   max-width: 1460px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
 }
@@ -88,6 +88,9 @@
   border-radius: 2rem;
   width: fit-content;
 }
+.blogs__selectBar h3 {
+  font-weight: 500;
+}
 .blogs__selectBar div {
   display: flex;
   align-items: center;
@@ -110,6 +113,7 @@
 }
 .blogs__selectBar__tag svg {
   font-size: 22px;
+  color: var(--primary-blue-color);
 }
 .blogs__selectBar__tagList {
   position: absolute;
@@ -127,19 +131,33 @@
 .blogs__selectBar__tagList li {
   width: 100%;
   cursor: pointer;
-  padding: 2px 0.2rem 0 0.8rem;
+  padding: 2px 0.2rem 0.2rem 0.8rem;
+  display: flex;
+  font-size: 16px;
 }
 .blogs__selectBar__tagList li:first-of-type {
   border-radius: 0.9rem 0.9rem 0 0;
-  padding-top: 2px;
+  padding-top: 5px;
 }
 .blogs__selectBar__tagList li:last-of-type {
   border-radius: 0 0 0.9rem 0.9rem;
-  padding-bottom: 2px;
+  padding-bottom: 5px;
 }
 .blogs__selectBar__tagList li:hover {
   background-color: var(--primary-blue-color);
+  color: white;
 }
 .blogs__selectBar__tagList_hidden {
   display: none;
+}
+
+.blogs__selectBar__check {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 1rem;
+  cursor: pointer;
+  opacity: 0;
 }

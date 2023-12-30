@@ -39,3 +39,25 @@ export const timeExpiredFrom = (createdAt: string) => {
   if (timer.days > 0 && timer.days <= 7) return `${timer.days} days ago`;
   if (timer.days > 7) return `${new Date(createTime).toLocaleDateString()}`;
 };
+
+export const PopularTags: string[] = [
+  "All",
+  "Cars",
+  "Sports",
+  "Food",
+  "Travel",
+  "LifeStyle",
+  "Fitness",
+  "Fashion",
+  "Buisness",
+  "Animals",
+];
+
+export const TimeSpanList: string[] = [
+  "All",
+  "Last 365days",
+  "Last 30days",
+  "Last 7days",
+  "Today",
+];
+export const sortOptionList: string[] = ["Latest", "Most popular"];

@@ -1,3 +1,4 @@
+import { PopularTags, TimeSpanList, sortOptionList } from "../../assets/assets";
 import SelectBar from "./SelectBar";
 import styles from "./blogs.module.css";
 import { FiSearch } from "react-icons/fi";
@@ -18,7 +19,24 @@ export default function Main() {
             </div>
           </div>
         </div>
-        <SelectBar />
+        <SelectBar
+          defaultValue={"All"}
+          id="tagsModal"
+          list={PopularTags}
+          headName={"Popular tag"}
+        />
+        <SelectBar
+          defaultValue={"Latest"}
+          id="sortModal"
+          list={sortOptionList}
+          headName={"Sorting"}
+        />
+        <SelectBar
+          id="timeModal"
+          defaultValue={"All"}
+          list={TimeSpanList}
+          headName={"Time span"}
+        />
       </div>
       <div className={styles.blogs__content}>blogs</div>
     </div>
