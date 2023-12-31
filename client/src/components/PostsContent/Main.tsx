@@ -31,7 +31,7 @@ export default function Main() {
   const [searchParams, setSearchParams] = useSearchParams({});
   const [postsData, setPostsData] = useState<PostType[]>([]);
   const [postsPage, setPostsPage] = useState<number>(1);
-  const { User, setUser, refetchUser }: UserAuth = useContext(AuthContext);
+  const { User, refetchUser }: UserAuth = useContext(AuthContext);
   const nav = searchParams.get("nav");
   const search = searchParams.get("search");
   const { loading, error, data, refetch } = useQuery(GET_POSTS, {

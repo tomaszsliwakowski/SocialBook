@@ -4,7 +4,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { MdDone } from "react-icons/md";
-import { FollowerObjectType, UserType } from "../../context/Auth";
+import { UserType } from "../../context/Auth";
 import { SlOptionsVertical } from "react-icons/sl";
 import { PostType } from "./Main";
 import { GET_LIKES } from "../../Query/postsQuery";

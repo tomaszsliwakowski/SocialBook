@@ -8,11 +8,19 @@ type PROPS = {
   defaultValue: string;
   list: string[];
   id: string;
+  name: string;
+  selectBlogsAction: Function;
 };
 
-export default function SelectBar({ headName, defaultValue, list, id }: PROPS) {
+export default function SelectBar({
+  name,
+  headName,
+  defaultValue,
+  list,
+  id,
+  selectBlogsAction,
+}: PROPS) {
   const [listStatus, setlistStatus] = useState(false);
-  const [selectTag, setSelectTag] = useState(defaultValue);
 
   useEffect(() => {
     const close = (e: Event) => {
@@ -28,7 +36,7 @@ export default function SelectBar({ headName, defaultValue, list, id }: PROPS) {
   }, []);
 
   const handleStateChange = (item: string) => {
-    setSelectTag(item);
+    selectBlogsAction(name, item);
     setlistStatus(false);
   };
 
@@ -44,7 +52,7 @@ export default function SelectBar({ headName, defaultValue, list, id }: PROPS) {
             checked={listStatus}
             onChange={() => setlistStatus((prev) => !prev)}
           />
-          <span>{selectTag}</span>
+          <span>{defaultValue}</span>
           {listStatus ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
           <ul
             id={id}

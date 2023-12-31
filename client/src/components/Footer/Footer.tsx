@@ -5,8 +5,12 @@ import { AiOutlineCopyrightCircle } from "react-icons/ai";
 import {
   BLOGS_ROUTE,
   CHATS_ROUTE,
+  CarsTagRoute,
+  FoodTagRoute,
   HOME_ROUTE,
   POSTS_ROUTE,
+  SportsTagRoute,
+  TravelTagRoute,
 } from "../../routes";
 import { motion, useAnimation, useInView } from "framer-motion";
 
@@ -57,10 +61,10 @@ export default function Footer({ id }: { id: string }) {
           </div>
           <div>
             <strong>Tags</strong>
-            <Link to={"/"}>Food</Link>
-            <Link to={"/"}>Travel</Link>
-            <Link to={"/"}>Cars</Link>
-            <Link to={"/"}>Sports</Link>
+            <Link to={FoodTagRoute}>Food</Link>
+            <Link to={TravelTagRoute}>Travel</Link>
+            <Link to={CarsTagRoute}>Cars</Link>
+            <Link to={SportsTagRoute}>Sports</Link>
           </div>
         </div>
       </div>

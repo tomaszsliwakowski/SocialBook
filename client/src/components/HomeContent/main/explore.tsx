@@ -1,3 +1,14 @@
+import {
+  AnimalsTagRoute,
+  BuisnessTagRoute,
+  CarsTagRoute,
+  FashionTagRoute,
+  FitnessTagRoute,
+  FoodTagRoute,
+  LifeStyleTagRoute,
+  SportsTagRoute,
+  TravelTagRoute,
+} from "../../../routes";
 import styles from "./main.module.css";
 import { Link } from "react-router-dom";
 
@@ -8,15 +19,15 @@ type EXPLORE_TYPE = {
 };
 
 const exploreData: EXPLORE_TYPE[] = [
-  { address: "/", img: "./food.jpg", name: "Food" },
-  { address: "/", img: "./travel.jpg", name: "Travel" },
-  { address: "/", img: "./lifestyle.jpg", name: "LifeStyle" },
-  { address: "/", img: "./fashion.jpg", name: "Fashion" },
-  { address: "/", img: "./buisness.jpg", name: "Buisness" },
-  { address: "/", img: "./sports.jpg", name: "Sports" },
-  { address: "/", img: "./cars.jpg", name: "Cars" },
-  { address: "/", img: "./fitness.jpg", name: "Fitness" },
-  { address: "/", img: "./animals.jpg", name: "Animals" },
+  { address: FoodTagRoute, img: "./food.jpg", name: "Food" },
+  { address: TravelTagRoute, img: "./travel.jpg", name: "Travel" },
+  { address: LifeStyleTagRoute, img: "./lifestyle.jpg", name: "LifeStyle" },
+  { address: FashionTagRoute, img: "./fashion.jpg", name: "Fashion" },
+  { address: BuisnessTagRoute, img: "./buisness.jpg", name: "Buisness" },
+  { address: SportsTagRoute, img: "./sports.jpg", name: "Sports" },
+  { address: CarsTagRoute, img: "./cars.jpg", name: "Cars" },
+  { address: FitnessTagRoute, img: "./fitness.jpg", name: "Fitness" },
+  { address: AnimalsTagRoute, img: "./animals.jpg", name: "Animals" },
 ];
 
 export default function Explore() {

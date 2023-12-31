@@ -61,3 +61,4 @@ export const TimeSpanList: string[] = [
   "Today",
 ];
 export const sortOptionList: string[] = ["Latest", "Most popular"];
+export const typeList: string[] = ["For you", "Watched"];
