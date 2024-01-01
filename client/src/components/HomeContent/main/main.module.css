@@ -98,30 +98,16 @@
   margin-bottom: 6rem;
 }
 .popular__list {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
-}
-.popular h2 {
-  margin-bottom: 1rem;
+  gap: 1.25rem;
 }
 .popular__list li {
-  display: flex;
-  box-shadow: 0 2px 8px var(--shadow-color);
-  border: 1px solid white;
-  border-radius: 1rem;
-  width: 100%;
-  max-width: 600px;
-  height: 100%;
-  max-height: 375px;
-  overflow: hidden;
+  max-width: 400px;
 }
-
-.popular__list img {
-  max-width: 250px;
-  height: auto;
-  object-fit: cover;
-  border-radius: 1rem 0 0 1rem;
+.popular h2 {
+  margin-bottom: 2rem;
 }
 
 @media screen and (max-width: 768px) {

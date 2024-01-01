@@ -4,16 +4,17 @@ import styles from "./blogs.module.css";
 import { BiUser } from "react-icons/bi";
 import { BsBookmarks } from "react-icons/bs";
 import { BsBookmarksFill } from "react-icons/bs";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Blog() {
   const [saveStatus, setSaveStatus] = useState(false);
   return (
     <li className={styles.blogs__content__element}>
-      <div className={styles.blogs__content__image}>
+      <Link to={"/"} className={styles.blogs__content__image}>
         <img src="./travel.jpg" alt="img" />
-      </div>
+      </Link>
       <div className={styles.blogs__content__tag}>
         <span>Travel</span>
       </div>

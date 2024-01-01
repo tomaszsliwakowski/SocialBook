@@ -1,6 +1,6 @@
 export const HOME_ROUTE = "/";
 export const BLOGS_ROUTE =
-  "/blogs?sorting=Latest&tag=All&timespan=All&type=For+you";
+  "/blogs?sorting=Latest&tag=All&timespan=All&type=For+You";
 export const CHATS_ROUTE = "/chats";
 export const LOGIN_ROUTE = "/auth/login";
 export const REGISTER_ROUTE = "/auth/register";
@@ -10,7 +10,7 @@ export const POSTS_ROUTE = "/posts?nav=all";
 //blogs tag route
 
 function blogsTagRouteBuilder(tag: string) {
-  return `/blogs?sorting=Latest&tag=${tag}&timespan=All&type=For+you`;
+  return `/blogs?sorting=Latest&tag=${tag}&timespan=All&type=For+You`;
 }
 
 export const FoodTagRoute = blogsTagRouteBuilder("Food");

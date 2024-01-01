@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  PopularTags,
-  TimeSpanList,
-  sortOptionList,
-  typeList,
-} from "../../assets/assets";
+import { PopularTags, TimeSpanList, sortOptionList } from "../../assets/assets";
 import SearchBar from "./SearchBar";
 import SelectBar from "./SelectBar";
 import styles from "./blogs.module.css";
@@ -25,13 +20,13 @@ export default function Main() {
     searchType || "title"
   );
 
-  const handleSearchValue = (value: string) => {
+  const handleSearchValue = (value: string): void => {
     setSearchValue(value);
   };
-  const handleSearchTypeValue = (value: string) => {
+  const handleSearchTypeValue = (value: string): void => {
     setSearchTypeValue(value);
   };
-  const searchBlogsAction = () => {
+  const searchBlogsAction = (): void => {
     if (searchValue === "") return;
     setSearchParams((prev) => {
       prev.set("search", searchValue);
@@ -39,20 +34,19 @@ export default function Main() {
       return prev;
     });
   };
-  const selectBlogsAction = (name: string, value: string) => {
+  const selectBlogsAction = (name: string, value: string): void => {
     setSearchParams((prev) => {
       prev.set(name, value);
       return prev;
     });
   };
-  const handleClearParams = () => {
+  const handleClearParams = (): void => {
     setSearchParams((prev) => {
       prev.delete("search");
       prev.delete("searchtype");
       prev.set("sorting", "Latest");
       prev.set("tag", "All");
       prev.set("timespan", "All");
-      prev.set("type", "For you");
       setSearchValue("");
       setSearchTypeValue("title");
       return prev;
@@ -61,6 +55,29 @@ export default function Main() {
 
   return (
     <div className={styles.blogs}>
+      <div className={styles.blogs__types}>
+        <span
+          className={`${
+            typeShow === "For You"
+              ? styles.blogs__types__active
+              : styles.blogs__types__none
+          }`}
+          onClick={() => selectBlogsAction("type", "For You")}
+        >
+          For You
+        </span>
+        <span>|</span>
+        <span
+          className={`${
+            typeShow === "Watched"
+              ? styles.blogs__types__active
+              : styles.blogs__types__none
+          }`}
+          onClick={() => selectBlogsAction("type", "Watched")}
+        >
+          Watched
+        </span>
+      </div>
       <div className={styles.blogs__filterBar}>
         <SearchBar
           handleSearchValue={handleSearchValue}
@@ -68,14 +85,6 @@ export default function Main() {
           searchBlogsAction={searchBlogsAction}
           handleSearchTypealue={handleSearchTypeValue}
           searchTypeValue={searchTypeValue}
-        />
-        <SelectBar
-          defaultValue={typeShow || "For you"}
-          id="typeModal"
-          list={typeList}
-          headName={"Type"}
-          name="type"
-          selectBlogsAction={selectBlogsAction}
         />
         <SelectBar
           defaultValue={tag || "All"}
