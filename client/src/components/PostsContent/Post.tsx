@@ -25,7 +25,7 @@ type PROPS = {
   setPostsData: React.Dispatch<React.SetStateAction<PostType[]>>;
   refetchUser: Function;
 };
-type StateStatusType = {
+export type StateStatusType = {
   postId: string;
   active: boolean;
 };
@@ -166,22 +166,29 @@ export default function Post({
         <li>
           <div className={styles.post__header}>
             <div className={styles.post__header__info}>
-              <BiUser />
-              <span>{postData.user_name}</span>
-              <span>{timeExpiredFrom(postData.createdAt)}</span>
+              <div className={styles.post__header__user}>
+                <BiUser className={styles.post__header__userIcon} />
+                <span>{postData.user_name}</span>
+                {User.id !== postData.user_id ? (
+                  sub.active ? (
+                    <div
+                      className={styles.follow}
+                      onClick={() =>
+                        setSub((prev) => ({ ...prev, active: false }))
+                      }
+                    >
+                      <MdDone onClick={() => handleDeleteFollow()} />
+                    </div>
+                  ) : (
+                    <button onClick={() => handleAddFollow()}>Follow</button>
+                  )
+                ) : null}
+              </div>
+              <span className={styles.post__header__time}>
+                {timeExpiredFrom(postData.createdAt)}
+              </span>
             </div>
-            {User.id !== postData.user_id ? (
-              !sub.active ? (
-                <button onClick={() => handleAddFollow()}>Follow</button>
-              ) : (
-                <div
-                  className={styles.follow}
-                  onClick={() => setSub((prev) => ({ ...prev, active: false }))}
-                >
-                  <MdDone onClick={() => handleDeleteFollow()} />
-                </div>
-              )
-            ) : (
+            {User.id === postData.user_id ? (
               <div className={styles.postSet} id="modal">
                 <SlOptionsVertical
                   id="modal"
@@ -200,7 +207,7 @@ export default function Post({
                   </div>
                 ) : null}
               </div>
-            )}
+            ) : null}
           </div>
           <div className={styles.post__content}>
             {postData.post_img !== "" ? (

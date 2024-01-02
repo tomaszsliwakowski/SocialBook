@@ -7,9 +7,14 @@ import { BsBookmarksFill } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { StateStatusType } from "../PostsContent/Post";
 
 export default function Blog() {
   const [saveStatus, setSaveStatus] = useState(false);
+  const [sub, setSub] = useState<StateStatusType>({
+    postId: "",
+    active: false,
+  });
   return (
     <li className={styles.blogs__content__element}>
       <Link to={"/"} className={styles.blogs__content__image}>
@@ -36,8 +41,13 @@ export default function Blog() {
             <BiUser />
           </div>
           <div>
-            <span>testowy</span>
-            <span>{timeExpiredFrom("1703088958000")}</span>
+            <div className={styles.blogs__content__userInfo}>
+              <span>testowy</span>
+              {true ? true ? <button>Follow</button> : null : null}
+            </div>
+            <span className={styles.blogs__content__createTime}>
+              {timeExpiredFrom("1703088958000")}
+            </span>
           </div>
         </div>
         <div className={styles.blogs__content__action}>
