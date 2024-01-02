@@ -4,8 +4,11 @@ import Explore from "./explore";
 import PupularBlogs from "./PupularBlogs";
 import Typed from "react-typed";
 import { motion } from "framer-motion";
+import { AuthContext, UserAuth } from "../../../context/Auth";
+import { useContext } from "react";
 
 export default function Main() {
+  const { User }: UserAuth = useContext(AuthContext);
   return (
     <>
       <motion.div
@@ -38,13 +41,13 @@ export default function Main() {
               />
             </div>
           </div>
-          <Explore />
+          <Explore User={User} />
         </div>
         <div className={styles.main__images}>
           <PhotoSlider />
         </div>
       </motion.div>
-      <PupularBlogs />
+      <PupularBlogs User={User} />
     </>
   );
 }

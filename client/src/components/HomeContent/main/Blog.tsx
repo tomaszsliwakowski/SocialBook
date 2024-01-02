@@ -7,8 +7,13 @@ import { motion, useAnimation, useInView } from "framer-motion";
 import { BiUser } from "react-icons/bi";
 import { timeExpiredFrom } from "../../../assets/assets";
 import { BsBookmarks, BsBookmarksFill } from "react-icons/bs";
+import { UserType } from "../../../context/Auth";
 
-export default function Blog() {
+type PROPS = {
+  User: UserType;
+};
+
+export default function Blog({ User }: PROPS) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const slideControls = useAnimation();
@@ -55,8 +60,13 @@ export default function Blog() {
             <BiUser />
           </div>
           <div>
-            <span>testowy</span>
-            <span>{timeExpiredFrom("1703088958000")}</span>
+            <div className={styles.blogs__content__userInfo}>
+              <span>testowy</span>
+              {User.email !== "" ? true ? <button>Follow</button> : null : null}
+            </div>
+            <span className={styles.blogs__content__createTime}>
+              {timeExpiredFrom("1703088958000")}
+            </span>
           </div>
         </div>
         <div className={styles.blogs__content__action}>
@@ -70,13 +80,15 @@ export default function Blog() {
               1231
             </span>
           </div>
-          <div className={styles.blogs__content__save}>
-            {saveStatus ? (
-              <BsBookmarksFill onClick={() => setSaveStatus(false)} />
-            ) : (
-              <BsBookmarks onClick={() => setSaveStatus(true)} />
-            )}
-          </div>
+          {User.email !== "" ? (
+            <div className={styles.blogs__content__save}>
+              {saveStatus ? (
+                <BsBookmarksFill onClick={() => setSaveStatus(false)} />
+              ) : (
+                <BsBookmarks onClick={() => setSaveStatus(true)} />
+              )}
+            </div>
+          ) : null}
         </div>
       </div>
     </motion.li>

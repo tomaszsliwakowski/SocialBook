@@ -8,8 +8,13 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { StateStatusType } from "../PostsContent/Post";
+import { UserType } from "../../context/Auth";
 
-export default function Blog() {
+type PROPS = {
+  User: UserType;
+};
+
+export default function Blog({ User }: PROPS) {
   const [saveStatus, setSaveStatus] = useState(false);
   const [sub, setSub] = useState<StateStatusType>({
     postId: "",
@@ -43,7 +48,7 @@ export default function Blog() {
           <div>
             <div className={styles.blogs__content__userInfo}>
               <span>testowy</span>
-              {true ? true ? <button>Follow</button> : null : null}
+              {User.email !== "" ? true ? <button>Follow</button> : null : null}
             </div>
             <span className={styles.blogs__content__createTime}>
               {timeExpiredFrom("1703088958000")}

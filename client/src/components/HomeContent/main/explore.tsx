@@ -1,3 +1,4 @@
+import { UserType } from "../../../context/Auth";
 import {
   AnimalsTagRoute,
   BuisnessTagRoute,
@@ -5,12 +6,17 @@ import {
   FashionTagRoute,
   FitnessTagRoute,
   FoodTagRoute,
+  LOGIN_ROUTE,
   LifeStyleTagRoute,
   SportsTagRoute,
   TravelTagRoute,
 } from "../../../routes";
 import styles from "./main.module.css";
 import { Link } from "react-router-dom";
+
+type PROPS = {
+  User: UserType;
+};
 
 type EXPLORE_TYPE = {
   address: string;
@@ -30,13 +36,17 @@ const exploreData: EXPLORE_TYPE[] = [
   { address: AnimalsTagRoute, img: "./animals.jpg", name: "Animals" },
 ];
 
-export default function Explore() {
+export default function Explore({ User }: PROPS) {
   return (
     <div className={styles.main__explore}>
       <h2>Explore Popular Categories</h2>
       <ul>
         {exploreData.map((item: EXPLORE_TYPE, id: number) => (
-          <Link key={id} to={item.address} className={styles.main__category}>
+          <Link
+            key={id}
+            to={User.email !== "" ? item.address : LOGIN_ROUTE}
+            className={styles.main__category}
+          >
             <span>{item.name}</span>
             <img src={item.img} alt={item.name} />
           </Link>
