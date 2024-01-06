@@ -9,6 +9,7 @@ import { FaRegCommentAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { StateStatusType } from "../PostsContent/Post";
 import { UserType } from "../../context/Auth";
+import { BlogRouteBuilder } from "../../routes";
 
 type PROPS = {
   User: UserType;
@@ -22,8 +23,21 @@ export default function Blog({ User }: PROPS) {
   });
   return (
     <li className={styles.blogs__content__element}>
-      <Link to={"/"} className={styles.blogs__content__image}>
+      <Link
+        to={BlogRouteBuilder("awdawd")}
+        className={styles.blogs__content__image}
+      >
         <img src="./travel.jpg" alt="img" />
+        <div className={styles.blogs__content__react}>
+          <span>
+            <AiOutlineHeart />
+            1231
+          </span>
+          <span>
+            <FaRegCommentAlt />
+            1231
+          </span>
+        </div>
       </Link>
       <div className={styles.blogs__content__tag}>
         <span>Travel</span>
@@ -55,24 +69,12 @@ export default function Blog({ User }: PROPS) {
             </span>
           </div>
         </div>
-        <div className={styles.blogs__content__action}>
-          <div className={styles.blogs__content__react}>
-            <span>
-              <AiOutlineHeart />
-              1231
-            </span>
-            <span>
-              <FaRegCommentAlt />
-              1231
-            </span>
-          </div>
-          <div className={styles.blogs__content__save}>
-            {saveStatus ? (
-              <BsBookmarksFill onClick={() => setSaveStatus(false)} />
-            ) : (
-              <BsBookmarks onClick={() => setSaveStatus(true)} />
-            )}
-          </div>
+        <div className={styles.blogs__content__save}>
+          {saveStatus ? (
+            <BsBookmarksFill onClick={() => setSaveStatus(false)} />
+          ) : (
+            <BsBookmarks onClick={() => setSaveStatus(true)} />
+          )}
         </div>
       </div>
     </li>

@@ -2,11 +2,13 @@ import { NavLink } from "react-router-dom";
 import styles from "./header.module.css";
 import {
   BLOGS_ROUTE,
+  BLOG_CREATOR_ROUTE,
   CHATS_ROUTE,
   HOME_ROUTE,
   LOGIN_ROUTE,
   POSTS_ROUTE,
 } from "../../routes";
+import { IoCreateOutline } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useContext, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
@@ -19,6 +21,7 @@ const activeStyle = {
 export default function HeaderNav() {
   const [mobile, setMobile] = useState(false);
   const { User }: UserAuth = useContext(AuthContext);
+
   return (
     <>
       <div
@@ -59,6 +62,15 @@ export default function HeaderNav() {
         >
           Chats
         </NavLink>
+        {window.location.pathname === "/blogs" ? (
+          <NavLink
+            to={BLOG_CREATOR_ROUTE}
+            onClick={() => setMobile(false)}
+            className={styles.header__nav__creator}
+          >
+            <IoCreateOutline />
+          </NavLink>
+        ) : null}
       </div>
       <div className={styles.hamburger}>
         <GiHamburgerMenu onClick={() => setMobile(true)} />

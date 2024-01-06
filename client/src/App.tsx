@@ -12,6 +12,17 @@ import { AuthProvider } from "./context/Auth";
 import ProtectAuthRoute from "./context/ProtectAuthRoute";
 import PostsPage from "./pages/PostsPage";
 import BlogsPage from "./pages/BlogsPage";
+import {
+  AUTH_PAGE_ROUTE,
+  BLOGS_PAGE_ROUTE,
+  BLOG_CREATOR_ROUTE,
+  CHATS_PAGE_ROUTE,
+  HOME_ROUTE,
+  POSTS_PAGE_ROUTE,
+  SINGLE_BLOG_ROUTE,
+} from "./routes";
+import BlogPage from "./pages/BlogPage";
+import BlogCreatorPage from "./pages/BlogCreatorPage";
 
 export default function App() {
   const client = new ApolloClient({
@@ -27,9 +38,17 @@ export default function App() {
         <ThemeProvider>
           <Routers>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path={HOME_ROUTE} element={<Home />} />
               <Route
-                path="/posts"
+                path={SINGLE_BLOG_ROUTE}
+                element={
+                  <ProtectAuthRoute>
+                    <BlogPage />
+                  </ProtectAuthRoute>
+                }
+              />
+              <Route
+                path={POSTS_PAGE_ROUTE}
                 element={
                   <ProtectAuthRoute>
                     <PostsPage />
@@ -37,7 +56,7 @@ export default function App() {
                 }
               />
               <Route
-                path="/blogs"
+                path={BLOGS_PAGE_ROUTE}
                 element={
                   <ProtectAuthRoute>
                     <BlogsPage />
@@ -45,14 +64,22 @@ export default function App() {
                 }
               />
               <Route
-                path="/chats"
+                path={CHATS_PAGE_ROUTE}
                 element={
                   <ProtectAuthRoute>
                     <Home />
                   </ProtectAuthRoute>
                 }
               />
-              <Route path="/auth/:action" element={<AuthPage />} />
+              <Route
+                path={BLOG_CREATOR_ROUTE}
+                element={
+                  <ProtectAuthRoute>
+                    <BlogCreatorPage />
+                  </ProtectAuthRoute>
+                }
+              />
+              <Route path={AUTH_PAGE_ROUTE} element={<AuthPage />} />
             </Routes>
           </Routers>
         </ThemeProvider>

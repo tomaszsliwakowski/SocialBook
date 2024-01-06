@@ -1,8 +1,8 @@
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
-import Main from "../components/HomeContent/main/Main";
+import Main from "../components/SingleBlogs/main";
 
-export default function Home() {
+export default function BlogPage() {
   return (
     <>
       <Header />

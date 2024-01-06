@@ -8,6 +8,7 @@ import { BiUser } from "react-icons/bi";
 import { timeExpiredFrom } from "../../../assets/assets";
 import { BsBookmarks, BsBookmarksFill } from "react-icons/bs";
 import { UserType } from "../../../context/Auth";
+import { BlogRouteBuilder } from "../../../routes";
 
 type PROPS = {
   User: UserType;
@@ -36,8 +37,21 @@ export default function Blog({ User }: PROPS) {
       transition={{ duration: 1.5, delay: 0.25 }}
       ref={ref}
     >
-      <Link to={"/"} className={styles.blogs__content__image}>
+      <Link
+        to={BlogRouteBuilder("awdwad")}
+        className={styles.blogs__content__image}
+      >
         <img src="./travel.jpg" alt="img" />
+        <div className={styles.blogs__content__react}>
+          <span>
+            <AiOutlineHeart />
+            1231
+          </span>
+          <span>
+            <FaRegCommentAlt />
+            1231
+          </span>
+        </div>
       </Link>
       <div className={styles.blogs__content__tag}>
         <span>Travel</span>
@@ -69,27 +83,15 @@ export default function Blog({ User }: PROPS) {
             </span>
           </div>
         </div>
-        <div className={styles.blogs__content__action}>
-          <div className={styles.blogs__content__react}>
-            <span>
-              <AiOutlineHeart />
-              1231
-            </span>
-            <span>
-              <FaRegCommentAlt />
-              1231
-            </span>
+        {User.email !== "" ? (
+          <div className={styles.blogs__content__save}>
+            {saveStatus ? (
+              <BsBookmarksFill onClick={() => setSaveStatus(false)} />
+            ) : (
+              <BsBookmarks onClick={() => setSaveStatus(true)} />
+            )}
           </div>
-          {User.email !== "" ? (
-            <div className={styles.blogs__content__save}>
-              {saveStatus ? (
-                <BsBookmarksFill onClick={() => setSaveStatus(false)} />
-              ) : (
-                <BsBookmarks onClick={() => setSaveStatus(true)} />
-              )}
-            </div>
-          ) : null}
-        </div>
+        ) : null}
       </div>
     </motion.li>
   );
