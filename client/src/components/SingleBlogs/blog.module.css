@@ -1,0 +1,124 @@
+.blog__main {
+  width: 100%;
+  min-height: 100vh;
+  max-width: 1460px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+}
+.blog__top {
+  width: 100%;
+}
+.blog__top__baner {
+  width: 100%;
+  height: 100%;
+  max-height: 500px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.blog__top__baner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.blog__top__save {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background-color: var(--bg-color);
+  height: fit-content;
+  width: fit-content;
+  padding: 8px 8px 4px 8px;
+  border-radius: 1rem;
+}
+.blog__top__save svg {
+  cursor: pointer;
+  color: var(--primary-blue-color);
+  font-size: 25px;
+}
+
+.blog__top__title {
+  width: 100%;
+  padding: 1rem 0;
+}
+.blog__top__title h2 {
+  font-size: clamp(1rem, 5vw, 2.2rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  line-height: 1.4em;
+  max-height: 2.8em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.blog__top__menu {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 0;
+}
+.blog__top__menu__user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.blog__top__menu__user svg {
+  font-size: 40px;
+}
+.blog__top__menu__userInfo {
+  display: flex;
+  flex-direction: column;
+}
+.blog__top__menu__userInfo div {
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+}
+.blog__top__menu__userInfo button {
+  width: fit-content;
+  height: fit-content;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--primary-blue-color);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+.blog__top__menu__userInfo div span {
+  font-size: 20px;
+  font-weight: 500;
+}
+.blog__top__menu__timer {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--border-2-color);
+}
+
+.blog__top__menu__action {
+  display: flex;
+  gap: 1rem;
+  align-items: start;
+}
+.blog__top__menu__action span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  min-height: 32px;
+}
+.blog__top__menu__action span:first-of-type svg {
+  font-size: 32px;
+  color: #ff006e;
+  cursor: pointer;
+}
+.blog__top__menu__action span:last-of-type svg {
+  font-size: 25px;
+  color: var(--primary-blue-color);
+  cursor: pointer;
+}
