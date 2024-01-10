@@ -66,6 +66,10 @@ export default function Content() {
           in quis facilis odit corrupti?
         </p>
       </div>
+      <div className={styles.blog__content__paragraph_img}>
+        <img src="../travel.jpg" alt="" />
+        <img src="../travel.jpg" alt="" />
+      </div>
     </div>
   );
 }

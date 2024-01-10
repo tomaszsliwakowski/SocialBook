@@ -44,14 +44,15 @@
   padding: 0 1rem 0 0;
 }
 .creator__editor__title input {
-  width: 100%;
+  width: calc(100% - 2rem);
   outline: none;
   font-weight: 500;
   height: 40px;
   padding: 2px 0.5rem;
   font-size: 18px;
-  border: 1px solid var(--font-color);
+  border: 1px solid var(--border-2-color);
   border-radius: 0.5rem;
+  margin-left: 1rem;
 }
 
 .creator__editor__paragraphList {
@@ -64,7 +65,6 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-height: 815px;
   overflow: auto;
 }
 .creator__editor__paragraphList li {
@@ -78,13 +78,14 @@
   overflow: hidden;
 }
 .creator__editor__paragraphList h4 {
-  font-size: 18px;
+  font-size: 20px;
   margin-bottom: 0.5rem;
 }
 .creator__editor__AddBtn {
   font-size: 18px;
   font-weight: bold;
   padding: 4px 1rem;
+  margin-left: 1rem;
   border-radius: 1rem;
   border: 1px solid var(--primary-blue-color);
   color: var(--primary-blue-color);
@@ -99,7 +100,7 @@
 
 .creator__editor__paragraph__content {
   display: flex;
-
+  gap: 1rem;
   height: 100%;
   max-height: 250px;
 }
@@ -118,9 +119,170 @@
 .creator__editor__paragraph__action {
   display: flex;
   justify-content: space-between;
+  padding: 0.5rem 0 0 0;
+  height: fit-content;
 }
 .creator__editor__paragraph__action svg {
   font-size: 30px;
   color: var(--primary-blue-color);
+  cursor: pointer;
+}
+.creator__editor__paragraph__action div:nth-child(1) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.creator__editor__paragraph__action div:nth-child(1) button {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 2px 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  background-color: var(--bg-color);
+}
+.creator__editor__paragraph__action div:nth-child(1) button:nth-child(1),
+.creator__editor__paragraph__action div:nth-child(1) button:nth-child(2) {
+  color: var(--primary-blue-color);
+  border: 1px solid var(--primary-blue-color);
+}
+.creator__editor__paragraph__action div:nth-child(1) button:nth-child(3) {
+  color: red;
+  border: 1px solid red;
+}
+.creator__editor__paragraph__action div:nth-child(1) button:nth-child(3):hover {
+  background-color: red;
+  color: white;
+}
+.creator__editor__paragraph__action div:nth-child(1) button:nth-child(1):hover,
+.creator__editor__paragraph__action div:nth-child(1) button:nth-child(2):hover {
+  background-color: var(--primary-blue-color);
+  color: white;
+}
+.creator__editor__paragraph__action div:nth-child(2) {
+  display: flex;
+  gap: 0.35rem;
+}
+.creator__editor__paragraph__action div:nth-child(2) svg {
+  font-size: 32px;
+  color: var(--primary-blue-color);
+  cursor: pointer;
+}
+.creator__editor__action {
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: end;
+}
+
+.creator__editor__action button {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 4px 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: var(--bg-color);
+}
+
+.creator__editor__action button:first-of-type {
+  color: var(--primary-blue-color);
+  border: 1px solid var(--primary-blue-color);
+}
+.creator__editor__action button:last-of-type {
+  color: green;
+  border: 1px solid green;
+}
+
+.creator__editor__action button:first-of-type:hover {
+  background-color: var(--primary-blue-color);
+  color: white;
+}
+.creator__editor__action button:last-of-type:hover {
+  background-color: green;
+  color: white;
+}
+
+.creator__editor__attachment {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.creator__editor__tags h4 {
+  font-size: 20px;
+}
+
+.creator__editor__tags__selectBar {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1rem;
+}
+.creator__editor__tags__selectBar__input {
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+.creator__editor__tags__selectBar__input input {
+  min-width: 200px;
+  height: 35px;
+  border: none;
+  padding: 0 0.5rem 0 0.8rem;
+  font-size: 18px;
+  outline: none;
+  background-color: white;
+  border: 1px solid var(--border-2-color);
+  border-radius: 1rem 0 0 1rem;
+  border-right: none;
+}
+.creator__editor__tags__selectBar__input button {
+  height: 35px;
+  border: 2px solid var(--primary-blue-color);
+  background-color: var(--primary-blue-color);
+  color: white;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 0 1rem 1rem 0;
+  padding: 0 0.5rem;
+}
+
+.creator__editor__tags__selectBar__select {
+}
+.creator__editor__tags__selectBar__select select {
+  height: 35px;
+}
+
+.creator__editor__tags__list {
+  padding: 0.5rem 1rem 1rem 1rem;
+  width: 100%;
+  height: auto;
+}
+.creator__editor__tags__list ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+  height: auto;
+}
+.creator__editor__tags__list li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  background-color: var(--primary-blue-color);
+  padding: 0px 0.2rem 0px 0.5rem;
+  border-radius: 0.5rem;
+}
+.creator__editor__tags__list li span {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+}
+.creator__editor__tags__list li svg {
+  font-size: 35px;
+  color: red;
   cursor: pointer;
 }
