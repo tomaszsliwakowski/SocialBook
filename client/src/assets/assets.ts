@@ -53,6 +53,18 @@ export const PopularTags: string[] = [
   "Animals",
 ];
 
+export const PopularTagsCreator: string[] = [
+  "Cars",
+  "Sports",
+  "Food",
+  "Travel",
+  "LifeStyle",
+  "Fitness",
+  "Fashion",
+  "Buisness",
+  "Animals",
+];
+
 export const TimeSpanList: string[] = [
   "All",
   "Last 365days",
