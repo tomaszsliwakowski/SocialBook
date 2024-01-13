@@ -1,4 +1,5 @@
 import styles from "./blogCreator.module.css";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 export default function Attachment() {
   return (
@@ -8,7 +9,9 @@ export default function Attachment() {
         <div className={styles.creator__editor__mainBaner}>main baner</div>
       </div>
       <div className={styles.creator__editor__action}>
-        <button>Clear Creator</button>
+        <button>
+          <FaRegTrashAlt />
+        </button>
         <button>Share Blog</button>
       </div>
     </div>

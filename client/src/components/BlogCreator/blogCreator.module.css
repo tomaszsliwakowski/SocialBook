@@ -1,7 +1,7 @@
 .creator__main {
   width: 100%;
   min-height: 100vh;
-  max-width: 1460px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
   display: flex;
@@ -22,13 +22,13 @@
 }
 
 .creator__editor__content {
-  width: 60%;
+  width: 72%;
   border-right: 1px solid var(--font-color);
   padding: 0 1rem 0 0;
 }
 .creator__editor__attachment {
-  width: 40%;
-  padding: 0 1rem;
+  width: 28%;
+  padding: 0 0 0 1rem;
 }
 
 .creator__editor__title {
@@ -63,20 +63,34 @@
   list-style-type: none;
   padding: 1rem;
   display: flex;
-  flex-direction: column;
   gap: 1rem;
   overflow: auto;
+  flex-wrap: wrap;
 }
 .creator__editor__paragraphList li {
   width: 100%;
   height: auto;
   max-height: 250px;
+  max-width: fit-content;
   border: 1px solid white;
   box-shadow: 0 0 10px var(--shadow-color);
   border-radius: 0.5rem;
   padding: 1rem;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
 }
+
+.creator__editor__paragraph__number {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.8rem;
+  font-weight: 500;
+  font-size: 16px;
+}
+
 .creator__editor__paragraphList h4 {
   font-size: 20px;
   margin-bottom: 0.5rem;
@@ -100,10 +114,34 @@
 
 .creator__editor__paragraph__content {
   display: flex;
-  gap: 1rem;
   height: 100%;
-  max-height: 250px;
+  width: 100%;
 }
+
+.creator__editor__paragraph__content span {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.creator__editor__paragraph__content span svg {
+  font-size: 40px;
+  color: #4568dc;
+}
+
+.creator__editor__paragraph__content span p {
+  font-size: 25px;
+  font-weight: bold;
+  background: #4568dc;
+  background: -webkit-linear-gradient(to right, #4568dc, #b06ab3);
+  background: linear-gradient(to right, #4568dc, #b06ab3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .creator__editor__paragraph__content p {
   overflow: hidden;
   padding: 0 1rem 0 0;
@@ -119,6 +157,7 @@
 .creator__editor__paragraph__action {
   display: flex;
   justify-content: space-between;
+  gap: 1.5rem;
   padding: 0.5rem 0 0 0;
   height: fit-content;
 }
@@ -130,13 +169,14 @@
 .creator__editor__paragraph__action div:nth-child(1) {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .creator__editor__paragraph__action div:nth-child(1) button {
   font-size: 14px;
   font-weight: 500;
-  padding: 2px 0.5rem;
+  padding: 4px 1rem;
+  height: 28px;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.3s;
@@ -162,7 +202,7 @@
 }
 .creator__editor__paragraph__action div:nth-child(2) {
   display: flex;
-  gap: 0.35rem;
+  gap: 0.5rem;
 }
 .creator__editor__paragraph__action div:nth-child(2) svg {
   font-size: 32px;
@@ -170,24 +210,37 @@
   cursor: pointer;
 }
 .creator__editor__action {
-  padding: 1rem;
   display: flex;
   gap: 1rem;
-  justify-content: end;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.creator__editor__action button {
+.creator__editor__action button:nth-child(2) {
   font-size: 18px;
   font-weight: bold;
-  padding: 4px 1rem;
+  padding: 5px 1rem;
+  width: 100%;
+  max-width: 180px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: var(--bg-color);
+}
+.creator__editor__action button:nth-child(1) {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px 1rem;
+  display: flex;
+  align-items: center;
+  max-width: 180px;
   border-radius: 0.5rem;
   cursor: pointer;
   background-color: var(--bg-color);
 }
 
 .creator__editor__action button:first-of-type {
-  color: var(--primary-blue-color);
-  border: 1px solid var(--primary-blue-color);
+  color: red;
+  border: 1px solid red;
 }
 .creator__editor__action button:last-of-type {
   color: green;
@@ -195,7 +248,7 @@
 }
 
 .creator__editor__action button:first-of-type:hover {
-  background-color: var(--primary-blue-color);
+  background-color: red;
   color: white;
 }
 .creator__editor__action button:last-of-type:hover {
