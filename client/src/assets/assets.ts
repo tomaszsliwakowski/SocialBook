@@ -25,12 +25,13 @@ export const deleteCookie = (name: string, path: string, domain: string) => {
 export const timeExpiredFrom = (createdAt: string) => {
   const createTime = parseInt(createdAt);
   const date = new Date();
-  const expired = date.getTime() - createTime;
+  const difference: number = date.getTime() - createTime;
   let timer: TimerType = {
-    minutes: Math.floor((expired / 1000 / 60) % 60),
-    hours: Math.floor((expired / 1000 / 60 / 60) % 60),
-    days: Math.floor(((expired / 1000 / 60 / 60) % 60) / 24),
+    minutes: Math.floor((difference / 1000 / 60) % 60),
+    hours: Math.floor((difference / 1000 / 60 / 60) % 60),
+    days: Math.floor(difference / 1000 / 60 / 60 / 24),
   };
+  console.log(timer);
   if (timer.minutes < 1 && timer.hours === 0) return `now`;
   if (timer.minutes < 60 && timer.hours === 0)
     return `${timer.minutes} minutes ago`;

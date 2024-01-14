@@ -34,6 +34,7 @@ export default function AddPost({
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      if (!e.target.files[0]) return;
       if (e.target.files[0].size > 2097152) {
         alert("File is too big!");
         return setImage(null);

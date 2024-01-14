@@ -62,8 +62,8 @@ export default function HeaderNav() {
         >
           Chats
         </NavLink>
-        {window.location.pathname === "/blogs" ||
-        window.location.pathname === "/blog" ? (
+        {window.location.pathname.split("/")[1] === "blogs" ||
+        window.location.pathname.split("/")[1] === "blog" ? (
           <NavLink
             to={BLOG_CREATOR_ROUTE}
             onClick={() => setMobile(false)}

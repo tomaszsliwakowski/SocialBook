@@ -274,7 +274,7 @@
 .creator__editor__tags__selectBar__input {
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: var(--bg-color);
 }
 .creator__editor__tags__selectBar__input input {
   min-width: 200px;
@@ -442,6 +442,53 @@
 }
 .blogsCreator__selectBar__tagList li.blogsCreator__selectedTags:hover {
   background-color: var(--primary-blueDark-color);
+}
+
+.creator__editor__smallBaner {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.creator__editor__mainBaner {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.creator__editor__Addimage {
+  width: 100%;
+  height: auto;
+  box-shadow: 0 0 15px var(--shadow-color);
+  border: 1px solid white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  height: 80px;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+.creator__editor__Addimage span {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.creator__editor__Addimage svg {
+  font-size: 40px;
+  color: #4568dc;
+}
+
+.creator__editor__Addimage img {
+  height: 80%;
+  width: auto;
+  color: #4568dc;
+  border-radius: 0.8rem;
 }
 
 @media screen and (max-width: 400px) {
