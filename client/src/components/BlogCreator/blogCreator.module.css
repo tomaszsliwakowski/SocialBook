@@ -491,6 +491,100 @@
   border-radius: 0.8rem;
 }
 
+.contentModal {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 70%);
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+.contentModal__body {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  background-color: var(--bg-color);
+  border-radius: 1rem;
+}
+
+.contentModal__body__head {
+  width: 100%;
+  height: auto;
+  padding: 2rem;
+}
+.contentModal__body__head h2 {
+  font-size: 28px;
+}
+.contentModal__body__main {
+  padding: 0 2rem;
+}
+.contentModal__body__main span {
+  font-size: 20px;
+  font-weight: 500;
+}
+.contentModal__body__main__paragraphList {
+  width: 100%;
+  height: auto;
+  padding: 1rem 0;
+}
+.contentModal__body__main__paragraphList ul {
+  list-style-type: none;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.contentModal__body__main__paragraphList ul li {
+  width: 220px;
+  height: 300px;
+  border: 1px solid var(--font-color);
+}
+
+.contentModal__body__action {
+  padding: 2rem;
+  display: flex;
+  justify-content: end;
+  gap: 2rem;
+}
+.contentModal__body__action button {
+  font-size: 18px;
+  font-weight: 500;
+  background-color: var(--bg-color);
+  border: 1px solid var(--primary-blue-color);
+  color: var(--primary-blue-color);
+  padding: 2px 2rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.contentModal__body__action button:first-of-type {
+  color: red;
+  border: 1px solid red;
+}
+.contentModal__body__action button:first-of-type:hover {
+  background-color: red;
+  color: white;
+}
+.contentModal__body__action button:last-of-type {
+  border: 1px solid var(--primary-blue-color);
+  color: var(--primary-blue-color);
+}
+.contentModal__body__action button:hover {
+  background-color: var(--primary-blue-color);
+  color: white;
+}
+
+.contentModal__body__action button:hover {
+  background-color: var(--primary-blue-color);
+  color: white;
+}
+
 @media screen and (max-width: 400px) {
   .blogsCreator__selectBar div {
     height: 40px;
