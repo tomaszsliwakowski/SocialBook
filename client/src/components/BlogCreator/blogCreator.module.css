@@ -542,10 +542,31 @@
 }
 .contentModal__body__main__paragraphList ul li {
   width: 220px;
-  height: 300px;
+  height: auto;
   border: 1px solid var(--font-color);
+  border-radius: 0.5rem;
+  cursor: pointer;
 }
-
+.contentModal__body__main__paragraphList ul li div:nth-child(1) {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: end;
+  padding: 0.5rem;
+}
+.contentModal__body__main__paragraphList ul li div:nth-child(2) {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0 2.5rem 0;
+}
+.contentModal__body__main__paragraphList ul li div:nth-child(2) svg {
+  font-size: 50px;
+  color: #4568dc;
+}
 .contentModal__body__action {
   padding: 2rem;
   display: flex;
@@ -583,6 +604,12 @@
 .contentModal__body__action button:hover {
   background-color: var(--primary-blue-color);
   color: white;
+}
+
+.contentModal__body__main__paragraphList
+  ul
+  li.contentModal__selectParagraphType {
+  border: 2px solid var(--primary-blue-color);
 }
 
 @media screen and (max-width: 400px) {

@@ -4,10 +4,12 @@ import ParagraphList from "./ParagraphList";
 import Tags from "./Tags";
 import Title from "./Title";
 import styles from "./blogCreator.module.css";
-import ParagraphType from "./ParagraphType";
+import ParagraphType from "./modal/ParagraphType";
+import ModalBody from "./modal/ModalBody";
 
 export default function Main() {
   const [contentModalStatus, setContentModalStatus] = useState(true);
+  const [selectedParagraph, setSelectedParagraph] = useState<string>("");
 
   useEffect(() => {
     if (!contentModalStatus) return;
@@ -33,6 +35,10 @@ export default function Main() {
     }
   };
 
+  const SelectParagraphHandler = (type: string) => {
+    setSelectedParagraph(type);
+  };
+
   return (
     <>
       <div className={styles.creator__main}>
@@ -47,18 +53,13 @@ export default function Main() {
         </div>
       </div>
       {contentModalStatus ? (
-        <div
-          id="modal"
-          onClick={(e) => closeModal(e)}
-          className={styles.contentModal}
-        >
-          <div className={styles.contentModal__body}>
-            <div className={styles.contentModal__body__head}>
-              <h2>Blog Content</h2>
-            </div>
-            <ParagraphType closeModal={closeModal} />
-          </div>
-        </div>
+        <ModalBody closeModal={closeModal} id="modal" title="Blog Content">
+          <ParagraphType
+            closeModal={closeModal}
+            selectedParagraph={selectedParagraph}
+            SelectParagraphHandler={SelectParagraphHandler}
+          />
+        </ModalBody>
       ) : null}
     </>
   );
