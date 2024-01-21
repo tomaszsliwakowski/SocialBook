@@ -5,8 +5,13 @@ import {
 } from "react-icons/io";
 import { FaImage } from "react-icons/fa";
 import { IoText } from "react-icons/io5";
+import { CreatorReducerType } from "../../reducers/BlogCreatorReducer";
 
-export default function Paragraph() {
+type PROPS = {
+  state: CreatorReducerType;
+};
+
+export default function Paragraph({ state }: PROPS) {
   return (
     <>
       <li className={styles.creator__editor__paragraph}>

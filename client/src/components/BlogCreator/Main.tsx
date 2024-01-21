@@ -6,20 +6,15 @@ import Title from "./Title";
 import styles from "./blogCreator.module.css";
 import ParagraphType from "./modal/ParagraphType";
 import ModalBody from "./modal/ModalBody";
-import { reducer, CreatorReducerType } from "../../reducers/BlogCreatorReducer";
-
-const initialState: CreatorReducerType = {
-  title: "",
-  blogContent: {},
-  tags: [],
-  miniature: "",
-  baner: "",
-};
+import {
+  CreatorReducer,
+  initialState,
+} from "../../reducers/BlogCreatorReducer";
 
 export default function Main() {
-  const [contentModalStatus, setContentModalStatus] = useState(true);
+  const [contentModalStatus, setContentModalStatus] = useState(false);
   const [selectedParagraph, setSelectedParagraph] = useState<string>("");
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(CreatorReducer, initialState);
 
   useEffect(() => {
     if (!contentModalStatus) return;
@@ -48,6 +43,12 @@ export default function Main() {
   const SelectParagraphHandler = (type: string) => {
     setSelectedParagraph(type);
   };
+  const ModalOff = () => {
+    setContentModalStatus(false);
+  };
+  const ModalOn = () => {
+    setContentModalStatus(true);
+  };
 
   return (
     <>
@@ -55,19 +56,20 @@ export default function Main() {
         <h2>Blog Creator</h2>
         <div className={styles.creator__editor}>
           <div className={styles.creator__editor__content}>
-            <Title />
-            <ParagraphList />
-            <Tags />
+            <Title state={state} dispatch={dispatch} />
+            <ParagraphList ModalOn={ModalOn} state={state} />
+            <Tags state={state} dispatch={dispatch} />
           </div>
-          <Attachment />
+          <Attachment state={state} dispatch={dispatch} />
         </div>
       </div>
       {contentModalStatus ? (
         <ModalBody closeModal={closeModal} id="modal" title="Blog Content">
           <ParagraphType
-            closeModal={closeModal}
+            ModalOff={ModalOff}
             selectedParagraph={selectedParagraph}
             SelectParagraphHandler={SelectParagraphHandler}
+            dispatch={dispatch}
           />
         </ModalBody>
       ) : null}

@@ -2,13 +2,18 @@ import { useRef, useState } from "react";
 import styles from "./blogCreator.module.css";
 import { FaRegTrashAlt } from "react-icons/fa";
 import AddImage from "./AddImage";
+import { Action, CreatorReducerType } from "../../reducers/BlogCreatorReducer";
 
 type ImageStateType = {
   miniature: string | null;
   baner: string | null;
 };
+type PROPS = {
+  state: CreatorReducerType;
+  dispatch: React.Dispatch<Action>;
+};
 
-export default function Attachment() {
+export default function Attachment({ state, dispatch }: PROPS) {
   const [image, setImage] = useState<ImageStateType>({
     miniature: null,
     baner: null,

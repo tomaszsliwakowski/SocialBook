@@ -4,8 +4,18 @@ import SelectBarCreator from "./SelectBarCreator";
 import styles from "./blogCreator.module.css";
 import { IoMdAdd } from "react-icons/io";
 import Tag from "./Tag";
+import {
+  Action,
+  ActionType,
+  CreatorReducerType,
+} from "../../reducers/BlogCreatorReducer";
 
-export default function Tags() {
+type PROPS = {
+  state: CreatorReducerType;
+  dispatch: React.Dispatch<Action>;
+};
+
+export default function Tags({ state, dispatch }: PROPS) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [enterTagValue, setEnterTagValue] = useState<string>("");
 
@@ -18,18 +28,18 @@ export default function Tags() {
   };
 
   const deleteSelectedTag = (item: string): void => {
-    setSelectedTags((prev) => prev.filter((tag) => tag !== item));
+    dispatch({ type: ActionType.delete_tag, payload: item });
   };
 
   const addEnterTag = (): void => {
     if (enterTagValue !== "") {
-      setSelectedTags((prev) => [...prev, enterTagValue]);
+      dispatch({ type: ActionType.add_tags, payload: enterTagValue });
     }
   };
 
   return (
     <div className={styles.creator__editor__tags}>
-      <h4>Tags ({selectedTags.length}/10)</h4>
+      <h4>Tags ({state.tags.length}/10)</h4>
       <div className={styles.creator__editor__tags__selectBar}>
         <div className={styles.creator__editor__tags__selectBar__input}>
           <input
@@ -57,7 +67,7 @@ export default function Tags() {
       </div>
       <div className={styles.creator__editor__tags__list}>
         <ul>
-          {selectedTags.map((item, index) => (
+          {state.tags.map((item, index) => (
             <Tag
               key={index}
               name={item}

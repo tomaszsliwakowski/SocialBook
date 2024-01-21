@@ -2,11 +2,16 @@ import styles from "../blogCreator.module.css";
 import PragraphTypeText from "./PragraphTypeText";
 import ParagraphTypeImage from "./ParagraphTypeImage";
 import ParagraphTypeTextAndImage from "./ParagraphTypeTextAndImage";
+import {
+  Action,
+  CreatorReducerType,
+} from "../../../reducers/BlogCreatorReducer";
 
 type PROPS = {
-  closeModal: Function;
   selectedParagraph: string;
   SelectParagraphHandler: Function;
+  ModalOff: Function;
+  dispatch: React.Dispatch<Action>;
 };
 export interface ParagrapTypePROPS {
   selectedParagraph: string;
@@ -15,9 +20,10 @@ export interface ParagrapTypePROPS {
 }
 
 export default function ParagraphType({
-  closeModal,
   selectedParagraph,
   SelectParagraphHandler,
+  ModalOff,
+  dispatch,
 }: PROPS) {
   return (
     <>
@@ -44,9 +50,7 @@ export default function ParagraphType({
         </div>
       </div>
       <div className={styles.contentModal__body__action}>
-        <button id="modalBtn" onClick={(e) => closeModal(e)}>
-          Close
-        </button>
+        <button onClick={() => ModalOff()}>Close</button>
         <button>Next</button>
       </div>
     </>
