@@ -9,7 +9,7 @@ export interface CreatorReducerType {
 }
 
 export enum ActionType {
-  add_title = "add-title",
+  change_title = "change-title",
   add_blogContent = "add-blogContent",
   add_tags = "add-tags",
   add_miniature = "add-miniature",
@@ -37,11 +37,9 @@ export const CreatorReducer: Reducer<CreatorReducerType, Action> = (
 ): CreatorReducerType => {
   const { type, payload } = action;
   switch (type) {
-    //titel
-    case ActionType.add_title: {
-      let newData = state;
-      newData.title = payload;
-      return newData;
+    //title
+    case ActionType.change_title: {
+      return { ...state, title: payload };
     }
     //blogContent
     case ActionType.add_blogContent: {
@@ -49,16 +47,11 @@ export const CreatorReducer: Reducer<CreatorReducerType, Action> = (
     }
     //tags
     case ActionType.add_tags: {
-      let newData = state;
       if (typeof payload !== "string") return state;
-      newData.tags.push(payload);
-      return newData;
+      return { ...state, tags: [...state.tags, payload] };
     }
     case ActionType.delete_tag: {
-      let newData = state;
-      let index = newData.tags.indexOf(payload);
-      newData.tags.splice(index, 1);
-      return newData;
+      return { ...state, tags: state.tags.filter((item) => item !== payload) };
     }
     //miniature
     case ActionType.add_miniature: {

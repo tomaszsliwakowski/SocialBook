@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PopularTagsCreator } from "../../assets/assets";
 import SelectBarCreator from "./SelectBarCreator";
 import styles from "./blogCreator.module.css";
@@ -34,8 +34,10 @@ export default function Tags({ state, dispatch }: PROPS) {
   const addEnterTag = (): void => {
     if (enterTagValue !== "") {
       dispatch({ type: ActionType.add_tags, payload: enterTagValue });
+      setEnterTagValue("");
     }
   };
+  const { tags }: { tags: string[] } = state;
 
   return (
     <div className={styles.creator__editor__tags}>
@@ -67,7 +69,7 @@ export default function Tags({ state, dispatch }: PROPS) {
       </div>
       <div className={styles.creator__editor__tags__list}>
         <ul>
-          {state.tags.map((item, index) => (
+          {tags.map((item, index) => (
             <Tag
               key={index}
               name={item}
