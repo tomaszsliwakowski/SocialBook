@@ -1,6 +1,7 @@
 import { IoText } from "react-icons/io5";
 import { ParagrapTypePROPS } from "./ParagraphType";
 import styles from "../blogCreator.module.css";
+import CheckBox from "./CheckBox";
 
 export default function PragraphTypeText({
   selectedParagraph,
@@ -17,9 +18,9 @@ export default function PragraphTypeText({
       }`}
     >
       <div>
-        <input type="checkbox" checked={selectedParagraph === type} />
+        <CheckBox selected={selectedParagraph === type} />
       </div>
-      <div>
+      <div className={styles.contentModal__selectParagraphType__icon}>
         <IoText />
       </div>
     </li>

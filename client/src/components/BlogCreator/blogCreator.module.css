@@ -543,7 +543,7 @@
 .contentModal__body__main__paragraphList ul li {
   width: 220px;
   height: auto;
-  border: 1px solid var(--font-color);
+  border: 2px solid var(--border-2-color);
   border-radius: 0.5rem;
   cursor: pointer;
 }
@@ -554,7 +554,10 @@
   justify-content: end;
   padding: 0.5rem;
 }
-.contentModal__body__main__paragraphList ul li div:nth-child(2) {
+.contentModal__body__main__paragraphList
+  ul
+  li
+  div.contentModal__selectParagraphType__icon {
   width: 100%;
   height: auto;
   display: flex;
@@ -563,7 +566,11 @@
   gap: 1rem;
   padding: 0.5rem 0 2.5rem 0;
 }
-.contentModal__body__main__paragraphList ul li div:nth-child(2) svg {
+.contentModal__body__main__paragraphList
+  ul
+  li
+  div.contentModal__selectParagraphType__icon
+  svg {
   font-size: 50px;
   color: #4568dc;
 }
@@ -612,9 +619,43 @@
   border: 2px solid var(--primary-blue-color);
 }
 
-.contentModal__body__main__paragraphList ul li input {
-  width: 16px;
-  height: 16px;
+.contentModal__body__main__paragraphList
+  ul
+  li
+  div:nth-child(1)
+  div.contentModal__selectParagraphType__check {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border-2-color);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-blue-color);
+}
+
+.contentModal__body__main__paragraphList
+  ul
+  li
+  div:nth-child(1)
+  div.contentModal__selectParagraphType__checked {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--primary-blue-color);
+  background-color: var(--primary-blue-color);
+  color: white;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.contentModal__body__main__paragraphList ul li div:nth-child(1) svg {
+  width: 10px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @media screen and (max-width: 400px) {

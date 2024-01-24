@@ -1,8 +1,12 @@
 import { Reducer } from "react";
 
+interface BlogContentReducerType {
+  paragraphType: string;
+}
+
 export interface CreatorReducerType {
   title: string;
-  blogContent: {};
+  blogContent: Array<BlogContentReducerType>;
   tags: Array<string>;
   miniature: "";
   baner: "";
@@ -25,7 +29,7 @@ export interface Action {
 
 export const initialState: CreatorReducerType = {
   title: "",
-  blogContent: {},
+  blogContent: [],
   tags: [],
   miniature: "",
   baner: "",
