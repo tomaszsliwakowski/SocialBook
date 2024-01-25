@@ -8,6 +8,7 @@ import { AuthContext, UserAuth } from "../../context/Auth";
 import { useQuery } from "@apollo/client";
 import { GET_POSTS } from "../../Query/postsQuery";
 import { ClipLoader } from "react-spinners";
+import { scrollDisable } from "../../assets/assets";
 
 export interface PostType {
   post_id: string;
@@ -64,20 +65,7 @@ export default function Main() {
   }, [nav, search]);
 
   useEffect(() => {
-    if (!addPostModal) return;
-    const parent = document.querySelector("body");
-    const documentWidth = document.documentElement.clientWidth;
-    const scrollbarWidth = Math.abs(window.innerWidth - documentWidth);
-    if (parent) {
-      parent.style.overflow = "hidden";
-      parent.style.paddingRight = `${scrollbarWidth}px`;
-    }
-    return () => {
-      if (parent) {
-        parent.style.overflow = "auto";
-        parent.style.paddingRight = "0px";
-      }
-    };
+    scrollDisable(addPostModal);
   }, [addPostModal]);
 
   const closeModal = (e: React.MouseEvent) => {

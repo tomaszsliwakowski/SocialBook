@@ -22,6 +22,23 @@ export const deleteCookie = (name: string, path: string, domain: string) => {
   }
 };
 
+export const scrollDisable = (status: boolean) => {
+  if (!status) return;
+  const parent = document.querySelector("body");
+  const documentWidth = document.documentElement.clientWidth;
+  const scrollbarWidth = Math.abs(window.innerWidth - documentWidth);
+  if (parent) {
+    parent.style.overflow = "hidden";
+    parent.style.paddingRight = `${scrollbarWidth}px`;
+  }
+  return () => {
+    if (parent) {
+      parent.style.overflow = "auto";
+      parent.style.paddingRight = "0px";
+    }
+  };
+};
+
 export const timeExpiredFrom = (createdAt: string) => {
   const createTime = parseInt(createdAt);
   const date = new Date();
@@ -31,7 +48,6 @@ export const timeExpiredFrom = (createdAt: string) => {
     hours: Math.floor((difference / 1000 / 60 / 60) % 60),
     days: Math.floor(difference / 1000 / 60 / 60 / 24),
   };
-  console.log(timer);
   if (timer.minutes < 1 && timer.hours === 0) return `now`;
   if (timer.minutes < 60 && timer.hours === 0)
     return `${timer.minutes} minutes ago`;

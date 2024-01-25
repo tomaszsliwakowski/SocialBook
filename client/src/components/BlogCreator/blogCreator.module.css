@@ -603,13 +603,19 @@
   border: 1px solid var(--primary-blue-color);
   color: var(--primary-blue-color);
 }
+
+.contentModal__body__action button.contentModal__body__action__add {
+  border: 1px solid green;
+  color: green;
+}
+
 .contentModal__body__action button:hover {
   background-color: var(--primary-blue-color);
   color: white;
 }
 
-.contentModal__body__action button:hover {
-  background-color: var(--primary-blue-color);
+.contentModal__body__action button.contentModal__body__action__add:hover {
+  background-color: green;
   color: white;
 }
 

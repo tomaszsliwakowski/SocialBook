@@ -4,33 +4,23 @@ import ParagraphList from "./ParagraphList";
 import Tags from "./Tags";
 import Title from "./Title";
 import styles from "./blogCreator.module.css";
-import ParagraphType from "./modal/ParagraphType";
+import ParagraphType from "./modal/type/ParagraphType";
 import ModalBody from "./modal/ModalBody";
 import {
   CreatorReducer,
   initialState,
 } from "../../reducers/BlogCreatorReducer";
+import ParagraphContent from "./modal/content/ParagraphContent";
+import { scrollDisable } from "../../assets/assets";
 
 export default function Main() {
   const [contentModalStatus, setContentModalStatus] = useState(false);
-  const [selectedParagraph, setSelectedParagraph] = useState<string>("");
+  const [selectedParagraph, setSelectedParagraph] = useState<string>("Text");
+  const [modalStep, setModalStep] = useState<number>(0);
   const [state, dispatch] = useReducer(CreatorReducer, initialState);
 
   useEffect(() => {
-    if (!contentModalStatus) return;
-    const parent = document.querySelector("body");
-    const documentWidth = document.documentElement.clientWidth;
-    const scrollbarWidth = Math.abs(window.innerWidth - documentWidth);
-    if (parent) {
-      parent.style.overflow = "hidden";
-      parent.style.paddingRight = `${scrollbarWidth}px`;
-    }
-    return () => {
-      if (parent) {
-        parent.style.overflow = "auto";
-        parent.style.paddingRight = "0px";
-      }
-    };
+    scrollDisable(contentModalStatus);
   }, [contentModalStatus]);
 
   const closeModal = (e: React.MouseEvent) => {
@@ -50,6 +40,15 @@ export default function Main() {
     setContentModalStatus(true);
   };
 
+  const SetModalStep = (action: string) => {
+    setModalStep((prev) =>
+      action === "next" ? prev + 1 : action === "back" ? prev - 1 : 0
+    );
+    if (action === "sub") {
+      setContentModalStatus(false);
+    }
+  };
+
   return (
     <>
       <div className={styles.creator__main}>
@@ -65,12 +64,20 @@ export default function Main() {
       </div>
       {contentModalStatus ? (
         <ModalBody closeModal={closeModal} id="modal" title="Blog Content">
-          <ParagraphType
-            ModalOff={ModalOff}
-            selectedParagraph={selectedParagraph}
-            SelectParagraphHandler={SelectParagraphHandler}
-            dispatch={dispatch}
-          />
+          {modalStep === 0 ? (
+            <ParagraphType
+              ModalOff={ModalOff}
+              selectedParagraph={selectedParagraph}
+              SelectParagraphHandler={SelectParagraphHandler}
+              SetModalStep={SetModalStep}
+            />
+          ) : null}
+          {modalStep === 1 ? (
+            <ParagraphContent
+              SetModalStep={SetModalStep}
+              selectedParagraph={selectedParagraph}
+            />
+          ) : null}
         </ModalBody>
       ) : null}
     </>

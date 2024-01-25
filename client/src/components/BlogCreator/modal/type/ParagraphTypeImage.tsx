@@ -1,6 +1,6 @@
 import { FaImage } from "react-icons/fa";
 import { ParagrapTypePROPS } from "./ParagraphType";
-import styles from "../blogCreator.module.css";
+import styles from "../../blogCreator.module.css";
 import CheckBox from "./CheckBox";
 
 export default function ParagraphTypeImage({

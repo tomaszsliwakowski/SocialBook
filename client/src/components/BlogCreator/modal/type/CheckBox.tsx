@@ -1,4 +1,4 @@
-import styles from "../blogCreator.module.css";
+import styles from "../../blogCreator.module.css";
 import { FaCheck } from "react-icons/fa6";
 
 type PROPS = {
