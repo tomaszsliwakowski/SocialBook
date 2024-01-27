@@ -39,6 +39,17 @@ body {
   color: var(--font-color);
 }
 
+body.scrollOffdark {
+  overflow: hidden;
+  padding-right: 1rem;
+  background-color: #212121;
+}
+body.scrollOfflight {
+  overflow: hidden;
+  padding-right: 1rem;
+  background-color: white;
+}
+
 .loader {
   min-height: 100vh;
   display: flex;

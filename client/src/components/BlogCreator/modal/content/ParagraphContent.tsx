@@ -1,15 +1,16 @@
 import styles from "../../blogCreator.module.css";
+import ActionButtons from "../ActionButtons";
 import ImageContentCreator from "./ImageContentCreator";
 import TextAndImageContentCreator from "./TextAndImageContentCreator";
 import TextContentCreator from "./TextContentCreator";
 
 type PROPS = {
-  SetModalStep: Function;
+  setModalStep: Function;
   selectedParagraph: string;
 };
 
 export default function ParagraphContent({
-  SetModalStep,
+  setModalStep,
   selectedParagraph,
 }: PROPS) {
   return (
@@ -24,15 +25,13 @@ export default function ParagraphContent({
           ) : null}
         </div>
       </div>
-      <div className={styles.contentModal__body__action}>
-        <button onClick={() => SetModalStep("back")}>Back</button>
-        <button
-          onClick={() => SetModalStep("sub")}
-          className={styles.contentModal__body__action__add}
-        >
-          Add
-        </button>
-      </div>
+      <ActionButtons
+        setModalStep={setModalStep}
+        actionOne="back"
+        actionTwo="sub"
+        nameOne="Back"
+        nameTwo="Add"
+      />
     </>
   );
 }

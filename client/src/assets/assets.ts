@@ -22,23 +22,6 @@ export const deleteCookie = (name: string, path: string, domain: string) => {
   }
 };
 
-export const scrollDisable = (status: boolean) => {
-  if (!status) return;
-  const parent = document.querySelector("body");
-  const documentWidth = document.documentElement.clientWidth;
-  const scrollbarWidth = Math.abs(window.innerWidth - documentWidth);
-  if (parent) {
-    parent.style.overflow = "hidden";
-    parent.style.paddingRight = `${scrollbarWidth}px`;
-  }
-  return () => {
-    if (parent) {
-      parent.style.overflow = "auto";
-      parent.style.paddingRight = "0px";
-    }
-  };
-};
-
 export const timeExpiredFrom = (createdAt: string) => {
   const createTime = parseInt(createdAt);
   const date = new Date();

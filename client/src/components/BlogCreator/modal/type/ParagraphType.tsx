@@ -2,24 +2,23 @@ import styles from "../../blogCreator.module.css";
 import PragraphTypeText from "./PragraphTypeText";
 import ParagraphTypeImage from "./ParagraphTypeImage";
 import ParagraphTypeTextAndImage from "./ParagraphTypeTextAndImage";
+import ActionButtons from "../ActionButtons";
 
 type PROPS = {
   selectedParagraph: string;
-  SelectParagraphHandler: Function;
-  ModalOff: Function;
-  SetModalStep: Function;
+  selectParagraphHandler: Function;
+  setModalStep: Function;
 };
 export interface ParagrapTypePROPS {
   selectedParagraph: string;
-  SelectParagraphHandler: Function;
+  selectParagraphHandler: Function;
   type: string;
 }
 
 export default function ParagraphType({
   selectedParagraph,
-  SelectParagraphHandler,
-  ModalOff,
-  SetModalStep,
+  selectParagraphHandler,
+  setModalStep,
 }: PROPS) {
   return (
     <>
@@ -29,26 +28,29 @@ export default function ParagraphType({
           <ul>
             <PragraphTypeText
               selectedParagraph={selectedParagraph}
-              SelectParagraphHandler={SelectParagraphHandler}
+              selectParagraphHandler={selectParagraphHandler}
               type="Text"
             />
             <ParagraphTypeImage
               selectedParagraph={selectedParagraph}
-              SelectParagraphHandler={SelectParagraphHandler}
+              selectParagraphHandler={selectParagraphHandler}
               type="Image"
             />
             <ParagraphTypeTextAndImage
               selectedParagraph={selectedParagraph}
-              SelectParagraphHandler={SelectParagraphHandler}
+              selectParagraphHandler={selectParagraphHandler}
               type="TextAndImage"
             />
           </ul>
         </div>
       </div>
-      <div className={styles.contentModal__body__action}>
-        <button onClick={() => ModalOff()}>Close</button>
-        <button onClick={() => SetModalStep("next")}>Next</button>
-      </div>
+      <ActionButtons
+        setModalStep={setModalStep}
+        actionOne="off"
+        actionTwo="next"
+        nameOne="Close"
+        nameTwo="Next"
+      />
     </>
   );
 }

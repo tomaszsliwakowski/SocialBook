@@ -5,12 +5,12 @@ import CheckBox from "./CheckBox";
 
 export default function PragraphTypeText({
   selectedParagraph,
-  SelectParagraphHandler,
+  selectParagraphHandler,
   type,
 }: ParagrapTypePROPS) {
   return (
     <li
-      onClick={() => SelectParagraphHandler(type)}
+      onClick={() => selectParagraphHandler(type)}
       className={`${
         selectedParagraph === type
           ? styles.contentModal__selectParagraphType

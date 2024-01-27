@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import Attachment from "./Attachment";
 import ParagraphList from "./ParagraphList";
 import Tags from "./Tags";
@@ -11,16 +11,26 @@ import {
   initialState,
 } from "../../reducers/BlogCreatorReducer";
 import ParagraphContent from "./modal/content/ParagraphContent";
-import { scrollDisable } from "../../assets/assets";
+import { ThemeContext } from "../../context/ThemeContext";
 
 export default function Main() {
+  const { theme } = useContext(ThemeContext);
   const [contentModalStatus, setContentModalStatus] = useState(false);
   const [selectedParagraph, setSelectedParagraph] = useState<string>("Text");
   const [modalStep, setModalStep] = useState<number>(0);
   const [state, dispatch] = useReducer(CreatorReducer, initialState);
 
   useEffect(() => {
-    scrollDisable(contentModalStatus);
+    if (!contentModalStatus) return;
+    const parent = document.querySelector("body");
+    if (parent) {
+      parent.classList.add("scrollOff" + theme);
+    }
+    return () => {
+      if (parent) {
+        parent.classList.remove("scrollOff" + theme);
+      }
+    };
   }, [contentModalStatus]);
 
   const closeModal = (e: React.MouseEvent) => {
@@ -30,22 +40,39 @@ export default function Main() {
     }
   };
 
-  const SelectParagraphHandler = (type: string) => {
+  const selectParagraphHandler = (type: string) => {
     setSelectedParagraph(type);
   };
-  const ModalOff = () => {
+  const modalOff = () => {
     setContentModalStatus(false);
   };
-  const ModalOn = () => {
+  const modalOn = () => {
     setContentModalStatus(true);
   };
+  const modalNextStep = () => {
+    setModalStep((prev) => prev + 1);
+  };
+  const modalBackStep = () => {
+    setModalStep((prev) => prev - 1);
+  };
+  console.log(modalStep);
 
-  const SetModalStep = (action: string) => {
-    setModalStep((prev) =>
-      action === "next" ? prev + 1 : action === "back" ? prev - 1 : 0
-    );
-    if (action === "sub") {
-      setContentModalStatus(false);
+  const modalSetStep = (action: string) => {
+    switch (action) {
+      case "next":
+        modalNextStep();
+        break;
+      case "back":
+        modalBackStep();
+        break;
+      case "sub":
+        //add
+        break;
+      case "off":
+        modalOff();
+        break;
+      default:
+        break;
     }
   };
 
@@ -56,7 +83,7 @@ export default function Main() {
         <div className={styles.creator__editor}>
           <div className={styles.creator__editor__content}>
             <Title state={state} dispatch={dispatch} />
-            <ParagraphList ModalOn={ModalOn} state={state} />
+            <ParagraphList ModalOn={modalOn} state={state} />
             <Tags state={state} dispatch={dispatch} />
           </div>
           <Attachment state={state} dispatch={dispatch} />
@@ -66,15 +93,14 @@ export default function Main() {
         <ModalBody closeModal={closeModal} id="modal" title="Blog Content">
           {modalStep === 0 ? (
             <ParagraphType
-              ModalOff={ModalOff}
               selectedParagraph={selectedParagraph}
-              SelectParagraphHandler={SelectParagraphHandler}
-              SetModalStep={SetModalStep}
+              selectParagraphHandler={selectParagraphHandler}
+              setModalStep={modalSetStep}
             />
           ) : null}
           {modalStep === 1 ? (
             <ParagraphContent
-              SetModalStep={SetModalStep}
+              setModalStep={modalSetStep}
               selectedParagraph={selectedParagraph}
             />
           ) : null}

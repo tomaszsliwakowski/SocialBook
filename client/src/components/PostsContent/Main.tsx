@@ -8,7 +8,7 @@ import { AuthContext, UserAuth } from "../../context/Auth";
 import { useQuery } from "@apollo/client";
 import { GET_POSTS } from "../../Query/postsQuery";
 import { ClipLoader } from "react-spinners";
-import { scrollDisable } from "../../assets/assets";
+import { ThemeContext } from "../../context/ThemeContext";
 
 export interface PostType {
   post_id: string;
@@ -28,6 +28,7 @@ const override: CSSProperties = {
 };
 
 export default function Main() {
+  const { theme } = useContext(ThemeContext);
   const [addPostModal, setAddPostModal] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams({});
   const [postsData, setPostsData] = useState<PostType[]>([]);
@@ -65,7 +66,16 @@ export default function Main() {
   }, [nav, search]);
 
   useEffect(() => {
-    scrollDisable(addPostModal);
+    if (!addPostModal) return;
+    const parent = document.querySelector("body");
+    if (parent) {
+      parent.classList.add("scrollOff" + theme);
+    }
+    return () => {
+      if (parent) {
+        parent.classList.remove("scrollOff" + theme);
+      }
+    };
   }, [addPostModal]);
 
   const closeModal = (e: React.MouseEvent) => {
