@@ -17,6 +17,7 @@ export default function Main() {
   const { theme } = useContext(ThemeContext);
   const [contentModalStatus, setContentModalStatus] = useState(false);
   const [selectedParagraph, setSelectedParagraph] = useState<string>("Text");
+  const [editorContent, setEditorContent] = useState<string>("");
   const [modalStep, setModalStep] = useState<number>(0);
   const [state, dispatch] = useReducer(CreatorReducer, initialState);
 
@@ -40,6 +41,10 @@ export default function Main() {
     }
   };
 
+  const paragraphContentHandler = () => {
+    //add to reducer
+  };
+
   const selectParagraphHandler = (type: string) => {
     setSelectedParagraph(type);
   };
@@ -55,7 +60,6 @@ export default function Main() {
   const modalBackStep = () => {
     setModalStep((prev) => prev - 1);
   };
-  console.log(modalStep);
 
   const modalSetStep = (action: string) => {
     switch (action) {
@@ -66,7 +70,7 @@ export default function Main() {
         modalBackStep();
         break;
       case "sub":
-        //add
+        paragraphContentHandler();
         break;
       case "off":
         modalOff();
@@ -74,6 +78,10 @@ export default function Main() {
       default:
         break;
     }
+  };
+
+  const editorContentHandler = (content: string) => {
+    setEditorContent(content);
   };
 
   return (
@@ -90,7 +98,12 @@ export default function Main() {
         </div>
       </div>
       {contentModalStatus ? (
-        <ModalBody closeModal={closeModal} id="modal" title="Blog Content">
+        <ModalBody
+          closeModal={closeModal}
+          id="modal"
+          title="Blog Content"
+          modalStep={modalStep}
+        >
           {modalStep === 0 ? (
             <ParagraphType
               selectedParagraph={selectedParagraph}
@@ -102,6 +115,8 @@ export default function Main() {
             <ParagraphContent
               setModalStep={modalSetStep}
               selectedParagraph={selectedParagraph}
+              theme={theme}
+              editorContentHandler={editorContentHandler}
             />
           ) : null}
         </ModalBody>

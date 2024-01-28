@@ -510,6 +510,13 @@
   background-color: var(--bg-color);
   border-radius: 1rem;
 }
+.contentModal__bodyWider {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  background-color: var(--bg-color);
+  border-radius: 1rem;
+}
 
 .contentModal__body__head {
   width: 100%;
@@ -662,6 +669,11 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.contentModal__textEditor {
+  max-height: 600px;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 400px) {
