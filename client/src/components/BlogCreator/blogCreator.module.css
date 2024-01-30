@@ -670,10 +670,23 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
-
 .contentModal__textEditor {
-  max-height: 600px;
+  max-height: 500px;
   overflow: hidden;
+}
+
+.contentModal__ImageContent {
+  height: 100px;
+}
+
+.contentModal__ImagesContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+}
+.contentModal__ImagesContent div {
+  max-width: 48%;
 }
 
 @media screen and (max-width: 400px) {

@@ -31,7 +31,10 @@ export default function ParagraphContent({
           ) : null}
           {selectedParagraph === "Image" ? <ImageContentCreator /> : null}
           {selectedParagraph === "TextAndImage" ? (
-            <TextAndImageContentCreator />
+            <TextAndImageContentCreator
+              theme={theme}
+              editorContentHandler={editorContentHandler}
+            />
           ) : null}
         </div>
       </div>
