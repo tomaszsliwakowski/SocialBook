@@ -1,9 +1,20 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import styles from "../../blogCreator.module.css";
 import { FaImage } from "react-icons/fa";
+import { ImagesContentType } from "../../Main";
+import { TypeImageEnum } from "./ImageContentCreator";
 
-export default function ImageContent() {
-  const [image, setImage] = useState<string>("");
+type PROPS = {
+  editorContentHandler: Function;
+  type?: keyof typeof TypeImageEnum;
+  images?: ImagesContentType;
+};
+
+export default function ImageContent({
+  editorContentHandler,
+  type,
+  images,
+}: PROPS) {
   const inputRef: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
 
@@ -21,21 +32,21 @@ export default function ImageContent() {
       if (!e.target.files[0]) return;
       if (e.target.files[0].size > 2097152) {
         alert("File is too big!");
-        return setImage("");
+        return editorContentHandler("", type);
       }
       const file = e.target.files[0];
       const redData = new FileReader();
       redData.readAsDataURL(file);
       redData.onload = () => {
         if (typeof redData.result === "string") {
-          setImage(redData.result);
+          editorContentHandler(redData.result, type);
         }
       };
     }
   };
 
   const DeleteImage = (): void => {
-    setImage("");
+    return editorContentHandler("", type);
   };
   return (
     <div
@@ -43,7 +54,15 @@ export default function ImageContent() {
       className={styles.creator__editor__Addimage}
     >
       <span>Add Image</span>
-      {image ? <img src={image} alt="Image to add" /> : <FaImage />}
+      {images && type ? (
+        images[type] ? (
+          <img src={images[type]} alt="Image to add" />
+        ) : (
+          <FaImage />
+        )
+      ) : (
+        <FaImage />
+      )}
       <input
         ref={inputRef}
         type="file"

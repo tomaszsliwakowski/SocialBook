@@ -1,4 +1,4 @@
-import { Action } from "../../../../reducers/BlogCreatorReducer";
+import { EditorContentType } from "../../Main";
 import styles from "../../blogCreator.module.css";
 import ActionButtons from "../ActionButtons";
 import ImageContentCreator from "./ImageContentCreator";
@@ -10,6 +10,8 @@ type PROPS = {
   selectedParagraph: string;
   theme: string;
   editorContentHandler: Function;
+  editorContent: EditorContentType;
+  textContentHandler: Function;
 };
 
 export default function ParagraphContent({
@@ -17,6 +19,8 @@ export default function ParagraphContent({
   selectedParagraph,
   theme,
   editorContentHandler,
+  editorContent,
+  textContentHandler,
 }: PROPS) {
   return (
     <>
@@ -26,14 +30,21 @@ export default function ParagraphContent({
           {selectedParagraph === "Text" ? (
             <TextEditor
               theme={theme}
-              editorContentHandler={editorContentHandler}
+              editorContentHandler={textContentHandler}
             />
           ) : null}
-          {selectedParagraph === "Image" ? <ImageContentCreator /> : null}
+          {selectedParagraph === "Image" ? (
+            <ImageContentCreator
+              editorContentHandler={editorContentHandler}
+              editorContent={editorContent}
+            />
+          ) : null}
           {selectedParagraph === "TextAndImage" ? (
             <TextAndImageContentCreator
               theme={theme}
               editorContentHandler={editorContentHandler}
+              editorContent={editorContent}
+              textContentHandler={textContentHandler}
             />
           ) : null}
         </div>

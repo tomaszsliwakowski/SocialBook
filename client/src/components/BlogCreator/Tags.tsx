@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PopularTagsCreator } from "../../assets/assets";
 import SelectBarCreator from "./SelectBarCreator";
 import styles from "./blogCreator.module.css";
@@ -16,24 +16,26 @@ type PROPS = {
 };
 
 export default function Tags({ state, dispatch }: PROPS) {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [enterTagValue, setEnterTagValue] = useState<string>("");
 
   const selectTagsHandler = (item: string): void => {
-    if (selectedTags.includes(item)) {
-      setSelectedTags((prev) => prev.filter((tag) => tag !== item));
+    if (state.tags.includes(item)) {
+      dispatch({ type: ActionType.DELETE_TAG, payload: item });
     } else {
-      setSelectedTags((prev) => [...prev, item]);
+      dispatch({ type: ActionType.ADD_TAG, payload: item });
     }
   };
 
   const deleteSelectedTag = (item: string): void => {
-    dispatch({ type: ActionType.delete_tag, payload: item });
+    dispatch({ type: ActionType.DELETE_TAG, payload: item });
   };
 
   const addEnterTag = (): void => {
     if (enterTagValue !== "") {
-      dispatch({ type: ActionType.add_tags, payload: enterTagValue });
+      dispatch({
+        type: ActionType.ADD_TAG,
+        payload: enterTagValue.charAt(0).toUpperCase() + enterTagValue.slice(1),
+      });
       setEnterTagValue("");
     }
   };
@@ -63,7 +65,7 @@ export default function Tags({ state, dispatch }: PROPS) {
             list={PopularTagsCreator}
             id="creatortags"
             selectTagsAction={selectTagsHandler}
-            selectedTags={selectedTags}
+            selectedTags={state.tags}
           />
         </div>
       </div>

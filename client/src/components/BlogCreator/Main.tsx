@@ -13,11 +13,22 @@ import {
 import ParagraphContent from "./modal/content/ParagraphContent";
 import { ThemeContext } from "../../context/ThemeContext";
 
+export interface ImagesContentType {
+  image_0?: string;
+  image_1?: string;
+  image_2?: string;
+  image_3?: string;
+}
+
+export interface EditorContentType extends ImagesContentType {
+  content?: string;
+}
+
 export default function Main() {
   const { theme } = useContext(ThemeContext);
   const [contentModalStatus, setContentModalStatus] = useState(false);
   const [selectedParagraph, setSelectedParagraph] = useState<string>("Text");
-  const [editorContent, setEditorContent] = useState<string>("");
+  const [editorContent, setEditorContent] = useState<EditorContentType>({});
   const [modalStep, setModalStep] = useState<number>(0);
   const [state, dispatch] = useReducer(CreatorReducer, initialState);
 
@@ -33,6 +44,10 @@ export default function Main() {
       }
     };
   }, [contentModalStatus]);
+
+  useEffect(() => {
+    setEditorContent({});
+  }, [selectedParagraph]);
 
   const closeModal = (e: React.MouseEvent) => {
     let target = e.target as HTMLElement;
@@ -80,8 +95,11 @@ export default function Main() {
     }
   };
 
-  const editorContentHandler = (content: string) => {
-    setEditorContent(content);
+  const editorContentHandler = (image: string, type: string) => {
+    setEditorContent((prev) => ({ ...prev, [type]: image }));
+  };
+  const textContentHandler = (content: string) => {
+    setEditorContent((prev) => ({ ...prev, content: content }));
   };
 
   return (
@@ -117,6 +135,8 @@ export default function Main() {
               selectedParagraph={selectedParagraph}
               theme={theme}
               editorContentHandler={editorContentHandler}
+              editorContent={editorContent}
+              textContentHandler={textContentHandler}
             />
           ) : null}
         </ModalBody>
