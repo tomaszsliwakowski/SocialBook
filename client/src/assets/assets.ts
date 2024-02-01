@@ -40,6 +40,10 @@ export const timeExpiredFrom = (createdAt: string) => {
   if (timer.days > 7) return `${new Date(createTime).toLocaleDateString()}`;
 };
 
+export const idGenerator = (): string => {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+};
+
 export const PopularTags: string[] = [
   "All",
   "Cars",

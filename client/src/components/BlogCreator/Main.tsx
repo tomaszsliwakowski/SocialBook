@@ -7,11 +7,13 @@ import styles from "./blogCreator.module.css";
 import ParagraphType from "./modal/type/ParagraphType";
 import ModalBody from "./modal/ModalBody";
 import {
+  ActionType,
   CreatorReducer,
   initialState,
 } from "../../reducers/BlogCreatorReducer";
 import ParagraphContent from "./modal/content/ParagraphContent";
 import { ThemeContext } from "../../context/ThemeContext";
+import { idGenerator } from "../../assets/assets";
 
 export interface ImagesContentType {
   image_0?: string;
@@ -57,8 +59,22 @@ export default function Main() {
   };
 
   const paragraphContentHandler = () => {
-    //add to reducer
+    if (state.blogContent.length < 4) {
+      dispatch({
+        type: ActionType.ADD_BLOGCONTENT,
+        payload: {
+          id: idGenerator(),
+          paragraphType: selectedParagraph,
+          ...editorContent,
+        },
+      });
+    }
+    setContentModalStatus(false);
+    setModalStep(0);
+    setSelectedParagraph("Text");
+    setEditorContent({});
   };
+  console.log(state);
 
   const selectParagraphHandler = (type: string) => {
     setSelectedParagraph(type);
@@ -108,7 +124,7 @@ export default function Main() {
         <h2>Blog Creator</h2>
         <div className={styles.creator__editor}>
           <div className={styles.creator__editor__content}>
-            <Title state={state} dispatch={dispatch} />
+            <Title dispatch={dispatch} />
             <ParagraphList ModalOn={modalOn} state={state} />
             <Tags state={state} dispatch={dispatch} />
           </div>

@@ -22,7 +22,11 @@ export default function AddImage({
       className={styles.creator__editor__Addimage}
     >
       <span>Add Image</span>
-      {image ? <img src={image} alt="Image to add" /> : <FaImage />}
+      {image && image !== "" ? (
+        <img src={image} alt="Image to add" />
+      ) : (
+        <FaImage />
+      )}
       <input
         name={name}
         ref={inputRef}

@@ -10,7 +10,7 @@ type PROPS = {
 export default function ParagraphList({ ModalOn, state }: PROPS) {
   return (
     <div className={styles.creator__editor__paragraphList}>
-      <h4>Blog Content (3/4)</h4>
+      <h4>Blog Content ({state.blogContent.length}/4)</h4>
       <button
         className={styles.creator__editor__AddBtn}
         onClick={() => ModalOn()}
@@ -18,7 +18,9 @@ export default function ParagraphList({ ModalOn, state }: PROPS) {
         Add Content
       </button>
       <ul>
-        <Paragraph state={state} />
+        {state.blogContent.map((item, id) => (
+          <Paragraph state={item} key={id} id={id} />
+        ))}
       </ul>
     </div>
   );

@@ -5,13 +5,13 @@ interface ParagraphType {
   paragraphType: string;
 }
 
-interface TextParagrafType extends ParagraphType {
+export interface TextParagrafType extends ParagraphType {
   content: string;
 }
-interface TextAndImageParagraphType extends TextParagrafType {
+export interface TextAndImageParagraphType extends TextParagrafType {
   image: string;
 }
-interface ImageParagraphType extends ParagraphType {
+export interface ImageParagraphType extends ParagraphType {
   image_0: string;
   image_1?: string;
   image_2?: string;
@@ -24,8 +24,8 @@ export interface CreatorReducerType {
     TextParagrafType | TextAndImageParagraphType | ImageParagraphType
   >;
   tags: Array<string>;
-  miniature: "";
-  baner: "";
+  miniature: string;
+  baner: string;
 }
 
 export enum ActionType {
@@ -36,8 +36,8 @@ export enum ActionType {
   INDEX_BLOGCONTENT = "index-blogContent",
   ADD_TAG = "add-tags",
   DELETE_TAG = "delete-tag",
-  ADD_MINIATURE = "add-miniature",
-  ADD_BANER = "add-baner",
+  CHANGE_MINIATURE = "change-miniature",
+  CHANGE_BANER = "change-baner",
   CLEAR_STATE = "clear-state",
 }
 
@@ -59,7 +59,6 @@ export const CreatorReducer: Reducer<CreatorReducerType, Action> = (
   action: Action
 ): CreatorReducerType => {
   const { type, payload } = action;
-  if (!payload) return initialState;
   switch (type) {
     //title
     case ActionType.CHANGE_TITLE: {
@@ -101,12 +100,12 @@ export const CreatorReducer: Reducer<CreatorReducerType, Action> = (
       return { ...state, tags: state.tags.filter((item) => item !== payload) };
     }
     //miniature
-    case ActionType.ADD_MINIATURE: {
-      return state;
+    case ActionType.CHANGE_MINIATURE: {
+      return { ...state, miniature: payload };
     }
     //baner
-    case ActionType.ADD_BANER: {
-      return state;
+    case ActionType.CHANGE_BANER: {
+      return { ...state, baner: payload };
     }
     //clear
     case ActionType.CLEAR_STATE: {
