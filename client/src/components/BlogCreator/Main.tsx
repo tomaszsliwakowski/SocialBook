@@ -60,6 +60,13 @@ export default function Main() {
 
   const paragraphContentHandler = () => {
     if (state.blogContent.length < 4) {
+      if (editorContent.content === "") return;
+      if (
+        (selectedParagraph === "Image" &&
+          Object.values(editorContent).length === 0) ||
+        Object.values(editorContent).filter((item) => item !== "").length === 0
+      )
+        return;
       dispatch({
         type: ActionType.ADD_BLOGCONTENT,
         payload: {
@@ -74,7 +81,6 @@ export default function Main() {
     setSelectedParagraph("Text");
     setEditorContent({});
   };
-  console.log(state);
 
   const selectParagraphHandler = (type: string) => {
     setSelectedParagraph(type);
@@ -125,7 +131,11 @@ export default function Main() {
         <div className={styles.creator__editor}>
           <div className={styles.creator__editor__content}>
             <Title dispatch={dispatch} />
-            <ParagraphList ModalOn={modalOn} state={state} />
+            <ParagraphList
+              ModalOn={modalOn}
+              state={state}
+              dispatch={dispatch}
+            />
             <Tags state={state} dispatch={dispatch} />
           </div>
           <Attachment state={state} dispatch={dispatch} />

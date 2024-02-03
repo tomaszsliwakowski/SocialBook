@@ -12,16 +12,17 @@ import {
 } from "../../reducers/BlogCreatorReducer";
 
 type PROPS = {
-  id: number;
+  num: number;
   state: TextParagrafType | TextAndImageParagraphType | ImageParagraphType;
+  changeParagraphIndex: Function;
 };
 
-export default function Paragraph({ state, id }: PROPS) {
+export default function Paragraph({ state, num, changeParagraphIndex }: PROPS) {
   return (
     <>
       <li className={styles.creator__editor__paragraph}>
         <span className={styles.creator__editor__paragraph__number}>
-          {id + 1}
+          {num + 1}
         </span>
         <div className={styles.creator__editor__paragraph__content}>
           {state.paragraphType === "Text" ? <PragraphText /> : null}
@@ -37,8 +38,12 @@ export default function Paragraph({ state, id }: PROPS) {
             <button>Delete</button>
           </div>
           <div>
-            <IoIosArrowDropupCircle />
-            <IoIosArrowDropdownCircle />
+            <IoIosArrowDropupCircle
+              onClick={() => changeParagraphIndex(state.id, "up")}
+            />
+            <IoIosArrowDropdownCircle
+              onClick={() => changeParagraphIndex(state.id, "down")}
+            />
           </div>
         </div>
       </li>

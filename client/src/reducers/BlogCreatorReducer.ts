@@ -82,13 +82,19 @@ export const CreatorReducer: Reducer<CreatorReducerType, Action> = (
       };
     }
     case ActionType.INDEX_BLOGCONTENT: {
-      const fromIndex = state.blogContent.indexOf(payload.id);
+      const copyOfState = state.blogContent;
+      const paragraph = copyOfState.filter((item) => item.id === payload.id)[0];
+      const fromIndex = copyOfState.indexOf(paragraph);
       const toIndex = payload.action === "up" ? fromIndex + 1 : fromIndex - 1;
-      if (toIndex < 0 || toIndex > 3) return state;
-      const element = state.blogContent.splice(fromIndex, 1)[0];
+      if (toIndex < 0 || toIndex > 3 || toIndex > copyOfState.length)
+        return state;
+      const element = copyOfState[fromIndex];
+      const element2 = copyOfState[toIndex];
+      copyOfState[fromIndex] = element2;
+      copyOfState[toIndex] = element;
       return {
         ...state,
-        blogContent: state.blogContent.splice(toIndex, 0, element),
+        blogContent: copyOfState,
       };
     }
     //tags
