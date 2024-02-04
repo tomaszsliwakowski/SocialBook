@@ -48,6 +48,7 @@ export default function ImageContent({
   const DeleteImage = (): void => {
     return editorContentHandler("", type);
   };
+  console.log(images);
   return (
     <div
       onClick={() => handleImageClick(inputRef)}

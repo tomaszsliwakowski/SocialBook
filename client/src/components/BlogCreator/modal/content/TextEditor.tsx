@@ -2,15 +2,21 @@ import styles from "../../blogCreator.module.css";
 import JoditEditor from "jodit-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDebounce } from "../../../../hooks/useDebounce";
+import { EditorContentType } from "../../Main";
 
 type PROPS = {
   theme: string;
   editorContentHandler: Function;
+  state: EditorContentType | undefined;
 };
 
-export default function TextEditor({ theme, editorContentHandler }: PROPS) {
+export default function TextEditor({
+  theme,
+  editorContentHandler,
+  state,
+}: PROPS) {
   const editor = useRef(null);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(state?.content || "");
   const debouncedContent = useDebounce(content, 3000);
 
   const config = useMemo(

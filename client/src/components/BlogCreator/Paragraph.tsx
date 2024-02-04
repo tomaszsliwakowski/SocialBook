@@ -15,9 +15,19 @@ type PROPS = {
   num: number;
   state: TextParagrafType | TextAndImageParagraphType | ImageParagraphType;
   changeParagraphIndex: Function;
+  deleteParagraphContent: Function;
+  showParagraphContent: Function;
+  editParagraphContent: Function;
 };
 
-export default function Paragraph({ state, num, changeParagraphIndex }: PROPS) {
+export default function Paragraph({
+  state,
+  num,
+  changeParagraphIndex,
+  editParagraphContent,
+  deleteParagraphContent,
+  showParagraphContent,
+}: PROPS) {
   return (
     <>
       <li className={styles.creator__editor__paragraph}>
@@ -33,9 +43,11 @@ export default function Paragraph({ state, num, changeParagraphIndex }: PROPS) {
         </div>
         <div className={styles.creator__editor__paragraph__action}>
           <div>
-            <button>Show</button>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={() => showParagraphContent(state.id)}>Show</button>
+            <button onClick={() => editParagraphContent(state.id)}>Edit</button>
+            <button onClick={() => deleteParagraphContent(state.id)}>
+              Delete
+            </button>
           </div>
           <div>
             <IoIosArrowDropupCircle

@@ -1,18 +1,10 @@
 import { Reducer } from "react";
 
-interface ParagraphType {
+export interface ParagraphType {
   id: string;
   paragraphType: string;
-}
-
-export interface TextParagrafType extends ParagraphType {
-  content: string;
-}
-export interface TextAndImageParagraphType extends TextParagrafType {
-  image: string;
-}
-export interface ImageParagraphType extends ParagraphType {
-  image_0: string;
+  content?: string;
+  image_0?: string;
   image_1?: string;
   image_2?: string;
   image_4?: string;
@@ -20,9 +12,7 @@ export interface ImageParagraphType extends ParagraphType {
 
 export interface CreatorReducerType {
   title: string;
-  blogContent: Array<
-    TextParagrafType | TextAndImageParagraphType | ImageParagraphType
-  >;
+  blogContent: Array<ParagraphType>;
   tags: Array<string>;
   miniature: string;
   baner: string;
@@ -86,7 +76,7 @@ export const CreatorReducer: Reducer<CreatorReducerType, Action> = (
       const paragraph = copyOfState.filter((item) => item.id === payload.id)[0];
       const fromIndex = copyOfState.indexOf(paragraph);
       const toIndex = payload.action === "up" ? fromIndex + 1 : fromIndex - 1;
-      if (toIndex < 0 || toIndex > 3 || toIndex > copyOfState.length)
+      if (toIndex < 0 || toIndex > 3 || toIndex >= copyOfState.length)
         return state;
       const element = copyOfState[fromIndex];
       const element2 = copyOfState[toIndex];

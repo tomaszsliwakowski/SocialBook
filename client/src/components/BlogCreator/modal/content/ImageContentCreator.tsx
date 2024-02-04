@@ -1,3 +1,4 @@
+import { CreatorReducerType } from "../../../../reducers/BlogCreatorReducer";
 import { EditorContentType } from "../../Main";
 import styles from "../../blogCreator.module.css";
 import ImageContent from "./ImageContent";

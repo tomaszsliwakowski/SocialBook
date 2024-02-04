@@ -1,4 +1,4 @@
-import { EditorContentType } from "../../Main";
+import { EditorContentType, ModalStateType } from "../../Main";
 import styles from "../../blogCreator.module.css";
 import ActionButtons from "../ActionButtons";
 import ImageContentCreator from "./ImageContentCreator";
@@ -12,6 +12,8 @@ type PROPS = {
   editorContentHandler: Function;
   editorContent: EditorContentType;
   textContentHandler: Function;
+  modalStatus: ModalStateType;
+  state: EditorContentType | undefined;
 };
 
 export default function ParagraphContent({
@@ -21,16 +23,19 @@ export default function ParagraphContent({
   editorContentHandler,
   editorContent,
   textContentHandler,
+  modalStatus,
+  state,
 }: PROPS) {
   return (
     <>
       <div className={styles.contentModal__body__main}>
-        <span>Add your paragraph content:</span>
+        <span>{modalStatus.type} your paragraph content:</span>
         <div className={styles.contentModal__body__main__paragraphList}>
           {selectedParagraph === "Text" ? (
             <TextEditor
               theme={theme}
               editorContentHandler={textContentHandler}
+              state={state}
             />
           ) : null}
           {selectedParagraph === "Image" ? (
@@ -45,17 +50,29 @@ export default function ParagraphContent({
               editorContentHandler={editorContentHandler}
               editorContent={editorContent}
               textContentHandler={textContentHandler}
+              state={state}
             />
           ) : null}
         </div>
       </div>
-      <ActionButtons
-        setModalStep={setModalStep}
-        actionOne="back"
-        actionTwo="sub"
-        nameOne="Back"
-        nameTwo="Add"
-      />
+      {modalStatus.type === "Add" ? (
+        <ActionButtons
+          setModalStep={setModalStep}
+          actionOne="back"
+          actionTwo="sub"
+          nameOne="Back"
+          nameTwo="Add"
+        />
+      ) : null}
+      {modalStatus.type === "Edit" ? (
+        <ActionButtons
+          setModalStep={setModalStep}
+          actionOne="off"
+          actionTwo="edit"
+          nameOne="Close"
+          nameTwo="Edit"
+        />
+      ) : null}
     </>
   );
 }
