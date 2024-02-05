@@ -65,10 +65,13 @@ export const CreatorReducer: Reducer<CreatorReducerType, Action> = (
       };
     }
     case ActionType.MODIFY_BLOGCONTENT: {
-      const index = state.blogContent.findIndex(payload.id);
+      const copyOfState = state.blogContent;
+      const paragraph = copyOfState.filter((item) => item.id === payload.id)[0];
+      const Index = copyOfState.indexOf(paragraph);
+      copyOfState[Index] = payload;
       return {
         ...state,
-        blogContent: state.blogContent.splice(index, 1, payload.paragraph),
+        blogContent: copyOfState,
       };
     }
     case ActionType.INDEX_BLOGCONTENT: {

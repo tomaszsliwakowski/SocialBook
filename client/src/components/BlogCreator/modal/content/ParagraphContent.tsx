@@ -13,7 +13,6 @@ type PROPS = {
   editorContent: EditorContentType;
   textContentHandler: Function;
   modalStatus: ModalStateType;
-  state: EditorContentType | undefined;
 };
 
 export default function ParagraphContent({
@@ -24,7 +23,6 @@ export default function ParagraphContent({
   editorContent,
   textContentHandler,
   modalStatus,
-  state,
 }: PROPS) {
   return (
     <>
@@ -35,7 +33,7 @@ export default function ParagraphContent({
             <TextEditor
               theme={theme}
               editorContentHandler={textContentHandler}
-              state={state}
+              state={editorContent.content}
             />
           ) : null}
           {selectedParagraph === "Image" ? (
@@ -50,7 +48,6 @@ export default function ParagraphContent({
               editorContentHandler={editorContentHandler}
               editorContent={editorContent}
               textContentHandler={textContentHandler}
-              state={state}
             />
           ) : null}
         </div>

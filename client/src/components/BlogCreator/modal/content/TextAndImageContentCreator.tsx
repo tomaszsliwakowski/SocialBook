@@ -9,7 +9,6 @@ type PROPS = {
   editorContentHandler: Function;
   editorContent: EditorContentType;
   textContentHandler: Function;
-  state: EditorContentType | undefined;
 };
 
 export default function TextAndImageContentCreator({
@@ -17,7 +16,6 @@ export default function TextAndImageContentCreator({
   editorContentHandler,
   editorContent,
   textContentHandler,
-  state,
 }: PROPS) {
   return (
     <div className={styles.contentModal__TextAndImage}>
@@ -31,7 +29,7 @@ export default function TextAndImageContentCreator({
       <TextEditor
         theme={theme}
         editorContentHandler={textContentHandler}
-        state={state}
+        state={editorContent.content}
       />
     </div>
   );

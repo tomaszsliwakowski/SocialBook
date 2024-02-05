@@ -7,7 +7,7 @@ import { EditorContentType } from "../../Main";
 type PROPS = {
   theme: string;
   editorContentHandler: Function;
-  state: EditorContentType | undefined;
+  state: string | undefined;
 };
 
 export default function TextEditor({
@@ -16,7 +16,7 @@ export default function TextEditor({
   state,
 }: PROPS) {
   const editor = useRef(null);
-  const [content, setContent] = useState(state?.content || "");
+  const [content, setContent] = useState(state || "");
   const debouncedContent = useDebounce(content, 3000);
 
   const config = useMemo(

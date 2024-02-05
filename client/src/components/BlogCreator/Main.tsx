@@ -61,10 +61,6 @@ export default function Main() {
     };
   }, [modalStatus.status]);
 
-  useEffect(() => {
-    setEditorContent({});
-  }, [selectedParagraph]);
-
   const closeModal = (e: React.MouseEvent) => {
     let target = e.target as HTMLElement;
     if (target.id === "modal" || target.id === "modalBtn") {
@@ -118,6 +114,7 @@ export default function Main() {
       status: true,
     });
     setModalStep(0);
+    setEditorContent({});
     setSelectedParagraph("Text");
   };
   const modalNextStep = () => {
@@ -125,6 +122,15 @@ export default function Main() {
   };
   const modalBackStep = () => {
     setModalStep((prev) => prev - 1);
+  };
+
+  const editParagraphHandler = () => {
+    dispatch({ type: ActionType.MODIFY_BLOGCONTENT, payload: editorContent });
+    setModalStatus({
+      type: "",
+      status: false,
+    });
+    setEditorContent({});
   };
 
   const modalSetStep = (action: string) => {
@@ -139,7 +145,7 @@ export default function Main() {
         paragraphContentHandler();
         break;
       case "edit":
-        //edit
+        editParagraphHandler();
         break;
       case "off":
         modalOff();
@@ -223,11 +229,6 @@ export default function Main() {
               editorContent={editorContent}
               textContentHandler={textContentHandler}
               modalStatus={modalStatus}
-              state={
-                state.blogContent.filter(
-                  (item) => item.id === modalStatus.id
-                )[0]
-              }
             />
           ) : null}
         </ModalBody>
