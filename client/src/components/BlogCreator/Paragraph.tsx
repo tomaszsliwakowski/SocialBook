@@ -5,15 +5,11 @@ import {
 } from "react-icons/io";
 import { FaImage } from "react-icons/fa";
 import { IoText } from "react-icons/io5";
-import {
-  ImageParagraphType,
-  TextAndImageParagraphType,
-  TextParagrafType,
-} from "../../reducers/BlogCreatorReducer";
+import { ParagraphType } from "../../reducers/BlogCreatorReducer";
 
 type PROPS = {
   num: number;
-  state: TextParagrafType | TextAndImageParagraphType | ImageParagraphType;
+  state: ParagraphType;
   changeParagraphIndex: Function;
   deleteParagraphContent: Function;
   showParagraphContent: Function;

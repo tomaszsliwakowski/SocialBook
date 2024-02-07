@@ -72,6 +72,17 @@ export default function Main() {
     }
   };
 
+  useEffect(() => {
+    function handleOnBeforeUnload(e: BeforeUnloadEvent) {
+      e.preventDefault();
+      return (e.returnValue = "");
+    }
+    window.addEventListener("beforeunload", handleOnBeforeUnload);
+    return () => {
+      window.addEventListener("beforeunload", handleOnBeforeUnload);
+    };
+  }, []);
+
   const paragraphContentHandler = () => {
     if (state.blogContent.length < 4) {
       if (editorContent.content === "") return;

@@ -88,6 +88,10 @@ export default function Attachment({ state, dispatch }: PROPS) {
     }
   };
 
+  const UploadBlog = () => {
+    console.log(state);
+  };
+
   return (
     <div className={styles.creator__editor__attachment}>
       <div>
@@ -116,7 +120,7 @@ export default function Attachment({ state, dispatch }: PROPS) {
         <button onClick={() => clearReducer()}>
           <FaRegTrashAlt />
         </button>
-        <button>Share Blog</button>
+        <button onClick={() => UploadBlog()}>Share Blog</button>
       </div>
     </div>
   );
