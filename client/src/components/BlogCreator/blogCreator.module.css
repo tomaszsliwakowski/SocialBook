@@ -693,6 +693,86 @@
 .showParagraphBody {
   width: 100%;
   height: 100%;
+  padding: 1rem;
+}
+.showParagraphBody div:nth-child(1) {
+  padding: 0 0 1rem 0;
+}
+.showParagraphBody__action {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-top: 1rem;
+}
+.showParagraphBody__action button {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 4px 1rem;
+  height: 35px;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  background-color: var(--bg-color);
+  border: 1px solid red;
+  color: red;
+}
+.showParagraphBody__action button:hover {
+  background-color: red;
+  color: white;
+}
+
+.showParagraphBody__content {
+  width: 100%;
+  max-height: 600px;
+  overflow: auto;
+}
+.showParagraphBody__content p {
+  width: 100%;
+  word-wrap: break-word;
+  padding: 0 1rem;
+  font-size: 18px;
+}
+.showParagraphBody__contentText {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  overflow: auto;
+}
+.showParagraphBody__contentText p {
+  width: 100%;
+  word-wrap: break-word;
+  padding: 0 1rem;
+  font-size: 18px;
+}
+
+.showParagraphBody__contentImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0 1rem 0;
+}
+.showParagraphBody__contentImage img {
+  width: auto;
+  height: 250px;
+  border-radius: 0.5rem;
+}
+.showParagraphBody__contentImages {
+  width: 100%;
+  height: auto;
+  max-height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+.showParagraphBody__contentImages img {
+  width: auto;
+  height: 100%;
+  max-height: 250px;
+  border-radius: 0.5rem;
 }
 
 @media screen and (max-width: 400px) {
@@ -777,6 +857,16 @@
   .creator__editor__paragraph__number {
     left: 0.4rem;
     top: 0.2rem;
+  }
+  .contentModal__body__main__paragraphList ul {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .showParagraphBody__contentImages img {
+    max-height: 220px;
   }
 }
 @media screen and (max-width: 868px) {

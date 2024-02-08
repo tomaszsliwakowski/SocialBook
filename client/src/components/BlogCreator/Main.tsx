@@ -251,7 +251,12 @@ export default function Main() {
           title="Paragraph Content"
           modalStep={1}
         >
-          <ShowParagraph />
+          <ShowParagraph
+            paragraph={
+              state.blogContent.filter((item) => item.id === modalStatus.id)[0]
+            }
+            modalOff={modalOff}
+          />
         </ModalBody>
       ) : null}
     </>
