@@ -4,18 +4,18 @@ export interface ParagraphType {
   id: string;
   paragraphType: string;
   content?: string;
-  image_0?: string;
-  image_1?: string;
-  image_2?: string;
-  image_3?: string;
+  image_0?: FormData;
+  image_1?: FormData;
+  image_2?: FormData;
+  image_3?: FormData;
 }
 
 export interface CreatorReducerType {
   title: string;
   blogContent: Array<ParagraphType>;
   tags: Array<string>;
-  miniature: string;
-  baner: string;
+  miniature: FormData | null;
+  baner: FormData | null;
 }
 
 export enum ActionType {
@@ -40,8 +40,8 @@ export const initialState: CreatorReducerType = {
   title: "",
   blogContent: [],
   tags: [],
-  miniature: "",
-  baner: "",
+  miniature: null,
+  baner: null,
 };
 
 export const CreatorReducer: Reducer<CreatorReducerType, Action> = (

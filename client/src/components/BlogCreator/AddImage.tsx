@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
 import styles from "./blogCreator.module.css";
 import { FaImage } from "react-icons/fa";
 
 type PROPS = {
   handleImageClick: Function;
-  image: string | null;
+  image: FormData | null;
   name: string;
   handleImageChange: Function;
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
@@ -16,14 +17,24 @@ export default function AddImage({
   handleImageChange,
   inputRef,
 }: PROPS) {
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    const file = image?.get("file") as File;
+    if (file) {
+      const fileUrl = URL.createObjectURL(file);
+      setImageUrl(fileUrl);
+    }
+  }, [image]);
+
   return (
     <div
       onClick={() => handleImageClick(inputRef)}
       className={styles.creator__editor__Addimage}
     >
       <span>Add Image</span>
-      {image && image !== "" ? (
-        <img src={image} alt="Image to add" />
+      {imageUrl && imageUrl !== "" ? (
+        <img src={imageUrl} alt="Image to add" />
       ) : (
         <FaImage />
       )}

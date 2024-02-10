@@ -18,10 +18,10 @@ import Layout from "./Layout";
 import ShowParagraph from "./modal/show/ShowParagraph";
 
 export interface ImagesContentType {
-  image_0?: string;
-  image_1?: string;
-  image_2?: string;
-  image_3?: string;
+  image_0?: FormData;
+  image_1?: FormData;
+  image_2?: FormData;
+  image_3?: FormData;
 }
 
 export interface EditorContentType extends ImagesContentType {
@@ -143,7 +143,6 @@ export default function Main() {
     });
     setEditorContent({});
   };
-
   const modalSetStep = (action: string) => {
     switch (action) {
       case "next":

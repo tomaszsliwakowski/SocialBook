@@ -28,7 +28,7 @@ export default function Attachment({ state, dispatch }: PROPS) {
     }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     DeleteImage(e.target.name);
     if (e.target.files) {
       if (!e.target.files[0]) return;
@@ -37,24 +37,20 @@ export default function Attachment({ state, dispatch }: PROPS) {
         return DeleteImage(e.target.name);
       }
       const file = e.target.files[0];
-      const redData = new FileReader();
-      redData.readAsDataURL(file);
-      redData.onload = () => {
-        if (typeof redData.result === "string") {
-          if (e.target.name === "baner") {
-            dispatch({
-              type: ActionType.CHANGE_BANER,
-              payload: redData.result,
-            });
-          }
-          if (e.target.name === "miniature") {
-            dispatch({
-              type: ActionType.CHANGE_MINIATURE,
-              payload: redData.result,
-            });
-          }
-        }
-      };
+      const formData = new FormData();
+      formData.append("file", file);
+      if (e.target.name === "baner") {
+        dispatch({
+          type: ActionType.CHANGE_BANER,
+          payload: formData,
+        });
+      }
+      if (e.target.name === "miniature") {
+        dispatch({
+          type: ActionType.CHANGE_MINIATURE,
+          payload: formData,
+        });
+      }
     }
   };
 
@@ -62,18 +58,18 @@ export default function Attachment({ state, dispatch }: PROPS) {
     if (name === "miniature") {
       dispatch({
         type: ActionType.CHANGE_MINIATURE,
-        payload: "",
+        payload: null,
       });
     }
     if (name === "baner") {
       dispatch({
         type: ActionType.CHANGE_BANER,
-        payload: "",
+        payload: null,
       });
     }
   };
 
-  const clearReducer = () => {
+  const clearReducer = (): void => {
     dispatch({
       type: ActionType.CLEAR_STATE,
       payload: "",
@@ -88,8 +84,17 @@ export default function Attachment({ state, dispatch }: PROPS) {
     }
   };
 
-  const UploadBlog = () => {
-    console.log(state);
+  const UploadBlog = (): void => {
+    const stateValues = Object.values(state);
+    const checkEmpty =
+      stateValues.filter((item) => {
+        if (typeof item === "string" && item !== "") {
+          return item;
+        } else if (typeof item === "object" && item.length !== 0) {
+          return item;
+        }
+      }).length === 0;
+    if (checkEmpty) return;
   };
 
   return (
