@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import styles from "./blogCreator.module.css";
 import { FaRegTrashAlt } from "react-icons/fa";
 import AddImage from "./AddImage";
@@ -7,15 +7,29 @@ import {
   ActionType,
   CreatorReducerType,
 } from "../../reducers/BlogCreatorReducer";
-import axios from "axios";
-import uploadBlogImages from "../../assets/UploadBlogImages";
+import uploadBlogImages, {
+  ImagesDataType,
+} from "../../assets/UploadBlogImages";
+import UploadBlogDataConstructor, {
+  CreatorDataType,
+} from "../../assets/UploadBlogDataConstructor";
+import { AuthContext, UserAuth } from "../../context/Auth";
 
 type PROPS = {
   state: CreatorReducerType;
   dispatch: React.Dispatch<Action>;
 };
 
+export type UploadedDataType =
+  | {
+      baner: string;
+      miniature: string;
+      paragraphsImages: ImagesDataType[];
+    }
+  | undefined;
+
 export default function Attachment({ state, dispatch }: PROPS) {
+  const { User }: UserAuth = useContext(AuthContext);
   const inputRefMiniature: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
 
@@ -87,6 +101,7 @@ export default function Attachment({ state, dispatch }: PROPS) {
   };
 
   const UploadBlog = async () => {
+    //start loading
     const stateValues = Object.values(state);
     const checkEmpty =
       stateValues.filter((item) => {
@@ -97,7 +112,12 @@ export default function Attachment({ state, dispatch }: PROPS) {
         }
       }).length === 0;
     if (checkEmpty) return;
-    const uploadedImages = uploadBlogImages(state);
+    const uploadedImages: UploadedDataType = await uploadBlogImages(state);
+    const creatorUploadData: CreatorDataType | undefined =
+      await UploadBlogDataConstructor(state, uploadedImages, User.id);
+    if (!creatorUploadData) return;
+
+    //end loading
   };
 
   return (
