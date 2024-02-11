@@ -20,6 +20,7 @@ export default function AddImage({
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
+    if (!image) setImageUrl("");
     const file = image?.get("file") as File;
     if (file) {
       const fileUrl = URL.createObjectURL(file);

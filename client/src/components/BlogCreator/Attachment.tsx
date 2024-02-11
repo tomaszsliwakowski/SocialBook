@@ -7,6 +7,8 @@ import {
   ActionType,
   CreatorReducerType,
 } from "../../reducers/BlogCreatorReducer";
+import axios from "axios";
+import uploadBlogImages from "../../assets/UploadBlogImages";
 
 type PROPS = {
   state: CreatorReducerType;
@@ -84,17 +86,18 @@ export default function Attachment({ state, dispatch }: PROPS) {
     }
   };
 
-  const UploadBlog = (): void => {
+  const UploadBlog = async () => {
     const stateValues = Object.values(state);
     const checkEmpty =
       stateValues.filter((item) => {
         if (typeof item === "string" && item !== "") {
           return item;
-        } else if (typeof item === "object" && item.length !== 0) {
+        } else if (state.blogContent.length > 0) {
           return item;
         }
       }).length === 0;
     if (checkEmpty) return;
+    const uploadedImages = uploadBlogImages(state);
   };
 
   return (

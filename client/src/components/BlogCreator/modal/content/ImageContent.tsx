@@ -41,7 +41,6 @@ export default function ImageContent({
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files);
     if (e.target.files) {
       if (!e.target.files[0]) return;
       if (e.target.files[0].size > 2097152) {

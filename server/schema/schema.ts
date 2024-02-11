@@ -9,12 +9,11 @@ import {
   deleteFollow,
   deleteLikePost,
   deletePost,
-  loginUser,
-  registerUser,
-} from "./mutations/mutations";
+} from "./mutations/mutationsPosts";
 import { GET_POSTS } from "./queries/Posts";
 import { GET_Likes } from "./queries/Like";
 import { GET_Comments } from "./queries/Comment";
+import { loginUser, registerUser } from "./mutations/mutationsUsers";
 
 const RootQuery = new GraphQLObjectType({
   name: "Query",
