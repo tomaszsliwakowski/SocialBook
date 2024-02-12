@@ -774,6 +774,19 @@
   max-height: 250px;
   border-radius: 0.5rem;
 }
+.creator__fetch__loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20000;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media screen and (max-width: 400px) {
   .blogsCreator__selectBar div {

@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { CSSProperties, useContext, useEffect, useRef, useState } from "react";
 import styles from "./blogCreator.module.css";
 import { FaRegTrashAlt } from "react-icons/fa";
 import AddImage from "./AddImage";
@@ -14,10 +14,18 @@ import UploadBlogDataConstructor, {
   CreatorDataType,
 } from "../../assets/UploadBlogDataConstructor";
 import { AuthContext, UserAuth } from "../../context/Auth";
+import { ClipLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
 type PROPS = {
   state: CreatorReducerType;
   dispatch: React.Dispatch<Action>;
+  theme: string;
+};
+const override: CSSProperties = {
+  display: "block",
+  marginTop: "0%",
+  borderWidth: "5px",
 };
 
 export type UploadedDataType =
@@ -28,13 +36,28 @@ export type UploadedDataType =
     }
   | undefined;
 
-export default function Attachment({ state, dispatch }: PROPS) {
+export default function Attachment({ state, dispatch, theme }: PROPS) {
   const { User }: UserAuth = useContext(AuthContext);
+  const [fetchLoading, setFetchLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
   const inputRefMiniature: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
 
   const inputRefBaner: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
+
+  useEffect(() => {
+    if (!fetchLoading) return;
+    const parent = document.querySelector("body");
+    if (parent) {
+      parent.classList.add("scrollOff" + theme);
+    }
+    return () => {
+      if (parent) {
+        parent.classList.remove("scrollOff" + theme);
+      }
+    };
+  }, [fetchLoading]);
 
   const handleImageClick = (
     Ref: React.MutableRefObject<HTMLInputElement | null>
@@ -101,7 +124,7 @@ export default function Attachment({ state, dispatch }: PROPS) {
   };
 
   const UploadBlog = async () => {
-    //start loading
+    setFetchLoading(true);
     const stateValues = Object.values(state);
     const checkEmpty =
       stateValues.filter((item) => {
@@ -116,40 +139,56 @@ export default function Attachment({ state, dispatch }: PROPS) {
     const creatorUploadData: CreatorDataType | undefined =
       await UploadBlogDataConstructor(state, uploadedImages, User.id);
     if (!creatorUploadData) return;
-
-    //end loading
+    console.log(creatorUploadData);
+    //end loading and redirect
+    setFetchLoading(false);
+    navigate("/blog/awdawd");
   };
 
   return (
-    <div className={styles.creator__editor__attachment}>
-      <div>
-        <div className={styles.creator__editor__smallBaner}>
-          <h3>Blog miniature</h3>
-          <AddImage
-            name="miniature"
-            handleImageChange={handleImageChange}
-            handleImageClick={handleImageClick}
-            image={state.miniature}
-            inputRef={inputRefMiniature}
-          />
+    <>
+      <div className={styles.creator__editor__attachment}>
+        <div>
+          <div className={styles.creator__editor__smallBaner}>
+            <h3>Blog miniature</h3>
+            <AddImage
+              name="miniature"
+              handleImageChange={handleImageChange}
+              handleImageClick={handleImageClick}
+              image={state.miniature}
+              inputRef={inputRefMiniature}
+            />
+          </div>
+          <div className={styles.creator__editor__mainBaner}>
+            <h3>Blog baner</h3>
+            <AddImage
+              name="baner"
+              handleImageChange={handleImageChange}
+              handleImageClick={handleImageClick}
+              image={state.baner}
+              inputRef={inputRefBaner}
+            />
+          </div>
         </div>
-        <div className={styles.creator__editor__mainBaner}>
-          <h3>Blog baner</h3>
-          <AddImage
-            name="baner"
-            handleImageChange={handleImageChange}
-            handleImageClick={handleImageClick}
-            image={state.baner}
-            inputRef={inputRefBaner}
-          />
+        <div className={styles.creator__editor__action}>
+          <button onClick={() => clearReducer()}>
+            <FaRegTrashAlt />
+          </button>
+          <button onClick={() => UploadBlog()}>Share Blog</button>
         </div>
       </div>
-      <div className={styles.creator__editor__action}>
-        <button onClick={() => clearReducer()}>
-          <FaRegTrashAlt />
-        </button>
-        <button onClick={() => UploadBlog()}>Share Blog</button>
-      </div>
-    </div>
+      {fetchLoading ? (
+        <div className={styles.creator__fetch__loading}>
+          <ClipLoader
+            color="#3a86ff"
+            loading={fetchLoading}
+            cssOverride={override}
+            size={200}
+            aria-label="ClipLoader"
+            speedMultiplier={0.6}
+          />
+        </div>
+      ) : null}
+    </>
   );
 }

@@ -14,6 +14,7 @@ import { GET_POSTS } from "./queries/Posts";
 import { GET_Likes } from "./queries/Like";
 import { GET_Comments } from "./queries/Comment";
 import { loginUser, registerUser } from "./mutations/mutationsUsers";
+import { addBlog } from "./mutations/mutationsBlogs";
 
 const RootQuery = new GraphQLObjectType({
   name: "Query",
@@ -37,6 +38,7 @@ const Mutation = new GraphQLObjectType({
     deleteCommentPost: deleteCommentPost,
     addFollow: addFollow,
     deleteFollow: deleteFollow,
+    addBlog: addBlog,
   },
 });
 

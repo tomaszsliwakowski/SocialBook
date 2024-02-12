@@ -213,7 +213,7 @@ export default function Main() {
           />
           <Tags state={state} dispatch={dispatch} />
         </div>
-        <Attachment state={state} dispatch={dispatch} />
+        <Attachment state={state} dispatch={dispatch} theme={theme} />
       </Layout>
       {(modalStatus.status && modalStatus.type === "Add") ||
       modalStatus.type === "Edit" ? (
