@@ -1,6 +1,4 @@
 import { GraphQLNonNull, GraphQLString } from "graphql";
-import { UserType } from "../types/userType";
-import bcrypt from "bcrypt";
 import { pool } from "../../database/mySqlConnect";
 import { verify } from "jsonwebtoken";
 import { AccessToken } from "../../assets/assets";
@@ -37,7 +35,7 @@ export const addPost = {
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: any = await pool
+    const res: addPostArgType | void = await pool
       .query(
         `INSERT INTO posts VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.post_text}','${args.post_img}','${args.user_name}','${args.user_email}')`
       )
@@ -64,7 +62,7 @@ export const deletePost = {
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: any = await pool
+    const res: deletePostArgType | void = await pool
       .query(`DELETE FROM posts WHERE post_id='${args.post_id}'`)
       .then(() => {
         pool.query(`DELETE FROM comments WHERE post_id='${args.post_id}'`);
@@ -72,7 +70,7 @@ export const deletePost = {
         return args;
       })
       .catch((res) => console.log(res));
-    if (!res.post_id) return;
+    if (!res || (res && !res.post_id)) return;
     return res;
   },
 };
@@ -93,13 +91,13 @@ export const addLikePost = {
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: any = await pool
+    const res: LikeArgType | void = await pool
       .query(`INSERT INTO likes VALUES ('${args.post_id}','${args.user_id}')`)
       .then(() => {
         return args;
       })
       .catch((res) => console.log(res));
-    if (!res.post_id) return;
+    if (!res || (res && !res.post_id)) return;
     return res;
   },
 };
@@ -115,7 +113,7 @@ export const deleteLikePost = {
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: any = await pool
+    const res: LikeArgType | void = await pool
       .query(
         `DELETE FROM likes WHERE (post_id='${args.post_id}' AND user_id='${args.user_id}')`
       )
@@ -123,7 +121,7 @@ export const deleteLikePost = {
         return args;
       })
       .catch((res) => console.log(res));
-    if (!res.post_id) return;
+    if (!res || (res && !res.post_id)) return;
     return res;
   },
 };
@@ -150,7 +148,7 @@ export const addCommentPost = {
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: any = await pool
+    const res: addCommentArgType | void = await pool
       .query(
         `INSERT INTO comments VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.comment_text}','${args.username}','${args.com_id}')`
       )
@@ -158,7 +156,7 @@ export const addCommentPost = {
         return args;
       })
       .catch((res) => console.log(res));
-    if (!res.post_id) return;
+    if (!res || (res && !res.post_id)) return;
     return res;
   },
 };
@@ -180,7 +178,7 @@ export const deleteCommentPost = {
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: any = await pool
+    const res: deleteCommentArgType | void = await pool
       .query(
         `DELETE FROM comments WHERE (post_id='${args.post_id}' AND user_id='${args.user_id}' AND com_id='${args.com_id}')`
       )
@@ -188,7 +186,7 @@ export const deleteCommentPost = {
         return args;
       })
       .catch((res) => console.log(res));
-    if (!res.post_id) return;
+    if (!res || (res && !res.post_id)) return;
     return res;
   },
 };
@@ -209,7 +207,7 @@ export const addFollow = {
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: any = await pool
+    const res: FollowerType | void = await pool
       .query(
         `INSERT INTO followers VALUES ('${args.user_id}','${args.follower_id}')`
       )
@@ -217,7 +215,7 @@ export const addFollow = {
         return args;
       })
       .catch((res) => console.log(res));
-    if (!res.user_id) return;
+    if (!res || (res && !res.user_id)) return;
     return res;
   },
 };
@@ -233,7 +231,7 @@ export const deleteFollow = {
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: any = await pool
+    const res: FollowerType | void = await pool
       .query(
         `DELETE FROM followers WHERE (user_id='${args.user_id}' AND followers_id='${args.follower_id}')`
       )
@@ -241,7 +239,7 @@ export const deleteFollow = {
         return args;
       })
       .catch((res) => console.log(res));
-    if (!res.user_id) return;
+    if (!res || (res && !res.user_id)) return;
     return res;
   },
 };

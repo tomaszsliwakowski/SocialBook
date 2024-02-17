@@ -16,6 +16,8 @@ import UploadBlogDataConstructor, {
 import { AuthContext, UserAuth } from "../../context/Auth";
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { ADD_BLOG } from "../../mutations/blogMutations";
 
 type PROPS = {
   state: CreatorReducerType;
@@ -123,6 +125,8 @@ export default function Attachment({ state, dispatch, theme }: PROPS) {
     }
   };
 
+  const [addBlog] = useMutation(ADD_BLOG);
+
   const UploadBlog = async () => {
     setFetchLoading(true);
     const stateValues = Object.values(state);
@@ -139,10 +143,18 @@ export default function Attachment({ state, dispatch, theme }: PROPS) {
     const creatorUploadData: CreatorDataType | undefined =
       await UploadBlogDataConstructor(state, uploadedImages, User.id);
     if (!creatorUploadData) return;
-    console.log(creatorUploadData);
-    //end loading and redirect
-    setFetchLoading(false);
-    navigate("/blog/awdawd");
+    //send to database
+    await addBlog({ variables: { blogData: creatorUploadData } })
+      .then((res) => {
+        const { addBlog } = res.data;
+        const id = addBlog.id;
+        setFetchLoading(false);
+        navigate(`/blog/${id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+        setFetchLoading(false);
+      });
   };
 
   return (

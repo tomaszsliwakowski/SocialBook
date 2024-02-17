@@ -85,6 +85,9 @@ const callApi = async (content: FormData) => {
       const data = res.data;
       const { secure_url } = data;
       return secure_url;
+    })
+    .catch((err: Error) => {
+      throw new Error(err.message);
     });
   return res;
 };

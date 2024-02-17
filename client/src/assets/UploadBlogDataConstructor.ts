@@ -6,25 +6,27 @@ export type CreatorDataType = {
   id: string;
   user_id: string;
   title: string;
-  blogContent: (
-    | {
-        id: string;
-        type: string;
-        content: string | undefined;
-        images: string[];
-      }
-    | {
-        id: string;
-        type: string;
-        images: string[];
-      }
-    | {
-        id: string;
-        type: string;
-        content: string | undefined;
-      }
-  )[];
-  tags: string[];
+  blogContent:
+    | (
+        | {
+            id: string;
+            type: string;
+            content: string | undefined;
+            images: string[];
+          }
+        | {
+            id: string;
+            type: string;
+            images: string[];
+          }
+        | {
+            id: string;
+            type: string;
+            content: string | undefined;
+          }
+      )[]
+    | string;
+  tags: string[] | string;
   baner: string;
   miniature: string;
 };
@@ -76,8 +78,8 @@ export default async function UploadBlogDataConstructor(
     id: idGenerator(),
     user_id: user_id,
     title: title,
-    blogContent: paragraphs,
-    tags: tags,
+    blogContent: JSON.stringify(paragraphs),
+    tags: JSON.stringify(tags),
     baner: baner,
     miniature: miniature,
   };
