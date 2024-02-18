@@ -1,14 +1,13 @@
 import styles from "./blog.module.css";
 
-export default function Title() {
+type PROPS = {
+  title: string;
+};
+
+export default function Title({ title }: PROPS) {
   return (
     <div className={styles.blog__top__title}>
-      <h2>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
-        consequatur, asperiores porro saepe, dicta mollitia obcaecati eligendi
-        delectus eius ducimus ratione non quas consectetur vero animi ullam sunt
-        consequuntur. Necessitatibus.
-      </h2>
+      <h2>{title}</h2>
     </div>
   );
 }

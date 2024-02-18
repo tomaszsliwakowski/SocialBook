@@ -45,7 +45,7 @@ export default function Comments({ postData, User, refetch }: PROPS) {
 
   useEffect(() => {
     if (!loading && !error && data) {
-      setComments(data.GetComments);
+      setComments(data.getComments);
     }
   }, [data]);
 

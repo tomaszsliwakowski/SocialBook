@@ -1,5 +1,5 @@
 import { GraphQLObjectType, GraphQLSchema } from "graphql";
-import { USER_ME } from "./queries/User";
+import { getUser, getUserInfo } from "./queries/User";
 import {
   addCommentPost,
   addFollow,
@@ -10,19 +10,22 @@ import {
   deleteLikePost,
   deletePost,
 } from "./mutations/mutationsPosts";
-import { GET_POSTS } from "./queries/Posts";
-import { GET_Likes } from "./queries/Like";
-import { GET_Comments } from "./queries/Comment";
+import { getPosts } from "./queries/Posts";
+import { getLikes } from "./queries/Like";
+import { getComments } from "./queries/Comment";
 import { loginUser, registerUser } from "./mutations/mutationsUsers";
 import { addBlog } from "./mutations/mutationsBlogs";
+import { getBlog } from "./queries/Blog";
 
 const RootQuery = new GraphQLObjectType({
   name: "Query",
   fields: {
-    GetUser: USER_ME,
-    GetPosts: GET_POSTS,
-    GetLikes: GET_Likes,
-    GetComments: GET_Comments,
+    getUser: getUser,
+    getPosts: getPosts,
+    getLikes: getLikes,
+    getComments: getComments,
+    getBlog: getBlog,
+    getUserInfo: getUserInfo,
   },
 });
 const Mutation = new GraphQLObjectType({

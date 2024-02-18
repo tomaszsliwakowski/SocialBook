@@ -15,6 +15,7 @@ export const BlogType = new GraphQLObjectType({
     tags: { type: GraphQLString },
     miniature: { type: GraphQLString },
     baner: { type: GraphQLString },
+    createdAt: { type: GraphQLString },
   }),
 });
 

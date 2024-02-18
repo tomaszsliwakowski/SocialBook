@@ -3,8 +3,9 @@ import { pool } from "../../database/mySqlConnect";
 import { verify } from "jsonwebtoken";
 import { AccessToken } from "../../assets/assets";
 import { Request } from "express";
+import { GraphQLNonNull, GraphQLString } from "graphql";
 
-export const USER_ME = {
+export const getUser = {
   type: UserType,
   async resolve(parent: any, args: any, req: Request) {
     const cookie = req.cookies.IdUser;
@@ -29,6 +30,29 @@ export const USER_ME = {
       email: email,
       followers: followers,
       observed: observed,
+    };
+  },
+};
+
+export const getUserInfo = {
+  type: UserType,
+  args: {
+    id: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve(parent: any, args: { id: string }, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return { name: "", email: "" };
+    const data = verify(cookie, AccessToken) as any;
+    if (!data) return { name: "", email: "" };
+    const [rows]: any = await pool.query(
+      `SELECT * FROM users WHERE id = '${data.userId}'`
+    );
+
+    const { id, name, email } = rows[0];
+    return {
+      id: id,
+      name: name,
+      email: email,
     };
   },
 };

@@ -52,15 +52,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const { loading, error, data, refetch } = useQuery(GET_USER);
   const refetchUser = refetch;
-
   useEffect(() => {
     if (!loading && !error && data) {
+      const { id, name, email, followers, observed } = data.getUser;
       setUser({
-        id: data.GetUser.id,
-        name: data.GetUser.name,
-        email: data.GetUser.email,
-        followers: data.GetUser.followers,
-        observed: data.GetUser.observed,
+        id: id,
+        name: name,
+        email: email,
+        followers: followers,
+        observed: observed,
       });
     }
   }, [data]);

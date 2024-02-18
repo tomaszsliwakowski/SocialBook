@@ -24,7 +24,7 @@ export default function Blog({ User }: PROPS) {
   return (
     <li className={styles.blogs__content__element}>
       <Link
-        to={BlogRouteBuilder("awdawd")}
+        to={BlogRouteBuilder("lsrfuh90mbi24jsa0kj")}
         className={styles.blogs__content__image}
       >
         <img src="./travel.jpg" alt="img" />

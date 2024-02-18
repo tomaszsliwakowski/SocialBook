@@ -1,75 +1,73 @@
 import styles from "./blog.module.css";
 
-export default function Content() {
+type PROPS = {
+  paragraphs: string;
+};
+
+type ParagraphsType = {
+  id: string;
+  type: string;
+  content?: string | undefined;
+  images?: string[];
+};
+
+export default function Content({ paragraphs }: PROPS) {
+  const paragraphsList: ParagraphsType[] = JSON.parse(paragraphs);
+
   return (
     <div className={styles.blog__content}>
-      <div className={styles.blog__content__paragraph_img}>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus
-          veniam dolorum mollitia odit quidem nesciunt optio ipsum, accusantium,
-          facilis labore alias ipsa quae soluta eaque laborum excepturi nam
-          pariatur officiis! Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Assumenda corporis quo vel ipsam, fugit iusto illum odio natus
-          aperiam repellat rem expedita laborum dolores ullam nihil delectus
-          voluptatem. Ab, repellendus. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Hic incidunt ab mollitia consequuntur asperiores quo
-          reprehenderit iste laborum praesentium rerum! Sed ex commodi
-          praesentium excepturi in quis facilis odit corrupti?
-        </p>
-        <img src="../travel.jpg" alt="" />
-      </div>
-      <div className={styles.blog__content__paragraph}>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus
-          veniam dolorum mollitia odit quidem nesciunt optio ipsum, accusantium,
-          facilis labore alias ipsa quae soluta eaque laborum excepturi nam
-          pariatur officiis! Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Assumenda corporis quo vel ipsam, fugit iusto illum odio natus
-          aperiam repellat rem expedita laborum dolores ullam nihil delectus
-          voluptatem. Ab, repellendus. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Hic incidunt ab mollitia consequuntur asperiores quo
-          reprehenderit iste laborum praesentium rerum! Sed ex commodi
-          praesentium excepturi in quis facilis odit corrupti? Lorem ipsum dolor
-          sit amet consectetur adipisicing elit. Temporibus veniam dolorum
-          mollitia odit quidem nesciunt optio ipsum, accusantium, facilis labore
-          alias ipsa quae soluta eaque laborum excepturi nam pariatur officiis!
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda
-          corporis quo vel ipsam, fugit iusto illum odio natus aperiam repellat
-          rem expedita laborum dolores ullam nihil delectus voluptatem. Ab,
-          repellendus. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Hic incidunt ab mollitia consequuntur asperiores quo reprehenderit
-          iste laborum praesentium rerum! Sed ex commodi praesentium excepturi
-          in quis facilis odit corrupti?
-        </p>
-      </div>
-      <div className={styles.blog__content__paragraph}>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus
-          veniam dolorum mollitia odit quidem nesciunt optio ipsum, accusantium,
-          facilis labore alias ipsa quae soluta eaque laborum excepturi nam
-          pariatur officiis! Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Assumenda corporis quo vel ipsam, fugit iusto illum odio natus
-          aperiam repellat rem expedita laborum dolores ullam nihil delectus
-          voluptatem. Ab, repellendus. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Hic incidunt ab mollitia consequuntur asperiores quo
-          reprehenderit iste laborum praesentium rerum! Sed ex commodi
-          praesentium excepturi in quis facilis odit corrupti? Lorem ipsum dolor
-          sit amet consectetur adipisicing elit. Temporibus veniam dolorum
-          mollitia odit quidem nesciunt optio ipsum, accusantium, facilis labore
-          alias ipsa quae soluta eaque laborum excepturi nam pariatur officiis!
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda
-          corporis quo vel ipsam, fugit iusto illum odio natus aperiam repellat
-          rem expedita laborum dolores ullam nihil delectus voluptatem. Ab,
-          repellendus. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Hic incidunt ab mollitia consequuntur asperiores quo reprehenderit
-          iste laborum praesentium rerum! Sed ex commodi praesentium excepturi
-          in quis facilis odit corrupti?
-        </p>
-      </div>
-      <div className={styles.blog__content__paragraph_img}>
-        <img src="../travel.jpg" alt="" />
-        <img src="../travel.jpg" alt="" />
-      </div>
+      {paragraphsList.map((paragraph, num) => (
+        <div key={num}>
+          {paragraph.type === "Text" ? (
+            <TextParagraph paragraph={paragraph} />
+          ) : null}
+          {paragraph.type === "TextAndImage" ? (
+            <TextAndImageParagraph paragraph={paragraph} />
+          ) : null}
+          {paragraph.type === "Image" ? (
+            <ImagesParagraph paragraph={paragraph} />
+          ) : null}
+        </div>
+      ))}
     </div>
   );
 }
+
+const ImagesParagraph = ({ paragraph }: { paragraph: ParagraphsType }) => {
+  return (
+    <div className={styles.blog__content__paragraph_img}>
+      {paragraph.images
+        ? paragraph.images.map((image, id) => (
+            <img key={id} src={image} alt="image" />
+          ))
+        : null}
+    </div>
+  );
+};
+const TextAndImageParagraph = ({
+  paragraph,
+}: {
+  paragraph: ParagraphsType;
+}) => {
+  return (
+    <div className={styles.blog__content__paragraph_img}>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: paragraph.content ? paragraph.content : "",
+        }}
+      ></div>
+      {paragraph.images ? <img src={paragraph.images[0]} alt="image" /> : null}
+    </div>
+  );
+};
+const TextParagraph = ({ paragraph }: { paragraph: ParagraphsType }) => {
+  return (
+    <div className={styles.blog__content__paragraph}>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: paragraph.content ? paragraph.content : "",
+        }}
+      ></div>
+    </div>
+  );
+};

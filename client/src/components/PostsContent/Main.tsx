@@ -51,7 +51,7 @@ export default function Main() {
   useEffect(() => {
     if (!loading && !error && data) {
       setPostsData((prev) => {
-        const newData = data.GetPosts;
+        const newData = data.getPosts;
         if (prev.length === 0) return newData;
         if (postsPage === 1) return newData;
         let allData: PostType[] = prev.concat(newData);

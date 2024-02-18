@@ -1,11 +1,17 @@
 import styles from "./blog.module.css";
 
-export default function Tags() {
+type PROPS = {
+  tags: string;
+};
+
+export default function Tags({ tags }: PROPS) {
+  const tagsList: string[] = JSON.parse(tags);
   return (
     <div className={styles.blog__tags}>
       <ul>
-        <li>Travel</li>
-        <li>LifeStyle</li>
+        {tagsList.map((tag: string, num: number) => (
+          <li key={num}>{tag}</li>
+        ))}
       </ul>
     </div>
   );

@@ -8,7 +8,7 @@ type ReturnType = {
   liked: boolean;
 };
 
-export const GET_Likes = {
+export const getLikes = {
   type: LikesType,
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },

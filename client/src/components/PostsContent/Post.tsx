@@ -218,19 +218,19 @@ export default function Post({
           </div>
           <div className={styles.post__action}>
             <span>
-              {data.GetLikes.liked ? (
+              {data.getLikes.liked ? (
                 <AiFillHeart onClick={() => handleDeleteLikePost()} />
               ) : (
                 <AiOutlineHeart onClick={() => handleLikePost()} />
               )}
-              {data.GetLikes.likes}
+              {data.getLikes.likes}
             </span>
             <span
               onClick={() =>
                 setCommentsStatus((prev) => ({ ...prev, active: !prev.active }))
               }
             >
-              <FaRegCommentAlt /> {data.GetLikes.comments_count}
+              <FaRegCommentAlt /> {data.getLikes.comments_count}
             </span>
           </div>
           {commentsStatus.active ? (

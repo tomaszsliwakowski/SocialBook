@@ -27,7 +27,7 @@ type PostsDataType = {
   user_email: string;
 };
 
-export const GET_POSTS = {
+export const getPosts = {
   type: new GraphQLList(PostType),
   args: {
     type: { type: new GraphQLNonNull(GraphQLString) },
@@ -111,9 +111,4 @@ export const GET_POSTS = {
       parseInt(args.count) * 10
     );
   },
-};
-
-export const GET_POST = {
-  type: PostType,
-  async resolve(parent: any, args: any) {},
 };

@@ -2,7 +2,7 @@ import { GraphQLList, GraphQLNonNull, GraphQLString } from "graphql";
 import { CommentType } from "../types/postType";
 import { pool } from "../../database/mySqlConnect";
 
-export const GET_Comments = {
+export const getComments = {
   type: new GraphQLList(CommentType),
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
