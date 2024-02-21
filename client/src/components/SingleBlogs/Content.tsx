@@ -1,3 +1,4 @@
+import BlogImage from "./BlogImage";
 import styles from "./blog.module.css";
 
 type PROPS = {
@@ -38,7 +39,12 @@ const ImagesParagraph = ({ paragraph }: { paragraph: ParagraphsType }) => {
     <div className={styles.blog__content__paragraph_img}>
       {paragraph.images
         ? paragraph.images.map((image, id) => (
-            <img key={id} src={image} alt="image" />
+            <BlogImage
+              key={id}
+              image={image}
+              width="fit-content"
+              alt="Paragraph image"
+            />
           ))
         : null}
     </div>
@@ -56,7 +62,13 @@ const TextAndImageParagraph = ({
           __html: paragraph.content ? paragraph.content : "",
         }}
       ></div>
-      {paragraph.images ? <img src={paragraph.images[0]} alt="image" /> : null}
+      {paragraph.images ? (
+        <BlogImage
+          image={paragraph.images[0]}
+          alt="Paragraph image"
+          width="fit-content"
+        />
+      ) : null}
     </div>
   );
 };

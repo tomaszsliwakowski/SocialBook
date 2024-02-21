@@ -6,6 +6,7 @@ import styles from "./blogs.module.css";
 import { BsTrash } from "react-icons/bs";
 import { useSearchParams } from "react-router-dom";
 import Blogs from "./Blogs";
+import BlogTypes from "./BlogTypes";
 
 export default function Main() {
   const [searchParams, setSearchParams] = useSearchParams({});
@@ -55,29 +56,7 @@ export default function Main() {
 
   return (
     <div className={styles.blogs}>
-      <div className={styles.blogs__types}>
-        <span
-          className={`${
-            typeShow === "For You"
-              ? styles.blogs__types__active
-              : styles.blogs__types__none
-          }`}
-          onClick={() => selectBlogsAction("type", "For You")}
-        >
-          For You
-        </span>
-        <span>|</span>
-        <span
-          className={`${
-            typeShow === "Watched"
-              ? styles.blogs__types__active
-              : styles.blogs__types__none
-          }`}
-          onClick={() => selectBlogsAction("type", "Watched")}
-        >
-          Watched
-        </span>
-      </div>
+      <BlogTypes typeShow={typeShow} selectBlogsAction={selectBlogsAction} />
       <div className={styles.blogs__filterBar}>
         <SearchBar
           handleSearchValue={handleSearchValue}
