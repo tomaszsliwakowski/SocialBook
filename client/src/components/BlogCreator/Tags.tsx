@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PopularTagsCreator } from "../../assets/assets";
+import { PopularTagsCreator } from "../../assets/Library";
 import SelectBarCreator from "./SelectBarCreator";
 import styles from "./blogCreator.module.css";
 import { IoMdAdd } from "react-icons/io";

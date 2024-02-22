@@ -13,7 +13,7 @@ export default function TopSection({ blog }: PROPS) {
   return (
     <div className={styles.blog__top}>
       <Baner baner={blog.baner} />
-      <TopMenu createdAt={blog.createdAt} user_id={blog.user_id} />
+      <TopMenu createdAt={blog.createdAt} creatorId={blog.user_id} />
       <Tags tags={blog.tags} />
       <Title title={blog.title} />
     </div>

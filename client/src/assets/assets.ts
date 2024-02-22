@@ -1,10 +1,10 @@
+import { FollowerObjectType } from "../context/Auth";
+
 type TimerType = {
   minutes: number;
   hours: number;
   days: number;
 };
-
-export const DOMAIN = "localhost";
 
 export const getCookie = (name: string) => {
   return document.cookie.split(";").some((c) => {
@@ -44,36 +44,31 @@ export const idGenerator = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 };
 
-export const PopularTags: string[] = [
-  "All",
-  "Cars",
-  "Sports",
-  "Food",
-  "Travel",
-  "LifeStyle",
-  "Fitness",
-  "Fashion",
-  "Buisness",
-  "Animals",
-];
+export function followCheck(
+  followers: FollowerObjectType[],
+  Id: string
+): boolean {
+  const check = followers.filter((item) => item.followers_id === Id);
+  return check.length > 0;
+}
 
-export const PopularTagsCreator: string[] = [
-  "Cars",
-  "Sports",
-  "Food",
-  "Travel",
-  "LifeStyle",
-  "Fitness",
-  "Fashion",
-  "Buisness",
-  "Animals",
-];
-
-export const TimeSpanList: string[] = [
-  "All",
-  "Last 365days",
-  "Last 30days",
-  "Last 7days",
-  "Today",
-];
-export const sortOptionList: string[] = ["Latest", "Most popular"];
+export const handleAddFollow = async (
+  follow: Function,
+  refetchUser: Function
+) => {
+  await follow()
+    .then(() => {
+      refetchUser();
+    })
+    .catch((res: Error) => console.log(res));
+};
+export const handleDeleteFollow = async (
+  unFollow: Function,
+  refetchUser: Function
+) => {
+  await unFollow()
+    .then(() => {
+      refetchUser();
+    })
+    .catch((res: Error) => console.log(res));
+};

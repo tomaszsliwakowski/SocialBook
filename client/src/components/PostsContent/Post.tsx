@@ -17,7 +17,12 @@ import {
   DELETE_POST,
 } from "../../mutations/postsMutations";
 import Comments from "./Comments";
-import { timeExpiredFrom } from "../../assets/assets";
+import {
+  followCheck,
+  handleAddFollow,
+  handleDeleteFollow,
+  timeExpiredFrom,
+} from "../../assets/assets";
 
 type PROPS = {
   postData: PostType;
@@ -38,7 +43,7 @@ export default function Post({
 }: PROPS) {
   const [sub, setSub] = useState<StateStatusType>({
     postId: postData.post_id,
-    active: followCheck(),
+    active: followCheck(User.followers, postData.user_id),
   });
   const [postAction, setPostAction] = useState<StateStatusType>({
     postId: postData.post_id,
@@ -70,20 +75,6 @@ export default function Post({
       follower_id: postData.user_id,
     },
   });
-  const handleAddFollow = async () => {
-    await addFollow()
-      .then(() => {
-        refetchUser();
-      })
-      .catch((res) => console.log(res));
-  };
-  const handleDeleteFollow = async () => {
-    await deleteFollow()
-      .then(() => {
-        refetchUser();
-      })
-      .catch((res) => console.log(res));
-  };
 
   const [addLikePost] = useMutation(ADD_LIKE_POST, {
     variables: {
@@ -110,15 +101,11 @@ export default function Post({
     ],
   });
 
-  function followCheck(): boolean {
-    const check = User.followers.filter(
-      (item) => item.followers_id === postData.user_id
-    );
-    return check.length > 0;
-  }
-
   useEffect(() => {
-    setSub((prev) => ({ ...prev, active: followCheck() }));
+    setSub((prev) => ({
+      ...prev,
+      active: followCheck(User.followers, postData.user_id),
+    }));
   }, [User.followers, postData]);
 
   const handleDeletePost = async () => {
@@ -177,10 +164,18 @@ export default function Post({
                         setSub((prev) => ({ ...prev, active: false }))
                       }
                     >
-                      <MdDone onClick={() => handleDeleteFollow()} />
+                      <MdDone
+                        onClick={() =>
+                          handleDeleteFollow(deleteFollow, refetchUser)
+                        }
+                      />
                     </div>
                   ) : (
-                    <button onClick={() => handleAddFollow()}>Follow</button>
+                    <button
+                      onClick={() => handleAddFollow(addFollow, refetchUser)}
+                    >
+                      Follow
+                    </button>
                   )
                 ) : null}
               </div>

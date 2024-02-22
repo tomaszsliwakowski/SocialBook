@@ -212,6 +212,29 @@
   padding: 1rem 0;
 }
 
+.UserFollow {
+  border: 1px solid var(--primary-blue-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  border-radius: 25%;
+  cursor: pointer;
+  margin: 0 0.2rem;
+}
+.UserFollow svg {
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--primary-blue-color);
+  transition: all 0.3s;
+}
+.UserFollow:hover svg {
+  color: white;
+}
+.UserFollow:hover {
+  background-color: var(--primary-blue-color);
+}
+
 @media screen and (max-width: 768px) {
   .blog__content__paragraph_img {
     flex-direction: column;

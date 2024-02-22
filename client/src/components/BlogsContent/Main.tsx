@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { PopularTags, TimeSpanList, sortOptionList } from "../../assets/assets";
+import {
+  PopularTags,
+  TimeSpanList,
+  sortOptionList,
+} from "../../assets/Library";
 import SearchBar from "./SearchBar";
 import SelectBar from "./SelectBar";
 import styles from "./blogs.module.css";

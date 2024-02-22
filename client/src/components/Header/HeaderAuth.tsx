@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { LOGIN_ROUTE, REGISTER_ROUTE } from "../../routes";
 import { AuthContext, UserAuth } from "../../context/Auth";
 import { useContext } from "react";
-import { DOMAIN, deleteCookie } from "../../assets/assets";
+import { deleteCookie } from "../../assets/assets";
+import { DOMAIN } from "../../assets/Library";
 
 export default function HeaderAuth() {
   const { User, refetchUser }: UserAuth = useContext(AuthContext);
