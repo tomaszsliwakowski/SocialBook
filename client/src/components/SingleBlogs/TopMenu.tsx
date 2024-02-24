@@ -15,10 +15,12 @@ import { ADD_FOLLOW, DELETE_FOLLOW } from "../../mutations/postsMutations";
 import { AuthContext, UserAuth } from "../../context/Auth";
 import { MdDone } from "react-icons/md";
 import { StateStatusType } from "../PostsContent/Post";
+import { TopMenuAction } from "./TopMenuAction";
 
 type PROPS = {
   createdAt: string;
   creatorId: string;
+  blogId: string;
 };
 type OwnerType = {
   id: string;
@@ -26,16 +28,18 @@ type OwnerType = {
   email: string;
 };
 
-export default function TopMenu({ createdAt, creatorId }: PROPS) {
+export default function TopMenu({ createdAt, creatorId, blogId }: PROPS) {
   const [owner, setOwner] = useState<OwnerType | null>(null);
-  const { loading, data } = useQuery(GET_USER_INFO, {
-    variables: { id: creatorId },
-  });
   const { User, refetchUser }: UserAuth = useContext(AuthContext);
   const [sub, setSub] = useState<StateStatusType>({
     postId: creatorId,
     active: followCheck(User.followers, creatorId),
   });
+
+  const { loading, data } = useQuery(GET_USER_INFO, {
+    variables: { id: creatorId },
+  });
+
   useEffect(() => {
     if (!loading && data) {
       const ownerData = data.getUserInfo;
@@ -95,16 +99,7 @@ export default function TopMenu({ createdAt, creatorId }: PROPS) {
           </span>
         </div>
       </div>
-      <div className={styles.blog__top__menu__action}>
-        <span>
-          <AiOutlineHeart />
-          1231
-        </span>
-        <span>
-          <FaRegCommentAlt />
-          1231
-        </span>
-      </div>
+      <TopMenuAction blogId={blogId} userId={User.id} />
     </div>
   );
 }

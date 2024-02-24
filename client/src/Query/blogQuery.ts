@@ -14,7 +14,7 @@ export const GET_BLOG = gql`
     }
   }
 `;
-export const GET_LIKES = gql`
+export const GET_LIKES_BLOG = gql`
   query getBlogLikes($blog_id: String!, $user_id: String!) {
     getBlogLikes(blog_id: $blog_id, user_id: $user_id) {
       likes

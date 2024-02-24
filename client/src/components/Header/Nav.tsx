@@ -3,7 +3,6 @@ import styles from "./header.module.css";
 import {
   BLOGS_ROUTE,
   BLOG_CREATOR_ROUTE,
-  CHATS_ROUTE,
   HOME_ROUTE,
   LOGIN_ROUTE,
   POSTS_ROUTE,
@@ -54,13 +53,6 @@ export default function HeaderNav() {
           onClick={() => setMobile(false)}
         >
           Blogs
-        </NavLink>
-        <NavLink
-          to={User.email !== "" ? CHATS_ROUTE : LOGIN_ROUTE}
-          style={({ isActive }) => (isActive ? activeStyle : {})}
-          onClick={() => setMobile(false)}
-        >
-          Chats
         </NavLink>
         {window.location.pathname.split("/")[1] === "blogs" ||
         window.location.pathname.split("/")[1] === "blog" ? (

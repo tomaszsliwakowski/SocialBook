@@ -4,7 +4,6 @@ import styles from "./footer.module.css";
 import { AiOutlineCopyrightCircle } from "react-icons/ai";
 import {
   BLOGS_ROUTE,
-  CHATS_ROUTE,
   CarsTagRoute,
   FoodTagRoute,
   HOME_ROUTE,
@@ -57,7 +56,6 @@ export default function Footer({ id }: { id?: string }) {
             <Link to={HOME_ROUTE}>Start</Link>
             <Link to={POSTS_ROUTE}>Posts</Link>
             <Link to={BLOGS_ROUTE}>Blogs</Link>
-            <Link to={CHATS_ROUTE}>Chats</Link>
           </div>
           <div>
             <strong>Tags</strong>

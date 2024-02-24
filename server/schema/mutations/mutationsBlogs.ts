@@ -131,7 +131,7 @@ export const deleteLikeBlog = {
     if (!verifyUser) return;
     const res: LikeArgType | void = await pool
       .query(
-        `DELETE FROM blogslikes WHERE (post_id='${args.blog_id}' AND user_id='${args.user_id}')`
+        `DELETE FROM blogslikes WHERE (blog_id='${args.blog_id}' AND user_id='${args.user_id}')`
       )
       .then(() => {
         return args;

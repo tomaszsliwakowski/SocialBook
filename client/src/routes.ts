@@ -1,11 +1,9 @@
 export const HOME_ROUTE = "/";
 export const BLOGS_PAGE_ROUTE = "/blogs";
 export const POSTS_PAGE_ROUTE = "/posts";
-export const CHATS_PAGE_ROUTE = "/chats";
 export const AUTH_PAGE_ROUTE = "/auth/:action";
 export const BLOGS_ROUTE =
   "/blogs?sorting=Latest&tag=All&timespan=All&type=For+You";
-export const CHATS_ROUTE = "/chats";
 export const LOGIN_ROUTE = "/auth/login";
 export const REGISTER_ROUTE = "/auth/register";
 export const PROFILE_ROUTE = "/profile";

@@ -64,14 +64,6 @@ export default function App() {
                 }
               />
               <Route
-                path={CHATS_PAGE_ROUTE}
-                element={
-                  <ProtectAuthRoute>
-                    <Home />
-                  </ProtectAuthRoute>
-                }
-              />
-              <Route
                 path={BLOG_CREATOR_ROUTE}
                 element={
                   <ProtectAuthRoute>

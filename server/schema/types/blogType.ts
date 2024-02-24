@@ -33,14 +33,14 @@ export const BlogArgType = new GraphQLInputObjectType({
   },
 });
 export const LikeBlogType = new GraphQLObjectType({
-  name: "Like",
+  name: "BlogLike",
   fields: () => ({
-    post_id: { type: GraphQLID },
+    blog_id: { type: GraphQLID },
     user_id: { type: GraphQLID },
   }),
 });
 export const LikesBlogType = new GraphQLObjectType({
-  name: "Likes",
+  name: "BlogsLikes",
   fields: () => ({
     likes: { type: GraphQLString },
     comments_count: { type: GraphQLString },
