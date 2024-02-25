@@ -1,11 +1,5 @@
-import { BiUser } from "react-icons/bi";
-import styles from "./posts.module.css";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { FaRegCommentAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { MdDone } from "react-icons/md";
 import { UserType } from "../../context/Auth";
-import { SlOptionsVertical } from "react-icons/sl";
 import { PostType } from "./Main";
 import { GET_LIKES } from "../../Query/postsQuery";
 import { useMutation, useQuery } from "@apollo/client";
@@ -17,12 +11,10 @@ import {
   DELETE_POST,
 } from "../../mutations/postsMutations";
 import Comments from "./Comments";
-import {
-  followCheck,
-  handleAddFollow,
-  handleDeleteFollow,
-  timeExpiredFrom,
-} from "../../assets/assets";
+import { followCheck } from "../../assets/assets";
+import PostHeader from "./PostHeader";
+import PostContent from "./PostContent";
+import PostAction from "./PostAction";
 
 type PROPS = {
   postData: PostType;
@@ -30,9 +22,15 @@ type PROPS = {
   setPostsData: React.Dispatch<React.SetStateAction<PostType[]>>;
   refetchUser: Function;
 };
-export type StateStatusType = {
+export type PostStateStatusType = {
   postId: string;
   active: boolean;
+};
+
+export type LikesStateType = {
+  comments_count: string;
+  liked: boolean;
+  likes: string;
 };
 
 export default function Post({
@@ -41,22 +39,30 @@ export default function Post({
   setPostsData,
   refetchUser,
 }: PROPS) {
-  const [sub, setSub] = useState<StateStatusType>({
+  const [sub, setSub] = useState<PostStateStatusType>({
     postId: postData.post_id,
     active: followCheck(User.followers, postData.user_id),
   });
-  const [postAction, setPostAction] = useState<StateStatusType>({
+  const [postAction, setPostAction] = useState<PostStateStatusType>({
     postId: postData.post_id,
     active: false,
   });
-  const [commentsStatus, setCommentsStatus] = useState<StateStatusType>({
+  const [commentsStatus, setCommentsStatus] = useState<PostStateStatusType>({
     postId: postData.post_id,
     active: false,
   });
+  const [likes, setLikes] = useState<LikesStateType | null>(null);
 
   const { error, data, refetch } = useQuery(GET_LIKES, {
     variables: { post_id: postData.post_id, user_id: User.id },
   });
+
+  useEffect(() => {
+    if (!error && data) {
+      if (!data.getLikes) return;
+      setLikes(data.getLikes);
+    }
+  }, [data]);
 
   const [deletePost] = useMutation(DELETE_POST, {
     variables: {
@@ -147,87 +153,43 @@ export default function Post({
     };
   }, [postAction.active]);
 
+  const handleStatusSubChange = (action: boolean) => {
+    setSub((prev) => ({ ...prev, active: action }));
+  };
+  const actionPostOff = () => {
+    setPostAction((prev) => ({
+      active: !prev.active,
+      postId: prev.postId,
+    }));
+  };
+
+  const handleCommentsStatus = () => {
+    setCommentsStatus((prev) => ({ ...prev, active: !prev.active }));
+  };
+
   return (
     <>
       {!error && data ? (
         <li>
-          <div className={styles.post__header}>
-            <div className={styles.post__header__info}>
-              <div className={styles.post__header__user}>
-                <BiUser className={styles.post__header__userIcon} />
-                <span>{postData.user_name}</span>
-                {User.id !== postData.user_id ? (
-                  sub.active ? (
-                    <div
-                      className={styles.follow}
-                      onClick={() =>
-                        setSub((prev) => ({ ...prev, active: false }))
-                      }
-                    >
-                      <MdDone
-                        onClick={() =>
-                          handleDeleteFollow(deleteFollow, refetchUser)
-                        }
-                      />
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => handleAddFollow(addFollow, refetchUser)}
-                    >
-                      Follow
-                    </button>
-                  )
-                ) : null}
-              </div>
-              <span className={styles.post__header__time}>
-                {timeExpiredFrom(postData.createdAt)}
-              </span>
-            </div>
-            {User.id === postData.user_id ? (
-              <div className={styles.postSet} id="modal">
-                <SlOptionsVertical
-                  id="modal"
-                  onClick={() =>
-                    setPostAction((prev) => ({
-                      active: !prev.active,
-                      postId: prev.postId,
-                    }))
-                  }
-                />
-                {postAction.active ? (
-                  <div className={styles.postSet__opt} id="modal">
-                    <div id="modal" onClick={() => handleDeletePost()}>
-                      Delete
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-            ) : null}
-          </div>
-          <div className={styles.post__content}>
-            {postData.post_img !== "" ? (
-              <img src={postData.post_img} alt="post" />
-            ) : null}
-
-            {postData.post_text !== "" ? <p>{postData.post_text}</p> : null}
-          </div>
-          <div className={styles.post__action}>
-            <span>
-              {data.getLikes.liked ? (
-                <AiFillHeart onClick={() => handleDeleteLikePost()} />
-              ) : (
-                <AiOutlineHeart onClick={() => handleLikePost()} />
-              )}
-              {data.getLikes.likes}
-            </span>
-            <span
-              onClick={() =>
-                setCommentsStatus((prev) => ({ ...prev, active: !prev.active }))
-              }
-            >
-              <FaRegCommentAlt /> {data.getLikes.comments_count}
-            </span>
-          </div>
+          <PostHeader
+            handleDeletePost={handleDeletePost}
+            handleStatusSubChange={handleStatusSubChange}
+            actionPostOff={actionPostOff}
+            postAction={postAction}
+            User={User}
+            sub={sub}
+            postData={postData}
+            refetchUser={refetchUser}
+            addFollow={addFollow}
+            deleteFollow={deleteFollow}
+          />
+          <PostContent postData={postData} />
+          <PostAction
+            likes={likes}
+            handleLikePost={handleLikePost}
+            handleDeleteLikePost={handleDeleteLikePost}
+            handleCommentsStatus={handleCommentsStatus}
+          />
           {commentsStatus.active ? (
             <Comments postData={postData} User={User} refetch={refetch} />
           ) : null}

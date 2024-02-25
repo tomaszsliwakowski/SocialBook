@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import Comments from "./Comments";
+import CommentsSection from "./CommentsSection";
 import Content from "./Content";
 import TopSection from "./TopSection";
 import styles from "./blog.module.css";
@@ -21,7 +21,7 @@ export type BlogType = {
 export default function Main() {
   const params = useParams();
   const [blog, setBlog] = useState<BlogType | null>(null);
-  const { loading, data } = useQuery(GET_BLOG, {
+  const { loading, data, error } = useQuery(GET_BLOG, {
     variables: { id: params.id },
   });
 
@@ -35,11 +35,11 @@ export default function Main() {
 
   return (
     <div className={styles.blog__main}>
-      {blog ? (
+      {!error && blog ? (
         <>
           <TopSection blog={blog} />
           <Content paragraphs={blog.blogContent} />
-          <Comments />
+          <CommentsSection />
         </>
       ) : null}
     </div>

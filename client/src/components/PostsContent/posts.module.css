@@ -312,6 +312,11 @@
   align-items: center;
   position: relative;
   cursor: pointer;
+  visibility: hidden;
+}
+
+.comment:hover .comSet {
+  visibility: visible;
 }
 
 .comSet__opt {
@@ -601,6 +606,10 @@
   margin-right: 0.5rem;
   cursor: pointer;
   position: relative;
+  visibility: hidden;
+}
+.posts__list li:hover .postSet {
+  visibility: visible;
 }
 .postSet svg {
   font-size: 25px;

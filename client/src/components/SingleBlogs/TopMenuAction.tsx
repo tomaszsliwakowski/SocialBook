@@ -76,7 +76,9 @@ export const TopMenuAction = memo(function TopMenuAction({
         <p>{state?.likes}</p>
       </span>
       <span>
-        <FaRegCommentAlt />
+        <a href="#comments">
+          <FaRegCommentAlt />
+        </a>
         {state?.comments_count}
       </span>
     </div>

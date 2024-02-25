@@ -239,15 +239,129 @@
 .UserFollow:hover {
   background-color: var(--primary-blue-color);
 }
+.blog__comments {
+  margin-top: 2rem;
+  padding: 0 2rem;
+}
+
+.blog__comments__head h2 {
+  font-size: 26px;
+}
+.blog__comments__head span {
+  font-size: 14px;
+  color: var(--border-2-color);
+}
+
+.blog__comments__container {
+  display: flex;
+  gap: 5%;
+  height: 100%;
+  align-items: center;
+}
+.blog__comments__creator button {
+  font-size: 16px;
+  padding: 4px 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: 2px solid var(--primary-blue-color);
+  color: var(--primary-blue-color);
+  background-color: var(--bg-color);
+  transition: all 0.3s;
+}
+.blog__comments__creator button:hover {
+  background-color: var(--primary-blue-color);
+  color: white;
+}
+
+.blog__comments__content {
+  margin-top: 2rem;
+}
+
+.blog__comment {
+  width: 100%;
+  background-color: var(--bg-color);
+  height: fit-content;
+  display: flex;
+  list-style: none;
+}
+.blog__comment__content__modal {
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.blog__comment:hover .blog__comment__content__modal {
+  visibility: visible;
+}
+
+.blog__comment__content {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.2rem 0 0.5rem 0;
+}
+.blog__comment__contentHead {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.blog__comment__contentHead__con {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.blog__comment__user {
+  height: 100%;
+  width: 40px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-top: 4px;
+}
+.blog__comment__user svg {
+  font-size: 30px;
+  width: fit-content;
+  height: fit-content;
+}
+.blog__comment__contentHead div span {
+  color: var(--border-2-color);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 20px 0 10px;
+}
+
+.blog__comment__userName {
+  font-size: 20px;
+  font-weight: 500;
+}
 
 @media screen and (max-width: 768px) {
   .blog__content__paragraph_img {
     flex-direction: column;
   }
-  .blog__content__paragraph_img p {
+  .blog__content__paragraph_img div p {
+    max-width: 100%;
+    width: 100%;
+  }
+  .blog__content__paragraph_img div {
     max-width: 100%;
   }
   .blog__top__title h2 {
     width: 100%;
+  }
+  .blog__comments {
+    padding: 0;
+  }
+}
+@media screen and (max-width: 1050px) {
+  .blog__content__paragraph_img div {
+    max-width: 100%;
   }
 }

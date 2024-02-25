@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./posts.module.css";
-import { BiUser } from "react-icons/bi";
 import { useMutation, useQuery } from "@apollo/client";
 import { PostType } from "./Main";
 import { UserType } from "../../context/Auth";
@@ -9,9 +8,9 @@ import {
   DELETE_COMMENT_POST,
 } from "../../mutations/postsMutations";
 import { GET_COMMENTS } from "../../Query/postsQuery";
-import { SlOptionsVertical } from "react-icons/sl";
 import { v4 as uuidv4 } from "uuid";
-import { timeExpiredFrom } from "../../assets/assets";
+import AddComment from "./AddComment";
+import Comment from "./Comment";
 
 type PROPS = {
   postData: PostType;
@@ -19,7 +18,7 @@ type PROPS = {
   refetch: Function;
 };
 
-type CommentType = {
+export type CommentType = {
   post_id: string;
   user_id: string;
   username: string;
@@ -27,7 +26,7 @@ type CommentType = {
   createdAt: string;
   com_id: string;
 };
-type StateStatusType = {
+export type ComStateStatusType = {
   comId: string;
   active: boolean;
 };
@@ -35,7 +34,7 @@ type StateStatusType = {
 export default function Comments({ postData, User, refetch }: PROPS) {
   const [comValue, setComValue] = useState("");
   const [comments, setComments] = useState<CommentType[]>([]);
-  const [comAction, setComAction] = useState<StateStatusType>({
+  const [comAction, setComAction] = useState<ComStateStatusType>({
     comId: "",
     active: false,
   });
@@ -114,63 +113,33 @@ export default function Comments({ postData, User, refetch }: PROPS) {
     };
   }, [comAction.active]);
 
+  const writeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComValue(e.target.value);
+  };
+
+  const handleComAction = (id: string) => {
+    setComAction((prev) => ({
+      active: !prev.active,
+      comId: id,
+    }));
+  };
+
   return (
     <div className={styles.comments}>
-      <div className={styles.addComment}>
-        <div>
-          <BiUser />
-        </div>
-        <div>
-          <textarea
-            value={comValue}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-              setComValue(e.target.value)
-            }
-            maxLength={250}
-            placeholder="Write a comment"
-          ></textarea>
-        </div>
-        <div>
-          <button onClick={() => addComment()}>Share</button>
-        </div>
-      </div>
+      <AddComment
+        writeComment={writeComment}
+        comValue={comValue}
+        addComment={addComment}
+      />
       {comments.length > 0
         ? comments.map((item: CommentType, id: number) => (
-            <div key={id} className={styles.comment}>
-              <div className={styles.comment_user}>
-                <BiUser />
-              </div>
-              <div className={styles.comment__container}>
-                <div className={styles.comment__header}>
-                  <span>{item.username}</span>
-                  <div className={styles.comment__header__sec}>
-                    <span>{timeExpiredFrom(item.createdAt)}</span>
-                    <div id="ComModal" className={styles.comSet}>
-                      <SlOptionsVertical
-                        id="ComModal"
-                        onClick={() =>
-                          setComAction((prev) => ({
-                            active: !prev.active,
-                            comId: item.com_id,
-                          }))
-                        }
-                      />
-                      {comAction.active && comAction.comId === item.com_id ? (
-                        <div className={styles.comSet__opt} id="ComModal">
-                          <div
-                            id="ComModal"
-                            onClick={() => handelDeleteComment()}
-                          >
-                            Delete
-                          </div>
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
-                <p>{item.comment_text}</p>
-              </div>
-            </div>
+            <Comment
+              handelDeleteComment={handelDeleteComment}
+              handleComAction={handleComAction}
+              comment={item}
+              comAction={comAction}
+              key={id}
+            />
           ))
         : null}
     </div>

@@ -8,6 +8,9 @@ import { ADD_POST } from "../../mutations/postsMutations";
 import { UserType } from "../../context/Auth";
 import imageCompression from "browser-image-compression";
 import { PostType } from "./Main";
+import AddPostHeader from "./AddPostHeader";
+import AddPostContent from "./AddPostContent";
+import AddPostAction from "./AddPostAction";
 
 type PROPS = {
   setAddPostModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -99,35 +102,22 @@ export default function AddPost({
       .catch((res) => console.log(res));
   };
 
+  const handleModalSet = (action: boolean) => {
+    setAddPostModal(action);
+  };
+
   return (
     <div className={styles.posts__addPost__body}>
-      <div className={styles.addPosts__header}>
-        <h2>Add Post</h2>
-        <IoMdClose size={30} onClick={() => setAddPostModal(false)} />
-      </div>
-      <div className={styles.addPosts__content}>
-        <textarea
-          value={postText}
-          onChange={(e) => handleTextPost(e)}
-          placeholder="What are you thinking about?"
-        />
-        <div onClick={() => handleImageClick()}>
-          <span>Add image to post</span>
-          {image ? <img src={image} alt="Image to add" /> : <FaImage />}
-          <input
-            ref={inputRef}
-            id="image-upload"
-            onChange={handleImageChange}
-            type="file"
-            style={{ display: "none" }}
-          />
-        </div>
-      </div>
-      <div className={styles.addPost__action}>
-        <button disabled={shareDisable} onClick={() => sharePost()}>
-          Share Post
-        </button>
-      </div>
+      <AddPostHeader handleModalSet={handleModalSet} />
+      <AddPostContent
+        postText={postText}
+        image={image}
+        handleImageChange={handleImageChange}
+        handleImageClick={handleImageClick}
+        handleTextPost={handleTextPost}
+        inputRef={inputRef}
+      />
+      <AddPostAction shareDisable={shareDisable} sharePost={sharePost} />
     </div>
   );
 }
