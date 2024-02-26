@@ -1,9 +1,13 @@
 import styles from "./blog.module.css";
 
-export default function CommentsCreator() {
+type PROPS = {
+  modalStatusHandler: Function;
+};
+
+export default function CommentsCreator({ modalStatusHandler }: PROPS) {
   return (
     <div className={styles.blog__comments__creator}>
-      <button>Add Comment</button>
+      <button onClick={() => modalStatusHandler(true)}>Add Comment</button>
     </div>
   );
 }
