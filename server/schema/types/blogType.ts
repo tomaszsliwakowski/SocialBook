@@ -47,3 +47,15 @@ export const LikesBlogType = new GraphQLObjectType({
     liked: { type: GraphQLBoolean },
   }),
 });
+
+export const CommentBlogType = new GraphQLObjectType({
+  name: "BlogComment",
+  fields: () => ({
+    blog_id: { type: GraphQLID },
+    user_id: { type: GraphQLID },
+    createdAt: { type: GraphQLString },
+    comment_text: { type: GraphQLString },
+    com_id: { type: GraphQLString },
+    name: { type: GraphQLString },
+  }),
+});

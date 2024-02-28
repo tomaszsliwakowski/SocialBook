@@ -1,25 +1,64 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CommentsModalContent from "./CommentsModalContent";
 import CommentsModalHeader from "./CommentsModalHeader";
 import styles from "./blog.module.css";
 import CommentsModalAction from "./CommentsModalAction";
+import { ADD_COMMENT_BLOG } from "../../mutations/blogMutations";
+import { useMutation } from "@apollo/client";
+import { v4 as uuidv4 } from "uuid";
+import { AuthContext, UserAuth } from "../../context/Auth";
+import { CommentType } from "./CommentsSection";
+import { GET_COMMENTS_BLOG } from "../../Query/blogQuery";
 
 type PROPS = {
   closeModalAfterClickOtherSite: Function;
   modalStatusHandler: Function;
+  blog_id: string;
+  changeCommentsAfterAdd: Function;
 };
+
+type AddCommentType = Pick<
+  CommentType,
+  "blog_id" | "user_id" | "com_id" | "comment_text"
+>;
 
 export default function CommentsModal({
   closeModalAfterClickOtherSite,
   modalStatusHandler,
+  blog_id,
+  changeCommentsAfterAdd,
 }: PROPS) {
+  const { User }: UserAuth = useContext(AuthContext);
   const [commentText, setCommentText] = useState<string>("");
 
   const handleCommentText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCommentText(e.target.value);
   };
 
-  const shareComment = () => {};
+  const [addBlogComment] = useMutation(ADD_COMMENT_BLOG, {
+    variables: {
+      blog_id: blog_id,
+      user_id: User.id,
+      comment_text: commentText,
+      com_id: uuidv4(),
+    },
+  });
+
+  const shareComment = async () => {
+    if (commentText === "") return;
+    await addBlogComment()
+      .then((res) => {
+        let { addBlogComment }: { addBlogComment: AddCommentType } = res.data;
+        Object.assign(addBlogComment, {
+          createdAt: new Date().getTime().toString(),
+          name: User.name,
+        });
+        changeCommentsAfterAdd(addBlogComment);
+        setCommentText("");
+        modalStatusHandler(false);
+      })
+      .catch((res) => console.log(res));
+  };
 
   return (
     <div

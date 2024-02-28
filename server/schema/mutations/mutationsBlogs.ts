@@ -1,5 +1,10 @@
 import { GraphQLNonNull, GraphQLString } from "graphql";
-import { BlogArgType, BlogType, LikeBlogType } from "../types/blogType";
+import {
+  BlogArgType,
+  BlogType,
+  CommentBlogType,
+  LikeBlogType,
+} from "../types/blogType";
 import { Request } from "express";
 import { verify } from "jsonwebtoken";
 import { AccessToken } from "../../assets/assets";
@@ -62,7 +67,7 @@ export const addBlog = {
   },
 };
 
-type deletePostArgType = {
+type DeletePostArgType = {
   blog_id: string;
 };
 
@@ -71,12 +76,12 @@ export const deleteBlog = {
   args: {
     blog_id: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve(parent: any, args: deletePostArgType, req: Request) {
+  async resolve(parent: any, args: DeletePostArgType, req: Request) {
     const cookie = req.cookies.IdUser;
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: deletePostArgType | void = await pool
+    const res: DeletePostArgType | void = await pool
       .query(`DELETE FROM blogs WHERE id='${args.blog_id}'`)
       .then(() => {
         pool.query(`DELETE FROM blogscomments WHERE blog_id='${args.blog_id}'`);
@@ -132,6 +137,69 @@ export const deleteLikeBlog = {
     const res: LikeArgType | void = await pool
       .query(
         `DELETE FROM blogslikes WHERE (blog_id='${args.blog_id}' AND user_id='${args.user_id}')`
+      )
+      .then(() => {
+        return args;
+      })
+      .catch((res) => console.log(res));
+    if (!res || (res && !res.blog_id)) return;
+    return res;
+  },
+};
+
+type AddCommentArgType = {
+  blog_id: string;
+  user_id: string;
+  comment_text: string;
+  com_id: string;
+};
+
+export const addBlogComment = {
+  type: CommentBlogType,
+  args: {
+    blog_id: { type: new GraphQLNonNull(GraphQLString) },
+    user_id: { type: new GraphQLNonNull(GraphQLString) },
+    comment_text: { type: new GraphQLNonNull(GraphQLString) },
+    com_id: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve(parent: any, args: AddCommentArgType, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return;
+    const verifyUser = verify(cookie, AccessToken) as any;
+    if (!verifyUser) return;
+    const res: AddCommentArgType | void = await pool
+      .query(
+        `INSERT INTO blogscomments VALUES ('${args.blog_id}','${args.user_id}','${args.com_id}','${args.comment_text}',NOW())`
+      )
+      .then(() => {
+        return args;
+      })
+      .catch((res) => console.log(res));
+    if (!res || (res && !res.blog_id)) return;
+    return res;
+  },
+};
+
+type DeleteCommentArgType = {
+  blog_id: string;
+  user_id: string;
+  com_id: string;
+};
+export const deleteBlogComment = {
+  type: CommentBlogType,
+  args: {
+    post_id: { type: new GraphQLNonNull(GraphQLString) },
+    user_id: { type: new GraphQLNonNull(GraphQLString) },
+    com_id: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve(parent: any, args: DeleteCommentArgType, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return;
+    const verifyUser = verify(cookie, AccessToken) as any;
+    if (!verifyUser) return;
+    const res: DeleteCommentArgType | void = await pool
+      .query(
+        `DELETE FROM blogscomments WHERE (blog_id='${args.blog_id}' AND user_id='${args.user_id}' AND com_id='${args.com_id}')`
       )
       .then(() => {
         return args;

@@ -1,30 +1,26 @@
-import { BiUser } from "react-icons/bi";
 import styles from "./blog.module.css";
-import { timeExpiredFrom } from "../../assets/assets";
-import { SlOptionsVertical } from "react-icons/sl";
+import Comment from "./Comment";
+import { CommentType } from "./CommentsSection";
 
-export default function Comments() {
+type PROPS = {
+  comments: CommentType[];
+};
+
+export default function Comments({ comments }: PROPS) {
+  console.log(comments);
   return (
     <div className={styles.blog__comments__content}>
-      <ul>
-        <li className={styles.blog__comment}>
-          <div className={styles.blog__comment__user}>
-            <BiUser />
-          </div>
-          <div className={styles.blog__comment__content}>
-            <div className={styles.blog__comment__contentHead}>
-              <span className={styles.blog__comment__userName}>test</span>
-              <div className={styles.blog__comment__contentHead__con}>
-                <span>{timeExpiredFrom("312312321")}</span>
-                <div className={styles.blog__comment__content__modal}>
-                  <SlOptionsVertical />
-                </div>
-              </div>
-            </div>
-            <p>agfjeswghewghewguhwegiuhwegiuwhegiuwehgiuh</p>
-          </div>
-        </li>
-      </ul>
+      {comments.length !== 0 ? (
+        <ul>
+          {comments.map((item, id) => (
+            <Comment key={id} comment={item} />
+          ))}
+        </ul>
+      ) : (
+        <div className={styles.blog__comments__empty}>
+          There are no comments
+        </div>
+      )}
     </div>
   );
 }

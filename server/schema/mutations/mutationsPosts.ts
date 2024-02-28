@@ -11,7 +11,7 @@ import {
 } from "../types/postType";
 import { Request } from "express";
 
-type addPostArgType = {
+type AddPostArgType = {
   post_id: string;
   user_id: string;
   post_text: string;
@@ -30,12 +30,12 @@ export const addPost = {
     user_name: { type: new GraphQLNonNull(GraphQLString) },
     user_email: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve(parent: any, args: addPostArgType, req: Request) {
+  async resolve(parent: any, args: AddPostArgType, req: Request) {
     const cookie = req.cookies.IdUser;
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: addPostArgType | void = await pool
+    const res: AddPostArgType | void = await pool
       .query(
         `INSERT INTO posts VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.post_text}','${args.post_img}','${args.user_name}','${args.user_email}')`
       )
@@ -48,7 +48,7 @@ export const addPost = {
   },
 };
 
-type deletePostArgType = {
+type DeletePostArgType = {
   post_id: string;
 };
 
@@ -57,12 +57,12 @@ export const deletePost = {
   args: {
     post_id: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve(parent: any, args: deletePostArgType, req: Request) {
+  async resolve(parent: any, args: DeletePostArgType, req: Request) {
     const cookie = req.cookies.IdUser;
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: deletePostArgType | void = await pool
+    const res: DeletePostArgType | void = await pool
       .query(`DELETE FROM posts WHERE post_id='${args.post_id}'`)
       .then(() => {
         pool.query(`DELETE FROM comments WHERE post_id='${args.post_id}'`);
@@ -126,7 +126,7 @@ export const deleteLikePost = {
   },
 };
 
-type addCommentArgType = {
+type AddCommentArgType = {
   post_id: string;
   user_id: string;
   comment_text: string;
@@ -143,12 +143,12 @@ export const addCommentPost = {
     username: { type: new GraphQLNonNull(GraphQLString) },
     com_id: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve(parent: any, args: addCommentArgType, req: Request) {
+  async resolve(parent: any, args: AddCommentArgType, req: Request) {
     const cookie = req.cookies.IdUser;
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: addCommentArgType | void = await pool
+    const res: AddCommentArgType | void = await pool
       .query(
         `INSERT INTO comments VALUES ('${args.post_id}','${args.user_id}',NOW(),'${args.comment_text}','${args.username}','${args.com_id}')`
       )
@@ -161,7 +161,7 @@ export const addCommentPost = {
   },
 };
 
-type deleteCommentArgType = {
+type DeleteCommentArgType = {
   post_id: string;
   user_id: string;
   com_id: string;
@@ -173,12 +173,12 @@ export const deleteCommentPost = {
     user_id: { type: new GraphQLNonNull(GraphQLString) },
     com_id: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve(parent: any, args: deleteCommentArgType, req: Request) {
+  async resolve(parent: any, args: DeleteCommentArgType, req: Request) {
     const cookie = req.cookies.IdUser;
     if (!cookie) return;
     const verifyUser = verify(cookie, AccessToken) as any;
     if (!verifyUser) return;
-    const res: deleteCommentArgType | void = await pool
+    const res: DeleteCommentArgType | void = await pool
       .query(
         `DELETE FROM comments WHERE (post_id='${args.post_id}' AND user_id='${args.user_id}' AND com_id='${args.com_id}')`
       )

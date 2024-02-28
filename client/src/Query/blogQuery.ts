@@ -23,3 +23,15 @@ export const GET_LIKES_BLOG = gql`
     }
   }
 `;
+export const GET_COMMENTS_BLOG = gql`
+  query getBlogComments($blog_id: String!) {
+    getBlogComments(blog_id: $blog_id) {
+      blog_id
+      user_id
+      createdAt
+      comment_text
+      com_id
+      name
+    }
+  }
+`;

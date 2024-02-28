@@ -12,12 +12,14 @@ import {
 } from "./mutations/mutationsPosts";
 import { getPosts } from "./queries/Posts";
 import { getBlogLikes, getLikes } from "./queries/Like";
-import { getComments } from "./queries/Comment";
+import { getBlogComments, getPostComments } from "./queries/Comment";
 import { loginUser, registerUser } from "./mutations/mutationsUsers";
 import {
   addBlog,
+  addBlogComment,
   addLikeBlog,
   deleteBlog,
+  deleteBlogComment,
   deleteLikeBlog,
 } from "./mutations/mutationsBlogs";
 import { getBlog } from "./queries/Blog";
@@ -28,10 +30,11 @@ const RootQuery = new GraphQLObjectType({
     getUser: getUser,
     getPosts: getPosts,
     getLikes: getLikes,
-    getComments: getComments,
+    getComments: getPostComments,
     getBlog: getBlog,
     getUserInfo: getUserInfo,
     getBlogLikes: getBlogLikes,
+    getBlogComments: getBlogComments,
   },
 });
 const Mutation = new GraphQLObjectType({
@@ -51,6 +54,8 @@ const Mutation = new GraphQLObjectType({
     addLikeBlog: addLikeBlog,
     deleteLikeBlog: deleteLikeBlog,
     deleteBlog: deleteBlog,
+    addBlogComment: addBlogComment,
+    deleteBlogComment: deleteBlogComment,
   },
 });
 

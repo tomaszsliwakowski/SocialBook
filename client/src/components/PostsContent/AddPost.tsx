@@ -1,6 +1,4 @@
-import { IoMdClose } from "react-icons/io";
 import styles from "./posts.module.css";
-import { FaImage } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useMutation } from "@apollo/client";

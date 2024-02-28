@@ -13,6 +13,7 @@ export default function CommentsModalContent({
     <div className={styles.blog__comments__modal__body__content}>
       <textarea
         value={commentText}
+        maxLength={1000}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
           handleCommentText(e)
         }

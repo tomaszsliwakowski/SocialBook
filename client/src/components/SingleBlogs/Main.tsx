@@ -39,7 +39,7 @@ export default function Main() {
         <>
           <TopSection blog={blog} />
           <Content paragraphs={blog.blogContent} />
-          <CommentsSection />
+          <CommentsSection blog_id={blog.id} />
         </>
       ) : null}
     </div>
