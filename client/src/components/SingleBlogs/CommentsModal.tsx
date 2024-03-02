@@ -7,18 +7,19 @@ import { ADD_COMMENT_BLOG } from "../../mutations/blogMutations";
 import { useMutation } from "@apollo/client";
 import { v4 as uuidv4 } from "uuid";
 import { AuthContext, UserAuth } from "../../context/Auth";
-import { CommentType } from "./CommentsSection";
-import { GET_COMMENTS_BLOG } from "../../Query/blogQuery";
+import { BlogCommentType } from "./CommentsSection";
+import { AppDispatch } from "../../store/BlogStore";
+import { useDispatch } from "react-redux";
+import { addComment } from "../../store/BlogSlice";
 
 type PROPS = {
   closeModalAfterClickOtherSite: Function;
   modalStatusHandler: Function;
   blog_id: string;
-  changeCommentsAfterAdd: Function;
 };
 
 type AddCommentType = Pick<
-  CommentType,
+  BlogCommentType,
   "blog_id" | "user_id" | "com_id" | "comment_text"
 >;
 
@@ -26,9 +27,9 @@ export default function CommentsModal({
   closeModalAfterClickOtherSite,
   modalStatusHandler,
   blog_id,
-  changeCommentsAfterAdd,
 }: PROPS) {
   const { User }: UserAuth = useContext(AuthContext);
+  const dispatch: AppDispatch = useDispatch();
   const [commentText, setCommentText] = useState<string>("");
 
   const handleCommentText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -49,11 +50,11 @@ export default function CommentsModal({
     await addBlogComment()
       .then((res) => {
         let { addBlogComment }: { addBlogComment: AddCommentType } = res.data;
-        Object.assign(addBlogComment, {
+        const Comment = Object.assign(addBlogComment, {
           createdAt: new Date().getTime().toString(),
           name: User.name,
         });
-        changeCommentsAfterAdd(addBlogComment);
+        dispatch(addComment(Comment));
         setCommentText("");
         modalStatusHandler(false);
       })

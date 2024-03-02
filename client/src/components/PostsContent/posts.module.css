@@ -302,6 +302,8 @@
 }
 .comSet svg {
   font-size: 18px;
+  width: 30px;
+
   cursor: pointer;
 }
 .comSet {
@@ -313,6 +315,23 @@
   position: relative;
   cursor: pointer;
   visibility: hidden;
+}
+
+.comSetActive {
+  width: 30px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  visibility: visible;
+}
+
+.comSetActive svg {
+  font-size: 18px;
+  width: 30px;
+  cursor: pointer;
 }
 
 .comment:hover .comSet {
@@ -608,8 +627,22 @@
   position: relative;
   visibility: hidden;
 }
+.postSetActive {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  position: relative;
+  visibility: visible;
+}
 .posts__list li:hover .postSet {
   visibility: visible;
+}
+
+.postSetActive svg {
+  font-size: 25px;
+  padding: 0.2rem;
 }
 .postSet svg {
   font-size: 25px;

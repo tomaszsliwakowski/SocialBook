@@ -68,6 +68,7 @@ export default function PostHeader({
           actionPostOff={actionPostOff}
           handleDeletePost={handleDeletePost}
           postAction={postAction}
+          postId={postData.post_id}
         />
       ) : null}
     </div>

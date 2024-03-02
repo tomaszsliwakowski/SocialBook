@@ -6,6 +6,9 @@ import styles from "./blog.module.css";
 import { useQuery } from "@apollo/client";
 import { GET_BLOG } from "../../Query/blogQuery";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/BlogStore";
+import { addBlog } from "../../store/BlogSlice";
 
 export type BlogType = {
   id: string;
@@ -20,16 +23,16 @@ export type BlogType = {
 
 export default function Main() {
   const params = useParams();
-  const [blog, setBlog] = useState<BlogType | null>(null);
   const { loading, data, error } = useQuery(GET_BLOG, {
     variables: { id: params.id },
   });
-
+  const blog = useSelector((state: RootState) => state.blogData.blog);
+  const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
     if (!loading && data) {
       const blogData = data.getBlog;
       if (!blogData.id) return;
-      setBlog(blogData);
+      dispatch(addBlog(blogData));
     }
   }, [data]);
 

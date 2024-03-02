@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.7",
+    "@reduxjs/toolkit": "^2.2.1",
     "axios": "^1.6.7",
     "browser-image-compression": "^2.0.2",
     "framer-motion": "^10.16.4",
@@ -23,6 +24,7 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",
     "react-lazy-load-image-component": "^1.6.0",
+    "react-redux": "^9.1.0",
     "react-router-dom": "^6.18.0",
     "react-spinners": "^0.13.8",
     "react-typed": "^1.2.0",

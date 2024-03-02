@@ -14,8 +14,12 @@ import { useContext, useEffect, useState } from "react";
 import { ADD_FOLLOW, DELETE_FOLLOW } from "../../mutations/postsMutations";
 import { AuthContext, UserAuth } from "../../context/Auth";
 import { MdDone } from "react-icons/md";
-import { StateStatusType } from "../PostsContent/Post";
 import { TopMenuAction } from "./TopMenuAction";
+
+type StateStatusType = {
+  postId: string;
+  active: boolean;
+};
 
 type PROPS = {
   createdAt: string;

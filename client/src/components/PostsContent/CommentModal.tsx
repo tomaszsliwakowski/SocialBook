@@ -16,7 +16,14 @@ export default function CommentModal({
   comment,
 }: PROPS) {
   return (
-    <div id="ComModal" className={styles.comSet}>
+    <div
+      id="ComModal"
+      className={`${
+        comAction.active && comAction.comId === comment.com_id
+          ? styles.comSetActive
+          : styles.comSet
+      }`}
+    >
       <SlOptionsVertical
         id="ComModal"
         onClick={() => handleComAction(comment.com_id)}

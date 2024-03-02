@@ -3,7 +3,7 @@ import Tags from "./Tags";
 import Title from "./Title";
 import TopMenu from "./TopMenu";
 import styles from "./blog.module.css";
-import { BlogType } from "./main";
+import { BlogType } from "./Main";
 
 type PROPS = {
   blog: BlogType;

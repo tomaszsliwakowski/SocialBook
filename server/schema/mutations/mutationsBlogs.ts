@@ -188,7 +188,7 @@ type DeleteCommentArgType = {
 export const deleteBlogComment = {
   type: CommentBlogType,
   args: {
-    post_id: { type: new GraphQLNonNull(GraphQLString) },
+    blog_id: { type: new GraphQLNonNull(GraphQLString) },
     user_id: { type: new GraphQLNonNull(GraphQLString) },
     com_id: { type: new GraphQLNonNull(GraphQLString) },
   },

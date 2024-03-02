@@ -7,12 +7,16 @@ import CommentsModal from "./CommentsModal";
 import { ThemeContext } from "../../context/ThemeContext";
 import { useQuery } from "@apollo/client";
 import { GET_COMMENTS_BLOG } from "../../Query/blogQuery";
+import { AppDispatch, RootState } from "../../store/BlogStore";
+import { useDispatch, useSelector } from "react-redux";
+import { addComments } from "../../store/BlogSlice";
+import { AuthContext, UserAuth } from "../../context/Auth";
 
 type PROPS = {
   blog_id: string;
 };
 
-export interface CommentType {
+export interface BlogCommentType {
   blog_id: string;
   user_id: string;
   com_id: string;
@@ -21,14 +25,16 @@ export interface CommentType {
   name: string;
 }
 export type DeleteCommentType = Pick<
-  CommentType,
+  BlogCommentType,
   "blog_id" | "user_id" | "com_id"
 >;
 
 export default function CommentsSection({ blog_id }: PROPS) {
   const { theme } = useContext(ThemeContext);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
-  const [comments, setComments] = useState<CommentType[]>([]);
+  const { User }: UserAuth = useContext(AuthContext);
+  const comments = useSelector((state: RootState) => state.blogData.comments);
+  const dispatch: AppDispatch = useDispatch();
 
   const { loading, data } = useQuery(GET_COMMENTS_BLOG, {
     variables: { blog_id: blog_id },
@@ -38,7 +44,7 @@ export default function CommentsSection({ blog_id }: PROPS) {
     if (!loading && data) {
       const commentsData = data.getBlogComments;
       if (commentsData.lenght === 0) return;
-      setComments(commentsData);
+      dispatch(addComments(commentsData));
     }
   }, [data]);
 
@@ -65,10 +71,6 @@ export default function CommentsSection({ blog_id }: PROPS) {
     setModalStatus(action);
   };
 
-  const changeCommentsAfterAdd = (comment: CommentType): void => {
-    setComments((prev: CommentType[]) => prev.concat(comment));
-  };
-  const changeCommentsAfterDelete = (comment: DeleteCommentType): void => {};
   return (
     <>
       <div className={styles.blog__comments} id="comments">
@@ -76,14 +78,13 @@ export default function CommentsSection({ blog_id }: PROPS) {
           <CommentsHead />
           <CommentsCreator modalStatusHandler={modalStatusHandler} />
         </div>
-        <Comments comments={comments} />
+        <Comments User={User} comments={comments} />
       </div>
       {modalStatus ? (
         <CommentsModal
           closeModalAfterClickOtherSite={closeModalAfterClickOtherSite}
           modalStatusHandler={modalStatusHandler}
           blog_id={blog_id}
-          changeCommentsAfterAdd={changeCommentsAfterAdd}
         />
       ) : null}
     </>

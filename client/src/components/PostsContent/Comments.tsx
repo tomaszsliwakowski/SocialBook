@@ -118,10 +118,10 @@ export default function Comments({ postData, User, refetch }: PROPS) {
   };
 
   const handleComAction = (id: string) => {
-    setComAction((prev) => ({
-      active: !prev.active,
+    setComAction({
+      active: true,
       comId: id,
-    }));
+    });
   };
 
   return (

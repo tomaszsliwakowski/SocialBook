@@ -6,15 +6,24 @@ type PROPS = {
   actionPostOff: Function;
   handleDeletePost: Function;
   postAction: PostStateStatusType;
+  postId: string;
 };
 
 export default function PostModal({
   actionPostOff,
   postAction,
   handleDeletePost,
+  postId,
 }: PROPS) {
   return (
-    <div className={styles.postSet} id="modal">
+    <div
+      className={`${
+        postAction.active && postAction.postId === postId
+          ? styles.postSetActive
+          : styles.postSet
+      }`}
+      id="modal"
+    >
       <SlOptionsVertical id="modal" onClick={() => actionPostOff()} />
       {postAction.active ? (
         <div className={styles.postSet__opt} id="modal">
