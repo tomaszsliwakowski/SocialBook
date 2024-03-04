@@ -44,9 +44,7 @@ export const getPosts = {
       const observedData = await pool.query(
         `SELECT * FROM followers WHERE user_id = '${args.user_id}'`
       );
-
       const observed: any = observedData[0];
-
       if (observed.length === 0) {
         PostsToSend = [];
       } else {

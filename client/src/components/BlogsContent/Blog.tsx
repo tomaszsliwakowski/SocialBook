@@ -7,12 +7,15 @@ import { BsBookmarksFill } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { StateStatusType } from "../PostsContent/Post";
 import { UserType } from "../../context/Auth";
 import { BlogRouteBuilder } from "../../routes";
 
 type PROPS = {
   User: UserType;
+};
+type StateStatusType = {
+  postId: string;
+  active: boolean;
 };
 
 export default function Blog({ User }: PROPS) {

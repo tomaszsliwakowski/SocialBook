@@ -5,7 +5,7 @@ import TopSection from "./TopSection";
 import styles from "./blog.module.css";
 import { useQuery } from "@apollo/client";
 import { GET_BLOG } from "../../Query/blogQuery";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/BlogStore";
 import { addBlog } from "../../store/BlogSlice";

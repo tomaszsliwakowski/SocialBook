@@ -22,7 +22,7 @@ import {
   deleteBlogComment,
   deleteLikeBlog,
 } from "./mutations/mutationsBlogs";
-import { getBlog } from "./queries/Blog";
+import { getBlog, getBlogs } from "./queries/Blog";
 
 const RootQuery = new GraphQLObjectType({
   name: "Query",
@@ -35,6 +35,7 @@ const RootQuery = new GraphQLObjectType({
     getUserInfo: getUserInfo,
     getBlogLikes: getBlogLikes,
     getBlogComments: getBlogComments,
+    getBlogs: getBlogs,
   },
 });
 const Mutation = new GraphQLObjectType({

@@ -25,6 +25,15 @@ export default function Main() {
     searchType || "title"
   );
 
+  console.log({
+    searchTypeValue,
+    searchValue,
+    tag,
+    typeShow,
+    sorting,
+    timeSpan,
+  });
+
   const handleSearchValue = (value: string): void => {
     setSearchValue(value);
   };
