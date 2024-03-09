@@ -1,9 +1,5 @@
-import { useState } from "react";
-import {
-  PopularTags,
-  TimeSpanList,
-  sortOptionList,
-} from "../../assets/Library";
+import { useContext, useEffect, useState } from "react";
+import { PopularTags, TimeSpanList } from "../../assets/Library";
 import SearchBar from "./SearchBar";
 import SelectBar from "./SelectBar";
 import styles from "./blogs.module.css";
@@ -11,28 +7,60 @@ import { BsTrash } from "react-icons/bs";
 import { useSearchParams } from "react-router-dom";
 import Blogs from "./Blogs";
 import BlogTypes from "./BlogTypes";
+import { useQuery } from "@apollo/client";
+import { GET_BLOGS } from "../../Query/blogQuery";
+import { AuthContext, UserAuth } from "../../context/Auth";
+import { timeSpanHandler } from "../../assets/assets";
+
+export type BlogsType = {
+  id: string;
+  user_id: string;
+  title: string;
+  blogContent: string;
+  tags: string;
+  baner: string;
+  miniature: string;
+  createdAt: string;
+  likes: string;
+  comments: string;
+};
 
 export default function Main() {
+  const { User }: UserAuth = useContext(AuthContext);
   const [searchParams, setSearchParams] = useSearchParams({});
   const search = searchParams.get("search");
   const searchType = searchParams.get("searchtype");
   const tag = searchParams.get("tag");
   const typeShow = searchParams.get("type");
-  const sorting = searchParams.get("sorting");
   const timeSpan = searchParams.get("timespan");
   const [searchValue, setSearchValue] = useState<string>(search || "");
   const [searchTypeValue, setSearchTypeValue] = useState<string>(
     searchType || "title"
   );
+  const [blogs, setBlogs] = useState<BlogsType[]>([]);
 
-  console.log({
-    searchTypeValue,
-    searchValue,
-    tag,
-    typeShow,
-    sorting,
-    timeSpan,
+  const { loading, error, data, refetch } = useQuery(GET_BLOGS, {
+    variables: {
+      type: typeShow,
+      search: searchValue,
+      searchType: searchTypeValue,
+      tag: tag || "",
+      timeSpan: timeSpanHandler(timeSpan),
+      page: 0,
+      userId: User.id,
+    },
   });
+  useEffect(() => {
+    if (!loading && !error && data) {
+      const newData = data.getBlogs;
+      setBlogs(newData || []);
+    }
+  }, [data]);
+
+  console.log(blogs);
+  useEffect(() => {
+    refetch();
+  }, [timeSpan, tag, typeShow, searchValue]);
 
   const handleSearchValue = (value: string): void => {
     setSearchValue(value);
@@ -58,7 +86,6 @@ export default function Main() {
     setSearchParams((prev) => {
       prev.delete("search");
       prev.delete("searchtype");
-      prev.set("sorting", "Latest");
       prev.set("tag", "All");
       prev.set("timespan", "All");
       setSearchValue("");
@@ -87,14 +114,6 @@ export default function Main() {
           selectBlogsAction={selectBlogsAction}
         />
         <SelectBar
-          defaultValue={sorting || "Latest"}
-          id="sortModal"
-          list={sortOptionList}
-          headName={"Sorting"}
-          name="sorting"
-          selectBlogsAction={selectBlogsAction}
-        />
-        <SelectBar
           id="timeModal"
           defaultValue={timeSpan || "All"}
           list={TimeSpanList}
@@ -109,7 +128,7 @@ export default function Main() {
           <BsTrash />
         </div>
       </div>
-      <Blogs />
+      <Blogs blogs={blogs} />
     </div>
   );
 }

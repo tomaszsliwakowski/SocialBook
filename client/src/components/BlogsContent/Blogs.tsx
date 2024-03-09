@@ -1,19 +1,18 @@
-import { useContext } from "react";
-import { AuthContext, UserAuth } from "../../context/Auth";
 import Blog from "./Blog";
+import { BlogsType } from "./Main";
 import styles from "./blogs.module.css";
 
-export default function Blogs() {
-  const { User }: UserAuth = useContext(AuthContext);
+type PROPS = {
+  blogs: BlogsType[];
+};
+
+export default function Blogs({ blogs }: PROPS) {
   return (
     <div className={styles.blogs__content}>
       <ul className={styles.blogs__content__list}>
-        <Blog User={User} />
-        <Blog User={User} />
-        <Blog User={User} />
-        <Blog User={User} />
-        <Blog User={User} />
-        <Blog User={User} />
+        {blogs.map((item, id) => (
+          <Blog key={id} blog={item} />
+        ))}
       </ul>
     </div>
   );

@@ -19,6 +19,21 @@ export const BlogType = new GraphQLObjectType({
     createdAt: { type: GraphQLString },
   }),
 });
+export const BlogsType = new GraphQLObjectType({
+  name: "Blogs",
+  fields: () => ({
+    id: { type: GraphQLID },
+    user_id: { type: GraphQLID },
+    title: { type: GraphQLString },
+    blogContent: { type: GraphQLString },
+    tags: { type: GraphQLString },
+    miniature: { type: GraphQLString },
+    baner: { type: GraphQLString },
+    createdAt: { type: GraphQLString },
+    likes: { type: GraphQLString },
+    comments: { type: GraphQLString },
+  }),
+});
 
 export const BlogArgType = new GraphQLInputObjectType({
   name: "BlogArgType",

@@ -72,3 +72,28 @@ export const handleDeleteFollow = async (
     })
     .catch((res: Error) => console.log(res));
 };
+
+export const timeSpanHandler = (timeSpan: string | null): string => {
+  let time = "All";
+  switch (timeSpan) {
+    case "All":
+      time = "All";
+      break;
+    case "Last 365days":
+      time = "365";
+      break;
+    case "Last 30days":
+      time = "30";
+      break;
+    case "Last 7days":
+      time = "7";
+      break;
+    case "Today":
+      time = "1";
+      break;
+    default:
+      time = "All";
+      break;
+  }
+  return time;
+};

@@ -32,4 +32,3 @@ export const TimeSpanList: string[] = [
   "Last 7days",
   "Today",
 ];
-export const sortOptionList: string[] = ["Latest", "Most popular"];

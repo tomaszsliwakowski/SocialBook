@@ -14,6 +14,39 @@ export const GET_BLOG = gql`
     }
   }
 `;
+export const GET_BLOGS = gql`
+  query getBlosg(
+    $type: String!
+    $search: String!
+    $searchType: String!
+    $tag: String!
+    $timeSpan: String!
+    $page: Int!
+    $userId: String!
+  ) {
+    getBlogs(
+      type: $type
+      search: $search
+      searchType: $searchType
+      tag: $tag
+      timeSpan: $timeSpan
+      page: $page
+      userId: $userId
+    ) {
+      id
+      user_id
+      title
+      blogContent
+      tags
+      baner
+      miniature
+      createdAt
+      likes
+      comments
+    }
+  }
+`;
+
 export const GET_LIKES_BLOG = gql`
   query getBlogLikes($blog_id: String!, $user_id: String!) {
     getBlogLikes(blog_id: $blog_id, user_id: $user_id) {

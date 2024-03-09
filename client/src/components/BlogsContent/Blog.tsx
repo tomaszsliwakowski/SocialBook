@@ -7,23 +7,32 @@ import { BsBookmarksFill } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { UserType } from "../../context/Auth";
 import { BlogRouteBuilder } from "../../routes";
+import { BlogsType } from "./Main";
 
-type PROPS = {
-  User: UserType;
-};
 type StateStatusType = {
   postId: string;
   active: boolean;
 };
 
-export default function Blog({ User }: PROPS) {
+type PROPS = {
+  blog: BlogsType;
+};
+
+type BlogContentType = {
+  id: string;
+  type: string;
+  content: string | undefined;
+  images?: string[];
+};
+
+export default function Blog({ blog }: PROPS) {
   const [saveStatus, setSaveStatus] = useState(false);
   const [sub, setSub] = useState<StateStatusType>({
     postId: "",
     active: false,
   });
+
   return (
     <li className={styles.blogs__content__element}>
       <Link
@@ -34,28 +43,28 @@ export default function Blog({ User }: PROPS) {
         <div className={styles.blogs__content__react}>
           <span>
             <AiOutlineHeart />
-            1231
+            {blog.likes}
           </span>
           <span>
             <FaRegCommentAlt />
-            1231
+            {blog.comments}
           </span>
         </div>
       </Link>
       <div className={styles.blogs__content__tag}>
-        <span>Travel</span>
+        {JSON.parse(blog.tags).map((item: string, id: number) => (
+          <span key={id}>{item}</span>
+        ))}
       </div>
       <div className={styles.blogs__content__desc}>
-        <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta
-          perspiciatis possimus nihil, harum odit atque vero exercitationem
-          eaque id tempora. Consequatur, ratione consectetur! Inventore, esse
-          magnam voluptatem possimus explicabo tenetur. Lorem, ipsum dolor sit
-          amet consectetur adipisicing elit. Fugiat nam ullam neque doloribus
-          ipsa sequi mollitia, fuga officia sapiente facere consectetur aperiam
-          incidunt earum deserunt facilis delectus corporis iure unde?
-        </p>
+        <h2>{blog.title}</h2>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: JSON.parse(blog.blogContent).filter(
+              (item: BlogContentType) => item.type === "Text"
+            )[0].content,
+          }}
+        ></div>
       </div>
       <div className={styles.blogs__content__info}>
         <div className={styles.blogs__content__user}>
@@ -65,10 +74,10 @@ export default function Blog({ User }: PROPS) {
           <div>
             <div className={styles.blogs__content__userInfo}>
               <span>testowy</span>
-              {User.email !== "" ? true ? <button>Follow</button> : null : null}
+              {"" !== "" ? true ? <button>Follow</button> : null : null}
             </div>
             <span className={styles.blogs__content__createTime}>
-              {timeExpiredFrom("1703088958000")}
+              {timeExpiredFrom(blog.createdAt)}
             </span>
           </div>
         </div>
