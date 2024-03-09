@@ -43,10 +43,6 @@ export default function ImageContent({
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       if (!e.target.files[0]) return;
-      if (e.target.files[0].size > 2097152) {
-        alert("File is too big!");
-        return editorContentHandler(null, type);
-      }
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append("file", file);

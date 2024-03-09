@@ -2,8 +2,6 @@ import styles from "../../blogCreator.module.css";
 import JoditEditor from "jodit-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDebounce } from "../../../../hooks/useDebounce";
-import { EditorContentType } from "../../Main";
-
 type PROPS = {
   theme: string;
   editorContentHandler: Function;

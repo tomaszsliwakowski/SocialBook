@@ -43,6 +43,7 @@ export const GET_BLOGS = gql`
       createdAt
       likes
       comments
+      userName
     }
   }
 `;

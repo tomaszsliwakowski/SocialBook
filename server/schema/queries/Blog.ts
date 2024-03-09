@@ -42,6 +42,7 @@ type BlogType = {
   createdAt: string;
   likes?: string;
   comments?: string;
+  userName?: string;
 };
 
 const MySqlGetBlogQuery = async (args: GetBlogsArgType) => {
@@ -90,9 +91,13 @@ export const getBlogs = {
       const queryCom: any = await pool.query(
         `SELECT COUNT(socialbookdb.blogscomments.blog_id) OVER(partition by socialbookdb.blogscomments.user_id) as Comments FROM socialbookdb.blogscomments WHERE  (socialbookdb.blogscomments.blog_id = '${item.id}')`
       );
-      const Likes: string = queryLikes[0][0] ? queryLikes[0][0].Likes : "0";
-      const Comments: string = queryCom[0][0] ? queryCom[0][0].Comments : "0";
-      return { ...item, likes: Likes, comments: Comments };
+      const queryUser: any = await pool.query(
+        `SELECT name from users WHERE id = '${args.userId}'`
+      );
+      const likes: string = queryLikes[0][0] ? queryLikes[0][0].Likes : "0";
+      const comments: string = queryCom[0][0] ? queryCom[0][0].Comments : "0";
+      const userName: string = queryUser[0][0] ? queryUser[0][0].name : "";
+      return { ...item, likes: likes, comments: comments, userName: userName };
     });
 
     return blogsAllData;

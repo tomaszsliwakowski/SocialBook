@@ -73,10 +73,6 @@ export default function Attachment({ state, dispatch, theme }: PROPS) {
     DeleteImage(e.target.name);
     if (e.target.files) {
       if (!e.target.files[0]) return;
-      if (e.target.files[0].size > 2097152) {
-        alert("File is too big!");
-        return DeleteImage(e.target.name);
-      }
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append("file", file);

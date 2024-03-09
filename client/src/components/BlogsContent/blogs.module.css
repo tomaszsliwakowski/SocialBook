@@ -228,6 +228,7 @@
 .blogs__content__element {
   width: 100%;
   max-width: 450px;
+  max-height: 580px;
   height: fit-content;
   background-color: var(--bg-color);
   display: flex;
@@ -242,7 +243,8 @@
 
 .blogs__content__image img {
   width: 100%;
-  height: auto;
+  height: 300px;
+  object-fit: cover;
   border-radius: 1rem;
   max-height: 530px;
   transition: all 0.3s;
@@ -276,9 +278,10 @@
   text-overflow: ellipsis;
   word-wrap: break-word;
   line-height: 1.2em;
-  max-height: 2.5em;
+  height: 1.4em;
 }
-.blogs__content__desc p {
+
+.blogs__content__desc div p {
   margin-top: 0.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -289,7 +292,6 @@
 
 .blogs__content__info {
   padding: 0.5rem 1rem;
-  height: 100%;
   background-color: var(--bg-color);
   display: flex;
   justify-content: space-between;
@@ -385,6 +387,13 @@
 .blogs__content__react svg {
   cursor: pointer;
   font-size: 25px;
+}
+
+.blogs__content__notFound {
+  color: var(--border-2-color);
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
 }
 
 @media screen and (max-width: 400px) {

@@ -32,6 +32,7 @@ export const BlogsType = new GraphQLObjectType({
     createdAt: { type: GraphQLString },
     likes: { type: GraphQLString },
     comments: { type: GraphQLString },
+    userName: { type: GraphQLString },
   }),
 });
 

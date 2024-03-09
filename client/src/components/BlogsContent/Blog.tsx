@@ -36,10 +36,10 @@ export default function Blog({ blog }: PROPS) {
   return (
     <li className={styles.blogs__content__element}>
       <Link
-        to={BlogRouteBuilder("lsrfuh90mbi24jsa0kj")}
+        to={BlogRouteBuilder(blog.id)}
         className={styles.blogs__content__image}
       >
-        <img src="./travel.jpg" alt="img" />
+        <img src={blog.miniature} alt="miniature" />
         <div className={styles.blogs__content__react}>
           <span>
             <AiOutlineHeart />
@@ -73,8 +73,12 @@ export default function Blog({ blog }: PROPS) {
           </div>
           <div>
             <div className={styles.blogs__content__userInfo}>
-              <span>testowy</span>
-              {"" !== "" ? true ? <button>Follow</button> : null : null}
+              <span>{blog.userName}</span>
+              {blog.userName !== "" ? (
+                true ? (
+                  <button>Follow</button>
+                ) : null
+              ) : null}
             </div>
             <span className={styles.blogs__content__createTime}>
               {timeExpiredFrom(blog.createdAt)}

@@ -23,6 +23,7 @@ export type BlogsType = {
   createdAt: string;
   likes: string;
   comments: string;
+  userName: string;
 };
 
 export default function Main() {
