@@ -5,10 +5,33 @@ import PupularBlogs from "./PupularBlogs";
 import Typed from "react-typed";
 import { motion } from "framer-motion";
 import { AuthContext, UserAuth } from "../../../context/Auth";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { BlogsType } from "../../BlogsContent/Main";
+import { useQuery } from "@apollo/client";
+import { GET_BLOGS } from "../../../Query/blogQuery";
 
 export default function Main() {
   const { User }: UserAuth = useContext(AuthContext);
+  const [blogs, setBlogs] = useState<BlogsType[]>([]);
+
+  const { loading, error, data } = useQuery(GET_BLOGS, {
+    variables: {
+      type: "For You",
+      search: "",
+      searchType: "title",
+      tag: "All",
+      timeSpan: "All",
+      page: 0,
+      userId: "",
+    },
+  });
+  useEffect(() => {
+    if (!loading && !error && data) {
+      const newData = data.getBlogs;
+      setBlogs(newData || []);
+    }
+  }, [data]);
+
   return (
     <>
       <motion.div
@@ -47,7 +70,7 @@ export default function Main() {
           <PhotoSlider />
         </div>
       </motion.div>
-      <PupularBlogs User={User} />
+      <PupularBlogs blogs={blogs} />
     </>
   );
 }

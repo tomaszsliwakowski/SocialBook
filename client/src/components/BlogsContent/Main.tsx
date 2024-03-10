@@ -9,8 +9,8 @@ import Blogs from "./Blogs";
 import BlogTypes from "./BlogTypes";
 import { useQuery } from "@apollo/client";
 import { GET_BLOGS } from "../../Query/blogQuery";
-import { AuthContext, UserAuth } from "../../context/Auth";
 import { timeSpanHandler } from "../../assets/assets";
+import { AuthContext, UserAuth } from "../../context/Auth";
 
 export type BlogsType = {
   id: string;
@@ -38,6 +38,7 @@ export default function Main() {
   const [searchTypeValue, setSearchTypeValue] = useState<string>(
     searchType || "title"
   );
+
   const [blogs, setBlogs] = useState<BlogsType[]>([]);
 
   const { loading, error, data, refetch } = useQuery(GET_BLOGS, {
@@ -58,7 +59,6 @@ export default function Main() {
     }
   }, [data]);
 
-  console.log(blogs);
   useEffect(() => {
     refetch();
   }, [timeSpan, tag, typeShow, searchValue]);

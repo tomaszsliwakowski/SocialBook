@@ -201,6 +201,13 @@
   color: var(--primary-blue-color);
 }
 
+.blogs__content__notFound {
+  color: var(--border-2-color);
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+}
+
 @media screen and (max-width: 768px) {
   .main {
     display: flex;

@@ -86,13 +86,13 @@ export const getBlogs = {
     const selectedBlogs = blogs.splice(args.page, args.page + 10);
     const blogsAllData = selectedBlogs.map(async (item) => {
       const queryLikes: any = await pool.query(
-        `SELECT COUNT(socialbookdb.blogslikes.blog_id) OVER(partition by socialbookdb.blogslikes.user_id) as Likes FROM socialbookdb.blogslikes WHERE (socialbookdb.blogslikes.blog_id = '${item.id}') `
+        `select count(*) as Likes from blogslikes where blog_id = '${item.id}'`
       );
       const queryCom: any = await pool.query(
-        `SELECT COUNT(socialbookdb.blogscomments.blog_id) OVER(partition by socialbookdb.blogscomments.user_id) as Comments FROM socialbookdb.blogscomments WHERE  (socialbookdb.blogscomments.blog_id = '${item.id}')`
+        `select count(*) as Comments from blogscomments where blog_id = '${item.id}'`
       );
       const queryUser: any = await pool.query(
-        `SELECT name from users WHERE id = '${args.userId}'`
+        `SELECT name from users WHERE id = '${item.user_id}'`
       );
       const likes: string = queryLikes[0][0] ? queryLikes[0][0].Likes : "0";
       const comments: string = queryCom[0][0] ? queryCom[0][0].Comments : "0";

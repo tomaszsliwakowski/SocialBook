@@ -1,54 +1,40 @@
-import styles from "./blog.module.css";
+import styles from "./blogs.module.css";
 import { BiUser } from "react-icons/bi";
+import { BsBookmarks } from "react-icons/bs";
+import { BsBookmarksFill } from "react-icons/bs";
 import {
   followCheck,
   handleAddFollow,
   handleDeleteFollow,
   timeExpiredFrom,
 } from "../../assets/assets";
-import { GET_USER_INFO } from "../../Query/userQuery";
-import { useMutation, useQuery } from "@apollo/client";
 import { useContext, useEffect, useState } from "react";
-import { ADD_FOLLOW, DELETE_FOLLOW } from "../../mutations/postsMutations";
 import { AuthContext, UserAuth } from "../../context/Auth";
 import { MdDone } from "react-icons/md";
-import { TopMenuAction } from "./TopMenuAction";
+import { useMutation } from "@apollo/client";
+import { ADD_FOLLOW, DELETE_FOLLOW } from "../../mutations/postsMutations";
 
+type PROPS = {
+  userName: string;
+  createdAt: string;
+  creatorId: string;
+};
 type StateStatusType = {
   postId: string;
   active: boolean;
 };
 
-type PROPS = {
-  createdAt: string;
-  creatorId: string;
-  blogId: string;
-};
-type OwnerType = {
-  id: string;
-  name: string;
-  email: string;
-};
-
-export default function TopMenu({ createdAt, creatorId, blogId }: PROPS) {
-  const [owner, setOwner] = useState<OwnerType | null>(null);
+export default function BlogPanel({ userName, createdAt, creatorId }: PROPS) {
   const { User, refetchUser }: UserAuth = useContext(AuthContext);
+  const [saveStatus, setSaveStatus] = useState(false);
   const [sub, setSub] = useState<StateStatusType>({
-    postId: creatorId,
+    postId: "",
     active: followCheck(User.followers, creatorId),
   });
 
-  const { loading, data } = useQuery(GET_USER_INFO, {
-    variables: { id: creatorId },
-  });
-
-  useEffect(() => {
-    if (!loading && data) {
-      const ownerData = data.getUserInfo;
-      if (!ownerData.id) return;
-      setOwner(ownerData);
-    }
-  }, [data]);
+  const saveHandler = (state: boolean) => {
+    setSaveStatus(state);
+  };
 
   const [addFollow] = useMutation(ADD_FOLLOW, {
     variables: {
@@ -62,7 +48,6 @@ export default function TopMenu({ createdAt, creatorId, blogId }: PROPS) {
       follower_id: creatorId,
     },
   });
-
   useEffect(() => {
     setSub((prev) => ({
       ...prev,
@@ -71,12 +56,14 @@ export default function TopMenu({ createdAt, creatorId, blogId }: PROPS) {
   }, [User.followers, creatorId]);
 
   return (
-    <div className={styles.blog__top__menu}>
-      <div className={styles.blog__top__menu__user}>
-        <BiUser />
-        <div className={styles.blog__top__menu__userInfo}>
-          <div>
-            <span>{owner?.name}</span>
+    <div className={styles.blogs__content__info}>
+      <div className={styles.blogs__content__user}>
+        <div className={styles.blogs__content__userIcon}>
+          <BiUser />
+        </div>
+        <div>
+          <div className={styles.blogs__content__userInfo}>
+            <span>{userName}</span>
             {User.id !== creatorId ? (
               sub.active ? (
                 <div
@@ -96,12 +83,20 @@ export default function TopMenu({ createdAt, creatorId, blogId }: PROPS) {
               )
             ) : null}
           </div>
-          <span className={styles.blog__top__menu__timer}>
+          <span className={styles.blogs__content__createTime}>
             {timeExpiredFrom(createdAt)}
           </span>
         </div>
       </div>
-      <TopMenuAction blogId={blogId} userId={User.id} />
+      {User.id !== "" ? (
+        <div className={styles.blogs__content__save}>
+          {saveStatus ? (
+            <BsBookmarksFill onClick={() => saveHandler(false)} />
+          ) : (
+            <BsBookmarks onClick={() => saveHandler(true)} />
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }

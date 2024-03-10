@@ -3,7 +3,7 @@ import styles from "../SingleBlogs/blog.module.css";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { GET_LIKES_BLOG } from "../../Query/blogQuery";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import { ADD_LIKE_BLOG, DELETE_LIKE_BLOG } from "../../mutations/blogMutations";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/BlogStore";
