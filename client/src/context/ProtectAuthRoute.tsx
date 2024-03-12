@@ -16,7 +16,7 @@ export default function ProtectAuthRoute({
   const navigate = useNavigate();
   const { User, loading }: UserAuth = useContext(AuthContext);
 
-  if (!loading && User.email === "") navigate("/");
+  if ((!loading && User.email === "") || User.id === null) navigate("/");
 
   if (loading)
     return (
@@ -31,5 +31,5 @@ export default function ProtectAuthRoute({
         />
       </div>
     );
-  if (User.email !== "" && !loading) return <>{children}</>;
+  if (User.email !== "" && User.id && !loading) return <>{children}</>;
 }

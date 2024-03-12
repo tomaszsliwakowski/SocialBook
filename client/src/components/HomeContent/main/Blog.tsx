@@ -1,19 +1,21 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../BlogsContent/blogs.module.css";
 import { motion, useAnimation, useInView } from "framer-motion";
-import { BlogRouteBuilder } from "../../../routes";
+import { BlogRouteBuilder, LOGIN_ROUTE } from "../../../routes";
 import { BlogsType } from "../../BlogsContent/Main";
 import BlogStat from "../../BlogsContent/BlogStat";
 import BlogTags from "../../BlogsContent/BlogTags";
 import BlogDesc from "../../BlogsContent/BlogDesc";
 import BlogPanel from "../../BlogsContent/BlogPanel";
+import { AuthContext, UserAuth } from "../../../context/Auth";
 
 type PROPS = {
   blog: BlogsType;
 };
 
 export default function Blog({ blog }: PROPS) {
+  const { User }: UserAuth = useContext(AuthContext);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const slideControls = useAnimation();
@@ -36,7 +38,7 @@ export default function Blog({ blog }: PROPS) {
       ref={ref}
     >
       <Link
-        to={BlogRouteBuilder(blog.id)}
+        to={User.id && User.id !== "" ? BlogRouteBuilder(blog.id) : LOGIN_ROUTE}
         className={styles.blogs__content__image}
       >
         <img src={blog.miniature} alt="img" />

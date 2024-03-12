@@ -8,26 +8,16 @@ import { AuthContext, UserAuth } from "../../../context/Auth";
 import { useContext, useEffect, useState } from "react";
 import { BlogsType } from "../../BlogsContent/Main";
 import { useQuery } from "@apollo/client";
-import { GET_BLOGS } from "../../../Query/blogQuery";
+import { GET_POPULAR_BLOGS } from "../../../Query/blogQuery";
 
 export default function Main() {
   const { User }: UserAuth = useContext(AuthContext);
   const [blogs, setBlogs] = useState<BlogsType[]>([]);
 
-  const { loading, error, data } = useQuery(GET_BLOGS, {
-    variables: {
-      type: "For You",
-      search: "",
-      searchType: "title",
-      tag: "All",
-      timeSpan: "All",
-      page: 0,
-      userId: "",
-    },
-  });
+  const { loading, error, data } = useQuery(GET_POPULAR_BLOGS);
   useEffect(() => {
     if (!loading && !error && data) {
-      const newData = data.getBlogs;
+      const newData = data.getPopularBlogs;
       setBlogs(newData || []);
     }
   }, [data]);

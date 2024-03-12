@@ -48,6 +48,8 @@ export function followCheck(
   followers: FollowerObjectType[],
   Id: string
 ): boolean {
+  if (!followers || followers.length < 1) return false;
+  if (!Id) return false;
   const check = followers.filter((item) => item.followers_id === Id);
   return check.length > 0;
 }

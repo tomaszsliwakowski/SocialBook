@@ -15,7 +15,7 @@ export const GET_BLOG = gql`
   }
 `;
 export const GET_BLOGS = gql`
-  query getBlosg(
+  query getBlogs(
     $type: String!
     $search: String!
     $searchType: String!
@@ -33,6 +33,24 @@ export const GET_BLOGS = gql`
       page: $page
       userId: $userId
     ) {
+      id
+      user_id
+      title
+      blogContent
+      tags
+      baner
+      miniature
+      createdAt
+      likes
+      comments
+      userName
+    }
+  }
+`;
+
+export const GET_POPULAR_BLOGS = gql`
+  query getPopularBlogs {
+    getPopularBlogs {
       id
       user_id
       title

@@ -64,7 +64,7 @@ export default function BlogPanel({ userName, createdAt, creatorId }: PROPS) {
         <div>
           <div className={styles.blogs__content__userInfo}>
             <span>{userName}</span>
-            {User.id !== creatorId ? (
+            {User.id !== creatorId && User.id ? (
               sub.active ? (
                 <div
                   className={styles.UserFollow}
@@ -88,7 +88,7 @@ export default function BlogPanel({ userName, createdAt, creatorId }: PROPS) {
           </span>
         </div>
       </div>
-      {User.id !== "" ? (
+      {User.id !== "" && User.id ? (
         <div className={styles.blogs__content__save}>
           {saveStatus ? (
             <BsBookmarksFill onClick={() => saveHandler(false)} />
