@@ -36,10 +36,7 @@ export const getUser = {
 
 export const getUserInfo = {
   type: UserType,
-  args: {
-    id: { type: new GraphQLNonNull(GraphQLString) },
-  },
-  async resolve(parent: any, args: { id: string }, req: Request) {
+  async resolve(parent: any, args: any, req: Request) {
     const cookie = req.cookies.IdUser;
     if (!cookie) return { name: "", email: "" };
     const data = verify(cookie, AccessToken) as any;
@@ -53,6 +50,28 @@ export const getUserInfo = {
       id: id,
       name: name,
       email: email,
+    };
+  },
+};
+
+export const getUserName = {
+  type: UserType,
+  args: {
+    id: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  async resolve(parent: any, args: { id: string }, req: Request) {
+    const cookie = req.cookies.IdUser;
+    if (!cookie) return { name: "", email: "" };
+    const data = verify(cookie, AccessToken) as any;
+    if (!data) return { name: "", email: "" };
+    const [rows]: any = await pool.query(
+      `SELECT id,name FROM users WHERE id = '${args.id}'`
+    );
+
+    const { id, name } = rows[0];
+    return {
+      id: id,
+      name: name,
     };
   },
 };

@@ -29,12 +29,14 @@ export default function Comment({
           <span className={styles.blog__comment__userName}>{comment.name}</span>
           <div className={styles.blog__comment__contentHead__con}>
             <span>{timeExpiredFrom(comment.createdAt)}</span>
-            <CommentModal
-              comAction={comAction}
-              comment={comment}
-              handleComAction={handleComAction}
-              User={User}
-            />
+            {User.id === comment.user_id ? (
+              <CommentModal
+                comAction={comAction}
+                comment={comment}
+                handleComAction={handleComAction}
+                User={User}
+              />
+            ) : null}
           </div>
         </div>
         <p>{comment.comment_text}</p>

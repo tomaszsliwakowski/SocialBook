@@ -44,8 +44,8 @@ export default function Main() {
   const { loading, error, data, refetch } = useQuery(GET_BLOGS, {
     variables: {
       type: typeShow,
-      search: searchValue,
-      searchType: searchTypeValue,
+      search: search || "",
+      searchType: searchType || "title",
       tag: tag || "",
       timeSpan: timeSpanHandler(timeSpan),
       page: 0,
@@ -70,12 +70,18 @@ export default function Main() {
     setSearchTypeValue(value);
   };
   const searchBlogsAction = (): void => {
-    if (searchValue === "") return;
-    setSearchParams((prev) => {
-      prev.set("search", searchValue);
-      prev.set("searchtype", searchTypeValue);
-      return prev;
-    });
+    if (searchValue === "") {
+      setSearchParams((prev) => {
+        prev.delete("search");
+        return prev;
+      });
+    } else {
+      setSearchParams((prev) => {
+        prev.set("search", searchValue);
+        prev.set("searchtype", searchTypeValue);
+        return prev;
+      });
+    }
   };
   const selectBlogsAction = (name: string, value: string): void => {
     setSearchParams((prev) => {

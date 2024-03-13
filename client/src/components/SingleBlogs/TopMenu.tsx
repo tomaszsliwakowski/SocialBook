@@ -6,7 +6,7 @@ import {
   handleDeleteFollow,
   timeExpiredFrom,
 } from "../../assets/assets";
-import { GET_USER_INFO } from "../../Query/userQuery";
+import { GET_USER_NAME } from "../../Query/userQuery";
 import { useMutation, useQuery } from "@apollo/client";
 import { useContext, useEffect, useState } from "react";
 import { ADD_FOLLOW, DELETE_FOLLOW } from "../../mutations/postsMutations";
@@ -27,7 +27,6 @@ type PROPS = {
 type OwnerType = {
   id: string;
   name: string;
-  email: string;
 };
 
 export default function TopMenu({ createdAt, creatorId, blogId }: PROPS) {
@@ -38,13 +37,13 @@ export default function TopMenu({ createdAt, creatorId, blogId }: PROPS) {
     active: followCheck(User.followers, creatorId),
   });
 
-  const { loading, data } = useQuery(GET_USER_INFO, {
+  const { loading, data } = useQuery(GET_USER_NAME, {
     variables: { id: creatorId },
   });
 
   useEffect(() => {
     if (!loading && data) {
-      const ownerData = data.getUserInfo;
+      const ownerData = data.getUserName;
       if (!ownerData.id) return;
       setOwner(ownerData);
     }

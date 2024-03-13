@@ -1,5 +1,5 @@
 import { GraphQLObjectType, GraphQLSchema } from "graphql";
-import { getUser, getUserInfo } from "./queries/User";
+import { getUser, getUserInfo, getUserName } from "./queries/User";
 import {
   addCommentPost,
   addFollow,
@@ -37,6 +37,7 @@ const RootQuery = new GraphQLObjectType({
     getBlogComments: getBlogComments,
     getBlogs: getBlogs,
     getPopularBlogs: getPopularBlogs,
+    getUserName: getUserName,
   },
 });
 const Mutation = new GraphQLObjectType({

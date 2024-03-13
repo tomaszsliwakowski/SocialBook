@@ -18,11 +18,19 @@ export const GET_USER = gql`
   }
 `;
 export const GET_USER_INFO = gql`
-  query getUserInfo($id: String!) {
-    getUserInfo(id: $id) {
+  query getUserInfo {
+    getUserInfo {
       id
       name
       email
+    }
+  }
+`;
+export const GET_USER_NAME = gql`
+  query getUserName($id: String!) {
+    getUserName(id: $id) {
+      id
+      name
     }
   }
 `;

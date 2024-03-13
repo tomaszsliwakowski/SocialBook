@@ -146,7 +146,9 @@ const filterSearch = (blogs: BlogType[], args: GetBlogsArgType): BlogType[] => {
   if (args.search === "") return blogs;
 
   if (args.searchType === "title") {
-    return blogs.filter((item) => item.title.includes(args.search));
+    return blogs.filter((item) =>
+      item.title.toLowerCase().includes(args.search.toLowerCase())
+    );
   } else {
     return blogs.filter((item) => {
       const tags: Array<string> = JSON.parse(item.tags);
@@ -161,7 +163,9 @@ const filterSearch = (blogs: BlogType[], args: GetBlogsArgType): BlogType[] => {
 export const getPopularBlogs = {
   type: new GraphQLList(BlogsType),
   async resolve(parent: any, args: any) {
-    const blogsData: any = await pool.query(`SELECT * FROM blogs`);
+    const blogsData: any = await pool.query(
+      `SELECT * FROM blogs WHERE (createdAt between now() - interval 365 day and now() )`
+    );
     let blogs: BlogType[] | null = blogsData[0];
     if (!blogs) return;
     const blogsAllData = blogs.map((item) =>
@@ -183,9 +187,11 @@ export const getPopularBlogs = {
       });
     }
 
-    return blogsSelected.sort(function (a, b) {
-      return add(b.likes, b.comments) - add(a.likes, a.comments);
-    });
+    return blogsSelected
+      .sort(function (a, b) {
+        return add(b.likes, b.comments) - add(a.likes, a.comments);
+      })
+      .splice(0, 9);
   },
 };
 
