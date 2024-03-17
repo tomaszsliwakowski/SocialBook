@@ -423,6 +423,41 @@
   background-color: var(--primary-blue-color);
 }
 
+.blogs__getMore {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.blogs__loadingMore {
+  width: 100%;
+  max-width: 600px;
+  height: 40px;
+  background-color: var(--bg-color);
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border: 1px solid var(--primary-blue-color);
+  color: var(--primary-blue-color);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.blogs__loadingMore:disabled {
+  border-color: var(--border-2-color);
+  color: var(--border-2-color);
+}
+.blogs__loadingMore:disabled:hover {
+  border-color: var(--border-2-color);
+  background-color: var(--border-2-color);
+}
+
+.blogs__loadingMore:hover {
+  background-color: var(--primary-blue-color);
+  color: white;
+}
+
 @media screen and (max-width: 400px) {
   .blogs__filterBar {
     padding: 1rem 0.5rem;

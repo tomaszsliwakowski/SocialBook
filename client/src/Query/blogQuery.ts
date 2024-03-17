@@ -21,7 +21,8 @@ export const GET_BLOGS = gql`
     $searchType: String!
     $tag: String!
     $timeSpan: String!
-    $page: Int!
+    $pageMin: Int!
+    $pageMax: Int!
     $userId: String!
   ) {
     getBlogs(
@@ -30,7 +31,8 @@ export const GET_BLOGS = gql`
       searchType: $searchType
       tag: $tag
       timeSpan: $timeSpan
-      page: $page
+      pageMin: $pageMin
+      pageMax: $pageMax
       userId: $userId
     ) {
       id

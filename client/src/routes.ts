@@ -3,7 +3,7 @@ export const BLOGS_PAGE_ROUTE = "/blogs";
 export const POSTS_PAGE_ROUTE = "/posts";
 export const AUTH_PAGE_ROUTE = "/auth/:action";
 export const BLOGS_ROUTE =
-  "/blogs?sorting=Latest&tag=All&timespan=All&type=For+You";
+  "/blogs?sorting=Latest&tag=All&timespan=All&type=For+You&pageMin=0&pageMax=9";
 export const LOGIN_ROUTE = "/auth/login";
 export const REGISTER_ROUTE = "/auth/register";
 export const PROFILE_ROUTE = "/profile";
@@ -19,7 +19,7 @@ export function BlogRouteBuilder(id: string) {
 //blogs tag route
 
 function blogsTagRouteBuilder(tag: string) {
-  return `/blogs?sorting=Latest&tag=${tag}&timespan=All&type=For+You`;
+  return `/blogs?sorting=Latest&tag=${tag}&timespan=All&type=For+You&pageMin=0&pageMax=9`;
 }
 
 export const FoodTagRoute = blogsTagRouteBuilder("Food");

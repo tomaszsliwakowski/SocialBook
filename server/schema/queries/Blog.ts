@@ -31,7 +31,8 @@ type GetBlogsArgType = {
   tag: string;
   sorting: string;
   timeSpan: string;
-  page: number;
+  pageMin: number;
+  pageMax: number;
   userId: string;
 };
 
@@ -98,7 +99,8 @@ export const getBlogs = {
     searchType: { type: new GraphQLNonNull(GraphQLString) },
     tag: { type: new GraphQLNonNull(GraphQLString) },
     timeSpan: { type: new GraphQLNonNull(GraphQLString) },
-    page: { type: new GraphQLNonNull(GraphQLInt) },
+    pageMin: { type: new GraphQLNonNull(GraphQLInt) },
+    pageMax: { type: new GraphQLNonNull(GraphQLInt) },
     userId: { type: new GraphQLNonNull(GraphQLString) },
   },
   async resolve(parent: any, args: GetBlogsArgType) {
@@ -108,7 +110,7 @@ export const getBlogs = {
     if (!blogs) return;
     blogs = await filterHandler(blogs, args);
     if (!blogs) return;
-    const selectedBlogs = blogs.splice(args.page, args.page + 10);
+    const selectedBlogs = blogs.splice(args.pageMin, args.pageMax);
     const blogsAllData = selectedBlogs.map((item) =>
       getStats(item)
         .then((res) => {
@@ -120,7 +122,7 @@ export const getBlogs = {
         })
     );
 
-    return blogsAllData;
+    return blogsAllData.reverse().slice(args.pageMin, args.pageMax);
   },
 };
 
@@ -191,7 +193,7 @@ export const getPopularBlogs = {
       .sort(function (a, b) {
         return add(b.likes, b.comments) - add(a.likes, a.comments);
       })
-      .splice(0, 9);
+      .slice(0, 9);
   },
 };
 
