@@ -11,6 +11,7 @@ import { useQuery } from "@apollo/client";
 import { GET_BLOGS } from "../../Query/blogQuery";
 import { timeSpanHandler } from "../../assets/assets";
 import { AuthContext, UserAuth } from "../../context/Auth";
+import GetMoreBlogs from "./GetMoreBlogs";
 
 export type BlogsType = {
   id: string;
@@ -180,17 +181,8 @@ export default function Main() {
         </div>
       </div>
       <Blogs blogs={blogs} />
-
       {blogs.length >= 9 ? (
-        <div className={styles.blogs__getMore}>
-          <button
-            disabled={maxBlogs}
-            className={styles.blogs__loadingMore}
-            onClick={() => getMorePosts()}
-          >
-            {maxBlogs ? "End of blogs" : "Show more"}
-          </button>
-        </div>
+        <GetMoreBlogs maxBlogs={maxBlogs} getMorePosts={getMorePosts} />
       ) : null}
     </div>
   );

@@ -11,13 +11,13 @@ import AddPostContent from "./AddPostContent";
 import AddPostAction from "./AddPostAction";
 
 type PROPS = {
-  setAddPostModal: React.Dispatch<React.SetStateAction<boolean>>;
+  handleAddPostModal: Function;
   User: UserType;
   setPostsData: React.Dispatch<React.SetStateAction<PostType[]>>;
 };
 
 export default function AddPost({
-  setAddPostModal,
+  handleAddPostModal,
   User,
   setPostsData,
 }: PROPS) {
@@ -95,18 +95,14 @@ export default function AddPost({
         let { addPost }: { addPost: PostType } = res.data;
         Object.assign(addPost, { createdAt: new Date().getTime().toString() });
         setPostsData((prev) => prev.concat(addPost));
-        setAddPostModal(false);
+        handleAddPostModal(false);
       })
       .catch((res) => console.log(res));
   };
 
-  const handleModalSet = (action: boolean) => {
-    setAddPostModal(action);
-  };
-
   return (
     <div className={styles.posts__addPost__body}>
-      <AddPostHeader handleModalSet={handleModalSet} />
+      <AddPostHeader handleModalSet={handleAddPostModal} />
       <AddPostContent
         postText={postText}
         image={image}

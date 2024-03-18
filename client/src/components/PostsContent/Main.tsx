@@ -89,12 +89,28 @@ export default function Main() {
     window.location.reload();
   };
 
+  const paramsMenuHandler = (
+    deleteParam: string,
+    name: string,
+    value: string
+  ) => {
+    setSearchParams((prev) => {
+      prev.delete(deleteParam);
+      prev.set(name, value);
+      return prev;
+    });
+  };
+
+  const handleAddPostModal = (value: boolean) => {
+    setAddPostModal(value);
+  };
+
   return (
     <>
       <div className={styles.posts}>
         <Menu
-          setAddPostModal={setAddPostModal}
-          setSearchParams={setSearchParams}
+          handleAddPostModal={handleAddPostModal}
+          paramsMenuHandler={paramsMenuHandler}
           navParams={{ nav: nav, search: search }}
         />
         {loading ? (
@@ -134,7 +150,7 @@ export default function Main() {
           onClick={(e) => closeModal(e)}
         >
           <AddPost
-            setAddPostModal={setAddPostModal}
+            handleAddPostModal={handleAddPostModal}
             User={User}
             setPostsData={setPostsData}
           />
