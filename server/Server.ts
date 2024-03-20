@@ -15,8 +15,12 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 app.use(cookieParser());
-app.use(cors());
-
+app.use(
+  cors({
+    credentials: true,
+    origin: "https://social-book-bay.vercel.app/",
+  })
+);
 app.use(
   "/graphql",
   cors<cors.CorsRequest>({
