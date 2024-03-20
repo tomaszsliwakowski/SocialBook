@@ -23,10 +23,6 @@ app.use(
 );
 app.use(
   "/graphql",
-  cors<cors.CorsRequest>({
-    origin: "https://social-book-bay.vercel.app/",
-    credentials: true,
-  }),
   graphqlHTTP({
     schema,
     graphiql: true,
