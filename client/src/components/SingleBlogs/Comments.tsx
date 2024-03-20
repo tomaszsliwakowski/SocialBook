@@ -17,7 +17,7 @@ export default function Comments({ comments, User }: PROPS) {
   });
 
   const handleComAction = (id: string, active: boolean = true) => {
-    setComAction({ comId: id, active: true });
+    setComAction({ comId: id, active: active });
   };
 
   useEffect(() => {
