@@ -16,10 +16,7 @@ const port = process.env.PORT;
 app.use(body_parser_1.default.json({ limit: "50mb" }));
 app.use(body_parser_1.default.urlencoded({ limit: "50mb", extended: true }));
 app.use((0, cookie_parser_1.default)());
-app.use((0, cors_1.default)({
-    credentials: true,
-    origin: "https://social-book-bay.vercel.app/",
-}));
+app.use((0, cors_1.default)());
 app.use("/graphql", (0, cors_1.default)({
     origin: "https://social-book-bay.vercel.app/",
     credentials: true,
