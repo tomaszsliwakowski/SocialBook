@@ -1,4 +1,4 @@
-export const DOMAIN = "https://tomaszsliwakowski.github.io/SocialBook/";
+export const DOMAIN = "https://tomaszsliwakowski.github.io";
 
 export const PopularTags: string[] = [
   "All",
