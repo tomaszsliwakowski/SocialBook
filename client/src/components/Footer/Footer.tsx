@@ -39,7 +39,7 @@ export default function Footer({ id }: { id?: string }) {
       <div>
         <div className={styles.footer__info}>
           <div className={styles.footer__logo}>
-            <a href="/">
+            <a href="/SocialBook">
               <strong>S</strong>ocial<strong>B</strong>ook
             </a>
           </div>

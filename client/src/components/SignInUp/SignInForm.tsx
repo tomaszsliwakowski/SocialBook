@@ -43,7 +43,7 @@ export default function SignInForm() {
           const response = res.data;
           if (response.loginUser) {
             setState({ email: "", password: "" });
-            navigate("/");
+            navigate("/SocialBook");
           }
         })
         .catch((res: GraphQLError) => {

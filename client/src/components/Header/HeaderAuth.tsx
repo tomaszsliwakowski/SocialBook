@@ -41,19 +41,19 @@ const NotLogged = () => {
 
 const Logged = ({ refetch }: { refetch: Function }) => {
   function logOut() {
-    deleteCookie("IdUser", "/", DOMAIN);
+    deleteCookie("IdUser", "/SocialBook", DOMAIN);
     refetch();
   }
 
   return (
     <>
-      <Link className={styles.SetBtn} to={"/"}>
+      <Link className={styles.SetBtn} to={"/SocialBook"}>
         Profile
       </Link>
-      <Link className={styles.SetBtn} to={"/"}>
+      <Link className={styles.SetBtn} to={"/SocialBook"}>
         Saved
       </Link>
-      <Link className={styles.SetBtn} to={"/"}>
+      <Link className={styles.SetBtn} to={"/SocialBook"}>
         Settings
       </Link>
       <button className={styles.authBtn} onClick={() => logOut()}>

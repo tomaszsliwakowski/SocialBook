@@ -40,7 +40,7 @@ export default function SignUpForm() {
     if (email !== "" && password !== "" && name !== "") {
       registerUser().then(() => {
         setState({ name: "", email: "", password: "" });
-        navigate("/");
+        navigate("/SocialBook");
       });
     }
 

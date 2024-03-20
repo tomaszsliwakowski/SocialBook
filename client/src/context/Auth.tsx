@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return (
       <div className="error__page">
         <h1>Something Went Wrong!</h1>
-        <a href="/">Go Home Page</a>
+        <a href="/SocialBook">Go Home Page</a>
       </div>
     );
 

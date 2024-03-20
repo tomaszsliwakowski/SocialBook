@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <div className={styles.header}>
       <div className={styles.header__logo}>
-        <a href="/">
+        <a href="/SocialBook">
           <strong>S</strong>ocial<strong>B</strong>ook
         </a>
       </div>
