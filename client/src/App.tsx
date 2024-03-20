@@ -27,6 +27,9 @@ export default function App() {
   const client = new ApolloClient({
     link: createHttpLink({
       uri: "https://socialbook-backend-7vle.onrender.com/graphql",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
       credentials: "include",
     }),
     cache: new InMemoryCache(),
