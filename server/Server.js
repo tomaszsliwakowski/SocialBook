@@ -18,9 +18,12 @@ app.use(body_parser_1.default.urlencoded({ limit: "50mb", extended: true }));
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
     credentials: true,
-    origin: "https://social-book-jl17ebupw-tomaszsliwakowskis-projects.vercel.app/",
+    origin: "https://social-book-bay.vercel.app/",
 }));
-app.use("/graphql", (0, express_graphql_1.graphqlHTTP)({
+app.use("/graphql", (0, cors_1.default)({
+    origin: "https://social-book-bay.vercel.app/",
+    credentials: true,
+}), (0, express_graphql_1.graphqlHTTP)({
     schema: schema_1.schema,
     graphiql: true,
 }));

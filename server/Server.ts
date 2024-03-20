@@ -18,13 +18,16 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin:
-      "https://social-book-jl17ebupw-tomaszsliwakowskis-projects.vercel.app/",
+    origin: "https://social-book-bay.vercel.app/",
   })
 );
 
 app.use(
   "/graphql",
+  cors<cors.CorsRequest>({
+    origin: "https://social-book-bay.vercel.app/",
+    credentials: true,
+  }),
   graphqlHTTP({
     schema,
     graphiql: true,
