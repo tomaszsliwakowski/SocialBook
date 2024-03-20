@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "homepage": "https://tomaszsliwakowski.github.io/SocialBook",
+  "homepage": "https://tomaszsliwakowski.github.io/SocialBook/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,7 +10,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@apollo/client": "^3.8.7",
@@ -32,7 +32,10 @@
     "react-router-dom": "^6.18.0",
     "react-spinners": "^0.13.8",
     "react-typed": "^1.2.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "typescript": "^5.0.2",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
