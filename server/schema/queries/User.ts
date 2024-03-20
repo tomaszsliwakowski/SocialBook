@@ -9,6 +9,7 @@ export const getUser = {
   type: UserType,
   async resolve(parent: any, args: any, req: Request) {
     const cookie = req.cookies.IdUser;
+    console.log(cookie);
     if (!cookie) return { name: "", email: "" };
     const data = verify(cookie, AccessToken) as any;
     if (!data) return { name: "", email: "" };
