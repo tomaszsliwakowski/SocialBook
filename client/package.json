@@ -18,6 +18,7 @@
     "axios": "^1.6.7",
     "browser-image-compression": "^2.0.2",
     "framer-motion": "^10.16.4",
+    "gh-pages": "^6.1.1",
     "graphql": "^16.8.1",
     "jodit-react": "^4.0.9",
     "ra-data-graphql": "^4.14.3",
