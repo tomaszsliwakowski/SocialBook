@@ -15,20 +15,13 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 app.use(cookieParser());
-//app.use(
-// cors({
-//  credentials: true,
-//   origin: "https://social-book-bay.vercel.app/",
-// })
-//);
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+app.use(
+  cors({
+    credentials: true,
+    origin:
+      "https://social-book-jl17ebupw-tomaszsliwakowskis-projects.vercel.app/",
+  })
+);
 
 app.use(
   "/graphql",
