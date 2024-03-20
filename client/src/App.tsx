@@ -30,9 +30,6 @@ export default function App() {
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
-      fetchOptions: {
-        mode: "no-cors",
-      },
       credentials: "include",
     }),
     cache: new InMemoryCache(),
