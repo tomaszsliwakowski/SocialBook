@@ -26,7 +26,7 @@ import BlogCreatorPage from "./pages/BlogCreatorPage";
 export default function App() {
   const client = new ApolloClient({
     link: createHttpLink({
-      uri: "https://socialbook-backend-7vle.onrender.com/graphql",
+      uri: "https://socialbook-backend-7vle.onrender.com/",
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
