@@ -28,7 +28,8 @@ export default function App() {
     link: createHttpLink({
       uri: "https://socialbook-backend-7vle.onrender.com/graphql",
       headers: {
-        "Access-Control-Allow-Origin": "https://social-book-bay.vercel.app/",
+        "Access-Control-Allow-Origin":
+          "https://tomaszsliwakowski.github.io/SocialBook/",
       },
       credentials: "include",
     }),
