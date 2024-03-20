@@ -6,7 +6,7 @@ export default function AuthPage() {
   return (
     <>
       <div className="logo">
-        <Link to="/">
+        <Link to="/SocialBook">
           <strong>S</strong>ocial<strong>B</strong>ook
         </Link>
       </div>
