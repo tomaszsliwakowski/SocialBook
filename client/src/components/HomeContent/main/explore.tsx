@@ -25,15 +25,51 @@ type EXPLORE_TYPE = {
 };
 
 const exploreData: EXPLORE_TYPE[] = [
-  { address: FoodTagRoute, img: "./food.jpg", name: "Food" },
-  { address: TravelTagRoute, img: "./travel.jpg", name: "Travel" },
-  { address: LifeStyleTagRoute, img: "./lifestyle.jpg", name: "LifeStyle" },
-  { address: FashionTagRoute, img: "./fashion.jpg", name: "Fashion" },
-  { address: BuisnessTagRoute, img: "./buisness.jpg", name: "Buisness" },
-  { address: SportsTagRoute, img: "./sports.jpg", name: "Sports" },
-  { address: CarsTagRoute, img: "./cars.jpg", name: "Cars" },
-  { address: FitnessTagRoute, img: "./fitness.jpg", name: "Fitness" },
-  { address: AnimalsTagRoute, img: "./animals.jpg", name: "Animals" },
+  {
+    address: FoodTagRoute,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943197/food_rp5opr.jpg",
+    name: "Food",
+  },
+  {
+    address: TravelTagRoute,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943252/travel_mp00eb.jpg",
+    name: "Travel",
+  },
+  {
+    address: LifeStyleTagRoute,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943201/lifestyle_eoewly.jpg",
+    name: "LifeStyle",
+  },
+  {
+    address: FashionTagRoute,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943189/fashion_cnptsr.jpg",
+    name: "Fashion",
+  },
+  {
+    address: BuisnessTagRoute,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943180/buisness_funtvc.jpg",
+    name: "Buisness",
+  },
+  {
+    address: SportsTagRoute,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943243/sports_v7ffmx.jpg",
+    name: "Sports",
+  },
+  {
+    address: CarsTagRoute,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943209/slide1_vqxehd.jpg",
+    name: "Cars",
+  },
+  {
+    address: FitnessTagRoute,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943193/fitness_hihi7r.jpg",
+    name: "Fitness",
+  },
+  {
+    address: AnimalsTagRoute,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943178/animals_j8nvtz.jpg",
+    name: "Animals",
+  },
 ];
 
 export default function Explore({ User }: PROPS) {

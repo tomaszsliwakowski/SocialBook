@@ -1,6 +1,46 @@
 import { useEffect, useState } from "react";
 import styles from "./slider.module.css";
 
+type SlidesType = {
+  slide: number;
+  img: string;
+};
+
+const slides: SlidesType[] = [
+  {
+    slide: 0,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943184/cars_aw8v1u.jpg",
+  },
+  {
+    slide: 1,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943213/slide2_igbf0z.jpg",
+  },
+  {
+    slide: 2,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943218/slide3_xln4yx.jpg",
+  },
+  {
+    slide: 3,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943222/slide4_ffh6hv.jpg",
+  },
+  {
+    slide: 4,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943227/slide6_hrlf8k.jpg",
+  },
+  {
+    slide: 5,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943230/slide7_alxpey.jpg",
+  },
+  {
+    slide: 6,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943236/slide8_ap3fh6.jpg",
+  },
+  {
+    slide: 7,
+    img: "https://res.cloudinary.com/dhte02cxo/image/upload/v1710943240/slide9_xi87eq.jpg",
+  },
+];
+
 export default function PhotoSlider() {
   const [activeSlide, setActiveSlide] = useState<number>(0);
 
@@ -22,30 +62,14 @@ export default function PhotoSlider() {
   return (
     <div className={styles.slider}>
       <ul>
-        <li className={activeSlide === 0 ? `${styles.active}` : ""}>
-          <img src="./slide1.jpg" alt="slide photo" />
-        </li>
-        <li className={activeSlide === 1 ? `${styles.active}` : ""}>
-          <img src="./slide2.jpg" alt="slide photo" />
-        </li>
-        <li className={activeSlide === 2 ? `${styles.active}` : ""}>
-          <img src="./slide3.jpg" alt="slide photo" />
-        </li>
-        <li className={activeSlide === 3 ? `${styles.active}` : ""}>
-          <img src="./slide4.jpg" alt="slide photo" />
-        </li>
-        <li className={activeSlide === 4 ? `${styles.active}` : ""}>
-          <img src="./slide6.jpg" alt="slide photo" />
-        </li>
-        <li className={activeSlide === 5 ? `${styles.active}` : ""}>
-          <img src="./slide7.jpg" alt="slide photo" />
-        </li>
-        <li className={activeSlide === 6 ? `${styles.active}` : ""}>
-          <img src="./slide8.jpg" alt="slide photo" />
-        </li>
-        <li className={activeSlide === 7 ? `${styles.active}` : ""}>
-          <img src="./slide9.jpg" alt="slide photo" />
-        </li>
+        {slides.map((item, id) => (
+          <li
+            key={id}
+            className={activeSlide === item.slide ? `${styles.active}` : ""}
+          >
+            <img src={item.img} alt="slide photo" />
+          </li>
+        ))}
       </ul>
     </div>
   );
