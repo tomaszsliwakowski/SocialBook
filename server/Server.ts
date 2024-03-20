@@ -18,13 +18,13 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "https://tomaszsliwakowski.github.io/SocialBook/",
+    origin: "https://tomaszsliwakowski.github.io",
   })
 );
 app.use(
   "/graphql",
   cors<cors.CorsRequest>({
-    origin: "https://tomaszsliwakowski.github.io/SocialBook/",
+    origin: "https://tomaszsliwakowski.github.io",
     credentials: true,
   }),
   graphqlHTTP({

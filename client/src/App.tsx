@@ -28,8 +28,7 @@ export default function App() {
     link: createHttpLink({
       uri: "https://socialbook-backend-7vle.onrender.com/graphql",
       headers: {
-        "Access-Control-Allow-Origin":
-          "https://tomaszsliwakowski.github.io/SocialBook/",
+        "Access-Control-Allow-Origin": "https://tomaszsliwakowski.github.io",
       },
       credentials: "include",
     }),

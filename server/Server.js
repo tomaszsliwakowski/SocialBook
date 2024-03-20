@@ -18,10 +18,10 @@ app.use(body_parser_1.default.urlencoded({ limit: "50mb", extended: true }));
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
     credentials: true,
-    origin: "https://tomaszsliwakowski.github.io/SocialBook/",
+    origin: "https://tomaszsliwakowski.github.io",
 }));
 app.use("/graphql", (0, cors_1.default)({
-    origin: "https://tomaszsliwakowski.github.io/SocialBook/",
+    origin: "https://tomaszsliwakowski.github.io",
     credentials: true,
 }), (0, express_graphql_1.graphqlHTTP)({
     schema: schema_1.schema,
