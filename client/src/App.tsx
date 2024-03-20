@@ -16,7 +16,6 @@ import {
   AUTH_PAGE_ROUTE,
   BLOGS_PAGE_ROUTE,
   BLOG_CREATOR_ROUTE,
-  CHATS_PAGE_ROUTE,
   HOME_ROUTE,
   POSTS_PAGE_ROUTE,
   SINGLE_BLOG_ROUTE,
@@ -27,7 +26,7 @@ import BlogCreatorPage from "./pages/BlogCreatorPage";
 export default function App() {
   const client = new ApolloClient({
     link: createHttpLink({
-      uri: "http://localhost:4000/graphql",
+      uri: "https://socialbook-backend-7vle.onrender.com/graphql",
       credentials: "include",
     }),
     cache: new InMemoryCache(),
