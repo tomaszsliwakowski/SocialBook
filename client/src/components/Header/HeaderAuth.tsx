@@ -41,7 +41,7 @@ const NotLogged = () => {
 
 const Logged = ({ refetch }: { refetch: Function }) => {
   function logOut() {
-    deleteCookie("IdUser", "/SocialBook", DOMAIN);
+    deleteCookie("IdUser", "/", DOMAIN);
     refetch();
   }
 
