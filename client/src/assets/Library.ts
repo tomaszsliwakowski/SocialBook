@@ -1,5 +1,4 @@
-export const DOMAIN =
-  "https://social-book-c2tnv96nf-tomaszsliwakowskis-projects.vercel.app/";
+export const DOMAIN = "https://social-book-bay.vercel.app/";
 
 export const PopularTags: string[] = [
   "All",
