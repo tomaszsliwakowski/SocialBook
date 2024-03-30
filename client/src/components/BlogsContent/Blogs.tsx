@@ -9,17 +9,19 @@ type PROPS = {
 export default function Blogs({ blogs }: PROPS) {
   return (
     <div className={styles.blogs__content}>
-      {blogs.length !== 0 ? (
-        <ul className={styles.blogs__content__list}>
-          {blogs.map((item, id) => (
-            <Blog key={id} blog={item} />
-          ))}
-        </ul>
-      ) : (
-        <div className={styles.blogs__content__notFound}>
-          Not found any blogs
-        </div>
-      )}
+      {blogs ? (
+        blogs.length !== 0 ? (
+          <ul className={styles.blogs__content__list}>
+            {blogs.map((item, id) => (
+              <Blog key={id} blog={item} />
+            ))}
+          </ul>
+        ) : (
+          <div className={styles.blogs__content__notFound}>
+            Not found any blogs
+          </div>
+        )
+      ) : null}
     </div>
   );
 }
