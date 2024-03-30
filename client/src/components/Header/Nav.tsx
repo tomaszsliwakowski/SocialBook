@@ -54,8 +54,8 @@ export default function HeaderNav() {
         >
           Blogs
         </NavLink>
-        {window.location.pathname.split("/")[1] === "blogs" ||
-        window.location.pathname.split("/")[1] === "blog" ? (
+        {window.location.pathname.split("/")[2] === "blogs" ||
+        window.location.pathname.split("/")[2] === "blog" ? (
           <NavLink
             to={BLOG_CREATOR_ROUTE}
             onClick={() => setMobile(false)}
