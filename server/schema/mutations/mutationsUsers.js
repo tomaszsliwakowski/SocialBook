@@ -40,7 +40,10 @@ exports.loginUser = {
             const Token = (0, jsonwebtoken_1.sign)({ userId: user.id }, assets_1.AccessToken, {
                 expiresIn: "7d",
             });
-            res.cookie("IdUser", Token, { httpOnly: true, sameSite: "lax" });
+            res.cookie("IdUser", Token, {
+                sameSite: "none",
+                secure: true,
+            });
             return {
                 id: user.id,
                 name: user.name,
