@@ -59,7 +59,8 @@ export default function Main() {
 
   function pageMinHandler(): number {
     if (!pageMin) return 0;
-    if ((blogs && blogs.length ? blogs.length : 0) < parseInt(pageMin)) {
+    if (!blogs) return 0;
+    if (blogs.length < parseInt(pageMin)) {
       setSearchParams((prev) => {
         prev.set("pageMin", "0");
         return prev;
