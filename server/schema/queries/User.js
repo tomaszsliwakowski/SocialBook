@@ -20,7 +20,6 @@ exports.getUser = {
     resolve(parent, args, req) {
         return __awaiter(this, void 0, void 0, function* () {
             const cookie = req.cookies.IdUser;
-            console.log(cookie);
             if (!cookie)
                 return { name: "", email: "" };
             const data = (0, jsonwebtoken_1.verify)(cookie, assets_1.AccessToken);

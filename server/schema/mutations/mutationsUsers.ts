@@ -34,7 +34,7 @@ export const loginUser = {
       expiresIn: "7d",
     });
 
-    res.cookie("IdUser", Token);
+    res.cookie("IdUser", Token, { httpOnly: true, sameSite: "lax" });
 
     return {
       id: user.id,

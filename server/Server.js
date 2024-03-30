@@ -19,9 +19,11 @@ app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
     credentials: true,
     origin: "https://tomaszsliwakowski.github.io",
+    //origin: "http://localhost:3000",
 }));
 app.use("/graphql", (0, cors_1.default)({
     origin: "https://tomaszsliwakowski.github.io",
+    //origin: "http://localhost:3000",
     credentials: true,
 }), (0, express_graphql_1.graphqlHTTP)({
     schema: schema_1.schema,
