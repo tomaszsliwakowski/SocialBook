@@ -59,7 +59,7 @@ export default function Main() {
 
   function pageMinHandler(): number {
     if (!pageMin) return 0;
-    if (blogs.length < parseInt(pageMin)) {
+    if ((blogs && blogs.length ? blogs.length : 0) < parseInt(pageMin)) {
       setSearchParams((prev) => {
         prev.set("pageMin", "0");
         return prev;
@@ -128,6 +128,7 @@ export default function Main() {
 
   const getMorePosts = () => {
     if (!pageMin || !pageMax) return;
+    if (!blogs) return;
     if (blogs.length === parseInt(pageMax)) {
       setSearchParams((prev) => {
         prev.set("pageMin", pageMax);
@@ -139,6 +140,7 @@ export default function Main() {
 
   useEffect(() => {
     if (!pageMax) return;
+    if (!blogs) return;
     if (blogs.length === parseInt(pageMax)) {
       setMaxBlogs((prev) => (prev ? false : prev));
     } else {
