@@ -184,8 +184,10 @@ export default function Main() {
         </div>
       </div>
       <Blogs blogs={blogs} />
-      {blogs.length >= 9 ? (
-        <GetMoreBlogs maxBlogs={maxBlogs} getMorePosts={getMorePosts} />
+      {blogs ? (
+        blogs.length >= 9 ? (
+          <GetMoreBlogs maxBlogs={maxBlogs} getMorePosts={getMorePosts} />
+        ) : null
       ) : null}
     </div>
   );
