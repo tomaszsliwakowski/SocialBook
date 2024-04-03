@@ -49,7 +49,6 @@ export const getBlogLikes = {
     const comCount: any = await pool.query(
       `SELECT * FROM blogscomments WHERE blog_id ='${args.blog_id}'`
     );
-    console.log(likes[0]);
     const data: ReturnType = {
       likes: likes[0].length,
       comments_count: comCount[0].length,
