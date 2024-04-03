@@ -18,15 +18,15 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "https://tomaszsliwakowski.github.io",
-    //origin: "http://localhost:3000",
+    //origin: "https://tomaszsliwakowski.github.io",
+    origin: "http://localhost:3000",
   })
 );
 app.use(
   "/graphql",
   cors<cors.CorsRequest>({
-    origin: "https://tomaszsliwakowski.github.io",
-    //origin: "http://localhost:3000",
+    //origin: "https://tomaszsliwakowski.github.io",
+    origin: "http://localhost:3000",
     credentials: true,
   }),
   graphqlHTTP({

@@ -141,8 +141,19 @@
   margin-bottom: 2rem;
   display: flex;
   gap: 2rem;
+  overflow: hidden;
+  max-width: 100vw;
 }
-.blog__content__paragraph p {
+.blog__content__paragraph div {
+  display: flex;
+  align-items: center;
+  height: auto;
+  width: auto;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+.blog__content__paragraph div p {
   font-size: 22px;
   word-wrap: break-word;
   font-family: "Roboto", sans-serif;
