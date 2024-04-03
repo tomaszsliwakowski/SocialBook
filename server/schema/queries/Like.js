@@ -47,6 +47,7 @@ exports.getBlogLikes = {
         return __awaiter(this, void 0, void 0, function* () {
             const likes = yield mySqlConnect_1.pool.query(`SELECT * FROM blogslikes WHERE blog_id = '${args.blog_id}'`);
             const comCount = yield mySqlConnect_1.pool.query(`SELECT * FROM blogscomments WHERE blog_id ='${args.blog_id}'`);
+            console.log(likes[0]);
             const data = {
                 likes: likes[0].length,
                 comments_count: comCount[0].length,
